@@ -1,0 +1,5 @@
+Between-Live / Release / generic iOS arm64
+Xcode 26.3; iOS SDK 26.2; deployment target iOS 18
+CODE_SIGNING_ALLOWED=NO
+ARCHIVE SUCCEEDED
+No production credentials or distribution signing were validated.

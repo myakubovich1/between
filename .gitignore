@@ -1,0 +1,12 @@
+.DS_Store
+Config/Local.xcconfig
+.env*
+!.env.example
+DerivedData/
+*.xcuserstate
+xcuserdata/
+supabase/.temp/
+supabase/.branches/
+node_modules/
+work/
+*.xcresult/

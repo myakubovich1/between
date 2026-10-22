@@ -1,0 +1,8 @@
+Ink on Canvas (light): 14.80:1
+Ink on Canvas (dark): 15.12:1
+Metadata on Canvas (light): 5.73:1
+Metadata on Canvas (dark): 9.51:1
+Forest on Canvas (light): 5.93:1
+Forest on Canvas (dark): 10.14:1
+White on BrandFill (light): 6.36:1
+White on BrandFill (dark): 6.36:1

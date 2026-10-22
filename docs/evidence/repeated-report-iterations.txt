@@ -1,0 +1,5 @@
+Xcode test command used -test-iterations 3. Summary counts the unique test case.
+Test Case '-[BetweenUITests.BetweenUITests testGuestFindPlanDetailsAndReport]' passed (25.542 seconds).
+Test Case '-[BetweenUITests.BetweenUITests testGuestFindPlanDetailsAndReport]' passed (23.747 seconds).
+Test Case '-[BetweenUITests.BetweenUITests testGuestFindPlanDetailsAndReport]' passed (33.207 seconds).
+** TEST SUCCEEDED **

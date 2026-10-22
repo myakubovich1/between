@@ -1,0 +1,10 @@
+Release is blocked:
+ - SUPABASE_URL must use a real public HTTPS URL
+ - PRIVACY_URL is not configured
+ - TERMS_URL is not configured
+ - SUPPORT_URL is not configured
+ - DEVELOPMENT_TEAM is not configured
+ - Catalog entrance/access/date-specific hours curation remains incomplete
+ - HOSTED_BACKEND_VERIFIED must be confirmed after actual verification
+ - APPLE_SIGNIN_AND_REVOCATION_VERIFIED must be confirmed after actual verification
+ - PHYSICAL_DEVICE_VERIFIED must be confirmed after actual verification

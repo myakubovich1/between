@@ -1,0 +1,12 @@
+// Copy to Local.xcconfig; use https:/$()/ to preserve // in xcconfig.
+SUPABASE_URL = https:/$()/YOUR_PROJECT.supabase.co
+SUPABASE_PUBLISHABLE_KEY = sb_publishable_YOUR_KEY
+PRIVACY_URL =
+TERMS_URL =
+SUPPORT_URL =
+// Set your actual team in Xcode before running on a device.
+DEVELOPMENT_TEAM =
+// Set to YES only after the corresponding checks actually pass:
+HOSTED_BACKEND_VERIFIED = NO
+APPLE_SIGNIN_AND_REVOCATION_VERIFIED = NO
+PHYSICAL_DEVICE_VERIFIED = NO

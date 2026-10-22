@@ -1,0 +1,11 @@
+PASS guest catalog and private write protection
+PASS simultaneous idempotency across independent sessions
+PASS per-scope rate limit cannot race across sessions
+PASS invalid scope, zone, enum, stale draft, and body limit rejected
+MEASURE realtime invalidation 258 ms
+PASS two-client Realtime invalidation and persistent aggregate
+PASS viewer blocks, flags, and moderation affect aggregates privately
+PASS hourly global limit serialized across distinct scopes and sessions
+PASS server expiry, deduplication and scope separation
+PASS deletion eligibility gate, cascades and old-token rejection
+RESULT 9 backend integration groups passed. Apple revocation not exercised; local Auth test users use password sessions.

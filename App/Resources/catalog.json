@@ -1,0 +1,266 @@
+[
+  {
+    "id": "marston",
+    "name": "Marston Science Library",
+    "shortName": "Marston",
+    "aliases": [
+      "MSL",
+      "Science library"
+    ],
+    "category": "library",
+    "address": "444 Newell Drive, Gainesville, FL 32611",
+    "coordinate": {
+      "latitude": 29.647966,
+      "longitude": -82.3439126
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": true
+    },
+    "zones": [
+      {
+        "id": "marston-1",
+        "name": "Floor 1 \u00b7 Collaborative",
+        "quiet": false,
+        "access": "uf"
+      },
+      {
+        "id": "marston-2",
+        "name": "Floor 2 \u00b7 Collaborative",
+        "quiet": false,
+        "access": "uf"
+      },
+      {
+        "id": "marston-3",
+        "name": "Floor 3 \u00b7 Collaborative",
+        "quiet": false,
+        "access": "uf"
+      },
+      {
+        "id": "marston-4",
+        "name": "Floor 4 \u00b7 Quiet study",
+        "quiet": true,
+        "access": "uf"
+      },
+      {
+        "id": "marston-5",
+        "name": "Floor 5 \u00b7 Silent study",
+        "quiet": true,
+        "access": "uf"
+      }
+    ],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": "https://libcal.uflib.ufl.edu/",
+    "note": "Five floors, with collaborative study on floors 1\u20133 and designated quiet or silent study on floors 4\u20135.",
+    "sources": [
+      {
+        "url": "https://marston.uflib.ufl.edu/spaces/location-floorplans/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://marston.uflib.ufl.edu/spaces/location-floorplans/",
+        "checked": "2026-10-22",
+        "facts": "Designated floor policies, not current sound conditions."
+      }
+    ]
+  },
+  {
+    "id": "west",
+    "name": "Library West",
+    "shortName": "Library West",
+    "aliases": [
+      "Lib West",
+      "LW"
+    ],
+    "category": "library",
+    "address": "1545 W University Avenue, Gainesville, FL 32611",
+    "coordinate": {
+      "latitude": 29.6515883,
+      "longitude": -82.3429184
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": true
+    },
+    "zones": [
+      {
+        "id": "west-4",
+        "name": "Floor 4 \u00b7 Quiet study",
+        "quiet": true,
+        "access": "uf"
+      },
+      {
+        "id": "west-6",
+        "name": "Floor 6 \u00b7 Graduate study",
+        "quiet": false,
+        "access": "graduate"
+      }
+    ],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": "https://libcal.uflib.ufl.edu/",
+    "note": "The fourth floor is designated for quiet study. The sixth floor is for graduate students.",
+    "sources": [
+      {
+        "url": "https://librarywest.uflib.ufl.edu/about/maps-and-addresses/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://librarywest.uflib.ufl.edu/spaces/quiet-study-floor/",
+        "checked": "2026-10-22",
+        "facts": "Designated floor policies, not current sound conditions."
+      }
+    ]
+  },
+  {
+    "id": "smathers",
+    "name": "Smathers Library",
+    "shortName": "Smathers",
+    "aliases": [
+      "Library East",
+      "East"
+    ],
+    "category": "library",
+    "address": "1508 Union Road, Gainesville, FL 32611",
+    "coordinate": {
+      "latitude": 29.6508712,
+      "longitude": -82.3418369
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": null
+    },
+    "zones": [],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": null,
+    "note": "A historic library on the Plaza of the Americas. Check the official site for collection and reading-room access.",
+    "sources": [
+      {
+        "url": "https://uflib.ufl.edu/libraries-collections/smathers-library/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      }
+    ]
+  },
+  {
+    "id": "afa",
+    "name": "Architecture & Fine Arts Library",
+    "shortName": "Architecture & Fine Arts",
+    "aliases": [
+      "AFA",
+      "Fine Arts"
+    ],
+    "category": "library",
+    "address": "1389 Stadium Road, Gainesville, FL 32611",
+    "coordinate": {
+      "latitude": 29.6482392,
+      "longitude": -82.3406005
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": null
+    },
+    "zones": [],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": null,
+    "note": "Located in the Architecture building. Confirm current hours and entry before walking over.",
+    "sources": [
+      {
+        "url": "https://afa.uflib.ufl.edu/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      }
+    ]
+  },
+  {
+    "id": "education",
+    "name": "Education Library",
+    "shortName": "Education",
+    "aliases": [
+      "Norman",
+      "Norman Hall"
+    ],
+    "category": "library",
+    "address": "1221 SW 5th Avenue, Gainesville, FL 32601",
+    "coordinate": {
+      "latitude": 29.6471628,
+      "longitude": -82.3378873
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": true
+    },
+    "zones": [],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": "https://libcal.uflib.ufl.edu/",
+    "note": "Located in Norman Hall. Study-room information is available through the official library site.",
+    "sources": [
+      {
+        "url": "https://education.uflib.ufl.edu/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      }
+    ]
+  },
+  {
+    "id": "health",
+    "name": "Health Science Center Library",
+    "shortName": "Health Science",
+    "aliases": [
+      "HSCL",
+      "HSC"
+    ],
+    "category": "library",
+    "address": "1600 SW Archer Road, Gainesville, FL 32610",
+    "coordinate": {
+      "latitude": 29.6399157,
+      "longitude": -82.3434195
+    },
+    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "access": "unknown",
+    "quiet": false,
+    "amenities": {
+      "outlets": null,
+      "wifi": null,
+      "group": null
+    },
+    "zones": [],
+    "hours": null,
+    "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
+    "reservationURL": null,
+    "note": "Gainesville location. Entry rules may vary after staffed hours; check with the library.",
+    "sources": [
+      {
+        "url": "https://library.health.ufl.edu/",
+        "checked": "2026-10-22",
+        "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      }
+    ]
+  }
+]

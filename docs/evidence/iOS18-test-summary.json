@@ -1,0 +1,46 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "DB3E14E6-320D-4081-A750-890FFB6A6A91",
+        "deviceName" : "iPhone 16e",
+        "modelName" : "iPhone 16e",
+        "osBuildNumber" : "22F77",
+        "osVersion" : "18.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 18,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Between-Demo · Built with macOS 26.6.2",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792692773.546,
+  "passedTests" : 18,
+  "result" : "Passed",
+  "skippedTests" : 0,
+  "startTime" : 1792692464.248,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Between-Demo",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "100% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 0.84s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 18
+}

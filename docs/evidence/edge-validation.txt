@@ -1,0 +1,9 @@
+Check outputs/Between/supabase/functions/between-api/validation_test.ts
+running 4 tests from ./outputs/Between/supabase/functions/between-api/validation_test.ts
+accepted enums only, no client author/timestamp/state trust ... ok (19ms)
+late drafts require an explicit fresh confirmation ... ok (38ms)
+nearby heuristic validates age, accuracy, radius and finite coordinates ... ok (5ms)
+streamed body limit cannot be bypassed without content-length ... ok (55ms)
+
+ok | 4 passed | 0 failed (238ms)
+

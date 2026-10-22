@@ -1,0 +1,5 @@
+BEGIN
+INSERT 0 4
+DO
+ROLLBACK
+NOTICE:  PASS SQL aggregation: tie, opposition, decay, presence, deduplication, missing noise, scope, blocks, moderation, expiry

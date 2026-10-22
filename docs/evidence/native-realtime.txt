@@ -1,0 +1,2 @@
+Native Development guest: safe status invalidation to persisted refreshed cache: 1463 ms
+No report rows or synthetic observations were created for this check.
