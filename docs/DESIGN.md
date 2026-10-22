@@ -15,11 +15,11 @@ Ranking factors: preference fit 30%, usable study time 25%, recent seat evidence
 | Forest | #1C6B5A | #77D5BA | Accent text and symbols |
 | SoftForest | #E8F0E9 | #20382F | Quiet supporting surfaces |
 | Metadata | #59645F | #B3C1BA | Essential secondary text |
-| BrandFill | #1C6B5A | #1C6B5A | Filled buttons with white text |
+| BrandFill | #123F35 | #123F35 | Filled buttons with white text |
 
 SF system/rounded titles, native controls and SF Symbols; no downloaded fonts or photography. Spacing 4/8/12/16/24/32pt; margins 20pt; typical radius 14–22pt. Semantic surfaces support system appearance. Native bars and system sheets adopt platform materials; content-heavy cards are opaque. Explicit light/dark accent fills preserve contrast rather than placing white text on the light dark-mode accent. The custom icon is an original geometric lowercase “b”/gap composition and does not embed an SF Symbol or competitor asset.
 
-`PlaceCard` orders identity/walk, seat condition, usable minutes, hours/access caveat, evidence freshness. Save is a sibling button, not nested inside the navigation button. `StatusLabel` always uses words and an SF Symbol; gray/metadata means missing, never empty seats. `EvidenceCaption` uses independent reporter count and observation age. `Surface`, `Pill`, `Eyebrow`, `NoticeView` and `PrimaryButton` supply shared layouts. All primary hit regions are at least 44pt.
+The default UF-connected Find opens in list mode with a new doorway/book brand mark, compact forest time card, generous cream surfaces and larger study-minute numerals. A map toggle expands campus context. `PlaceCard` orders identity and actual opening hours, the separately labeled UF building count, walk/study time, community reports and entry caveat. Save is a sibling button, not nested inside the navigation button. `StatusLabel` always uses words and an SF Symbol; gray/metadata means missing, never empty seats. `EvidenceCaption` uses independent reporter count and observation age. `Surface`, `Pill`, `Eyebrow`, `NoticeView` and `PrimaryButton` supply shared layouts. All primary hit regions are at least 44pt.
 
 Labels distinguish “Plenty of seats / Some seats / Almost full / Full”, “Reports differ”, “No recent reports” and “Reports have expired”. Optional sound labels remain separate. One reporter is described as one student report. Community categories never become occupancy percentages, desk counts, adjacent-seat guarantees or accuracy claims.
 
@@ -29,4 +29,4 @@ Demo labeling is visible in all tab roots and presented flows. You provides no-d
 
 ## Accessibility and remaining user validation
 
-List navigation supports VoiceOver labels, native focus behavior and the full contribution path. Map controls are supplementary. Text wraps at Dynamic Type sizes, and essential actions remain in scroll or safe-area layouts. Dates and distances use Foundation formatting; UF schedules are absolute date-specific intervals curated for America/New_York. Verify VoiceOver on a physical device, including sheet dismissal/focus return, and perform a user-timed reporting trial before claiming a sub-10-second flow. Screenshot coverage and unrun accessibility checks are recorded in VERIFICATION.md.
+List navigation supports VoiceOver labels, native focus behavior and the full contribution path. Map controls are supplementary. Text wraps at Dynamic Type sizes, and essential actions remain in scroll or safe-area layouts. Dates and distances use Foundation formatting; UF schedules are parsed from the live public LibCal widget into absolute date-specific intervals in America/New_York. Verify VoiceOver on a physical device, including sheet dismissal/focus return, and perform a user-timed reporting trial before claiming a sub-10-second flow. Screenshot coverage and unrun accessibility checks are recorded in VERIFICATION.md.

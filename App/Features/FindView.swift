@@ -7,7 +7,7 @@ struct FindView: View {
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var path: [String] = []
     @State private var sheet: FindSheet?
-    @State private var mapShown = true
+    @State private var mapShown = AppConfiguration.current.isDemo
     @State private var mapHeight: CGFloat = 205
     @State private var selected: String?
     @State private var camera: MapCameraPosition = .region(.init(center: .init(latitude: 29.6485, longitude: -82.3435), span: .init(latitudeDelta: 0.012, longitudeDelta: 0.012)))
@@ -29,6 +29,7 @@ struct FindView: View {
             }.modifier(DemoSheetLabel())
         }
         .onAppear {
+            if sizeClass == .regular { mapShown = true }
             let args = ProcessInfo.processInfo.arguments
             if let i = args.firstIndex(of: "-screen"), args.count > i + 1 {
                 let screen = args[i + 1]
@@ -45,13 +46,19 @@ struct FindView: View {
         @Bindable var store = store
         return VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 14) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(store.config.name.lowercased()).font(.system(.largeTitle, design: .rounded, weight: .bold)).tracking(-1.8)
-                        Text("Make room for a little focus.").font(.subheadline).foregroundStyle(Color.metadata)
+                HStack(spacing: 11) {
+                    Image("BrandMark").resizable().frame(width: 46, height: 46).clipShape(RoundedRectangle(cornerRadius: 14)).accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("between").font(.system(.largeTitle, design: .rounded, weight: .bold)).tracking(-1.8)
+                        HStack(spacing: 4) {
+                            Circle().fill(Color.forest).frame(width: 5, height: 5)
+                            Text("UNIVERSITY OF FLORIDA").font(.system(size: 9, weight: .bold)).tracking(1.6)
+                        }.foregroundStyle(Color.metadata)
                     }
                     Spacer()
-                    Button { mapShown.toggle() } label: { Image(systemName: mapShown ? "list.bullet" : "map").frame(width: 46, height: 46).background(Color(.secondarySystemGroupedBackground), in: Circle()) }.accessibilityLabel(mapShown ? "Show list only" : "Show map").accessibilityIdentifier("toggle-map")
+                    Button { withAnimation(.easeInOut(duration: 0.2)) { mapShown.toggle() } } label: {
+                        Image(systemName: mapShown ? "list.bullet" : "map").frame(width: 46, height: 46).background(Color(.secondarySystemGroupedBackground), in: Circle())
+                    }.accessibilityLabel(mapShown ? "Show list only" : "Show map").accessibilityIdentifier("toggle-map")
                 }
                 HStack(spacing: 10) {
                     Image(systemName: "magnifyingglass").foregroundStyle(Color.metadata)
@@ -60,14 +67,17 @@ struct FindView: View {
                 }.padding(.horizontal, 14).frame(minHeight: 48).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
                 Button { sheet = .plan } label: {
                     HStack(spacing: 12) {
-                        Image(systemName: "hourglass").font(.title2).frame(width: 42, height: 44).background(.white.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("I have \(store.plan.available) minutes").font(.headline)
-                            Text(store.next.map { "Then to \($0.shortName)" } ?? "Find your in-between place").font(.caption).opacity(0.85)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("A little time. A good place.").font(.system(.headline, design: .serif, weight: .medium))
+                            Text(store.next.map { "Then to \($0.shortName)" } ?? "Find room for a little focus.").font(.caption).foregroundStyle(.white.opacity(0.8))
                         }
                         Spacer(minLength: 4)
-                        Image(systemName: "slider.horizontal.3").frame(width: 44, height: 44)
-                    }.padding(12).foregroundStyle(.white).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 20))
+                        VStack(spacing: 0) {
+                            Text("\(store.plan.available)").font(.system(size: 30, weight: .semibold, design: .rounded)).monospacedDigit()
+                            Text("MIN GAP").font(.system(size: 8, weight: .bold)).tracking(1)
+                        }
+                        Image(systemName: "chevron.down").font(.caption.weight(.bold))
+                    }.padding(.horizontal, 18).padding(.vertical, 14).foregroundStyle(.white).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 20))
                 }.buttonStyle(.plain).accessibilityIdentifier("time-plan")
             }.padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 12)
             ScrollView(.horizontal, showsIndicators: false) {
@@ -142,8 +152,8 @@ struct FindView: View {
             }
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("A good place to land").font(.title3.weight(.bold))
-                    Text("\(store.results.count) spots for your gap").font(.caption).foregroundStyle(Color.metadata)
+                    Text("Find your little window").font(.title3.weight(.bold))
+                    Text(store.config.isDemo ? "\(store.results.count) spots for your gap" : "\(store.results.count) libraries · Official UF data").font(.caption).foregroundStyle(Color.metadata)
                 }
                 Spacer()
                 if store.refreshing { ProgressView().controlSize(.small) }
@@ -151,6 +161,7 @@ struct FindView: View {
             }.padding(.horizontal, 20).padding(.bottom, 8)
             ScrollView {
                 LazyVStack(spacing: 12) {
+                    if let issue = store.officialIssue, !store.config.isDemo { NoticeView(title: issue, symbol: "wifi.exclamationmark") }
                     if store.offline { NoticeView(title: store.lastFetched == nil ? "Conditions unavailable. The campus catalog is still here." : "Offline · showing older cached conditions", symbol: "wifi.slash") }
                     if !mapShown { Button { sheet = .origin } label: { Label("From \(store.originName)", systemImage: "location.circle").frame(minHeight: 44) } }
                     if store.results.isEmpty {
@@ -165,7 +176,7 @@ struct FindView: View {
                         PlaceCard(recommendation: result) { selected = result.id; path = [result.id] }
                     }
                     if store.plan.nextID == nil { Text("No next destination set. Plans exclude travel to your next commitment.").font(.caption).foregroundStyle(Color.metadata).frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 8) }
-                    Text("Student observations, not a seat guarantee.").font(.caption2).foregroundStyle(Color.metadata).padding(.bottom, 16)
+                    Text(store.config.isDemo ? "Student observations, not a seat guarantee." : "Independent app · UF building counts aren’t available-seat counts.").font(.caption2).foregroundStyle(Color.metadata).padding(.bottom, 16)
                 }.padding(.horizontal, 20)
             }.refreshable { await store.refresh() }
         }.background(Color.canvas)

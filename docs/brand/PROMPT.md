@@ -1,0 +1,7 @@
+# Between brand artwork
+
+Created October 22, 2026 using the built-in image generation tool. Original image is `Between-logo.png` (1254×1254 opaque PNG). The consumed app icon is a deterministic 1024×1024 export, and BrandMark is a 240×240 export. The artwork combines a lowercase b, book/doorway and warm sun dot. No UF or competitor mark was used as a reference.
+
+Exact generation prompt:
+
+> Create a superb, original iOS app icon for BETWEEN, an independent campus study-space finder that helps students find a quiet pocket of time between classes. A single elegant geometric abstract lowercase b made from two interlocking rounded architectural arches, evoking a doorway to a peaceful study nook and the pages of an open book; a tiny warm marigold circular sun rests in the negative-space gap. Distinctive, beautifully balanced, highly readable at 40px. Premium restrained editorial design, flat vector-like solid ivory mark on a deep rich forest green background (#123F35). Warm marigold (#F3BC65) only for the small sun. Precise generous negative space, centered bold simple silhouette. The mark occupies about 64 percent of the square. Full bleed solid forest green square, opaque background. No border, no rounded-square outer container (iOS applies the mask), no text, no letters spelled out, no gradients, no shadows, no mockup, no extra objects, no university or alligator imagery. Make this feel like a confident contemporary independent product identity, calm and clever, immediately recognizable. Output a single square high resolution icon.

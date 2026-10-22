@@ -15,6 +15,7 @@ struct SavedView: View {
                             Surface {
                                 VStack(alignment: .leading, spacing: 10) {
                                     Label(place.shortName, systemImage: place.symbol).font(.headline).foregroundStyle(Color.ink)
+                                    if !store.config.isDemo { OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now) }
                                     StatusLabel(evidence: store.status(place: place.id), now: store.now)
                                     EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
                                     Text(store.offline ? "Cached conditions · may be old" : "Check hours and entry before you go").font(.caption).foregroundStyle(Color.metadata)
@@ -38,7 +39,7 @@ struct YouView: View {
         List {
             Section {
                 HStack(spacing: 16) {
-                    Image(systemName: "leaf").font(.title).foregroundStyle(Color.forest).frame(width: 60, height: 60).background(Color.softForest, in: RoundedRectangle(cornerRadius: 18))
+                    Image("BrandMark").resizable().frame(width: 60, height: 60).clipShape(RoundedRectangle(cornerRadius: 18)).accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: 4) { Text(store.signedIn ? "A little help goes a long way." : "Your space, your pace.").font(.headline); Text(store.signedIn ? store.config.isDemo ? "Demo contributor" : "Signed in with Apple" : "Browsing as a guest").font(.subheadline).foregroundStyle(Color.metadata) }
                 }.padding(.vertical, 8)
                 if !store.signedIn {
@@ -47,6 +48,13 @@ struct YouView: View {
                     } else if store.live != nil {
                         SignInWithAppleButton(.signIn, onRequest: store.prepareApple) { result in Task { await store.completeApple(result) } }.frame(height: 50)
                     } else { Text("Live sign-in needs your backend configuration. Guest discovery and local saves are available.").font(.footnote).foregroundStyle(Color.metadata) }
+                }
+            }
+            if !store.config.isDemo {
+                Section("Connected to UF") {
+                    Link(destination: UFLibraryData.sourceURL) { Label("UF Libraries occupancy", systemImage: "person.2") }
+                    Link(destination: URL(string: "https://libcal.uflib.ufl.edu/hours/")!) { Label("Official opening hours", systemImage: "clock") }
+                    Text("Published building counts and date-specific schedules. Student reports are shown separately. Sensor timestamps aren’t supplied by UF’s current display feed.").font(.caption).foregroundStyle(Color.metadata)
                 }
             }
             Section("Make it yours") {

@@ -42,7 +42,12 @@ struct Hours: Codable, Hashable, Sendable {
     /// Covers dates for which even an empty intervals array means a verified closure.
     var verifiedFrom: Date
     var verifiedUntil: Date
+    /// Explicit valid days prevent malformed or by-appointment entries becoming assumed closures.
+    var verifiedDays: [OpeningInterval]? = nil
+    var fetchedAt: Date? = nil
     func closing(at arrival: Date) -> HoursState {
+        if let fetchedAt, arrival.timeIntervalSince(fetchedAt) > 24 * 3600 { return .unknown }
+        if let verifiedDays, !verifiedDays.contains(where: { $0.start <= arrival && arrival < $0.end }) { return .unknown }
         guard arrival >= verifiedFrom && arrival < verifiedUntil else { return .unknown }
         guard let interval = intervals.first(where: { $0.start <= arrival && arrival < $0.end }) else { return .closed }
         return .open(until: interval.end)
@@ -69,6 +74,13 @@ struct Place: Codable, Hashable, Identifiable, Sendable {
     var reservationURL: URL?
     var note: String
     var sources: [Source]
+    func hoursLabel(at date: Date) -> String {
+        switch hours?.closing(at: date) ?? .unknown {
+        case .unknown: "Hours not confirmed"
+        case .closed: "Closed now"
+        case .open(let end): "Open until " + CampusClock.timeLabel(end) + (CampusClock.sameDay(date, end) ? "" : " · " + CampusClock.dayLabel(end))
+        }
+    }
     var symbol: String { category == "library" ? "books.vertical" : "building.2" }
     func matches(_ query: String) -> Bool {
         query.isEmpty || ([name, shortName] + aliases).contains { $0.localizedStandardContains(query) }
@@ -183,6 +195,14 @@ struct MyReport: Codable, Identifiable, Sendable {
 }
 
 enum CampusClock {
+    static func sameDay(_ a: Date, _ b: Date) -> Bool {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(identifier: "America/New_York")!
+        return calendar.isDate(a, inSameDayAs: b)
+    }
+    static func dayLabel(_ date: Date) -> String {
+        let formatter = DateFormatter(); formatter.timeZone = TimeZone(identifier: "America/New_York"); formatter.dateFormat = "EEE"
+        return formatter.string(from: date)
+    }
     static func timeLabel(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = .current

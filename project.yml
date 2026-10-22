@@ -50,7 +50,11 @@ targets:
   BetweenTests:
     type: bundle.unit-test
     platform: iOS
-    sources: [Tests]
+    sources:
+      - path: Tests
+        excludes: [Fixtures]
+      - path: Tests/Fixtures
+        buildPhase: resources
     dependencies:
       - target: Between
     settings:
@@ -66,6 +70,17 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
 schemes:
+  Between:
+    build:
+      targets:
+        Between: all
+    run:
+      config: Development
+    test:
+      config: Development
+      targets: [BetweenTests, BetweenUITests]
+    archive:
+      config: Release
   Between-Demo:
     build:
       targets:

@@ -2,6 +2,22 @@
 
 This records checks actually run on this Mac. Native simulator, localhost backend, real Apple integration, hosted deployment and public release are separate milestones. The last three remain unverified/blocked; this is not a public-release signoff.
 
+## UF data and UI update — subsequent verification
+
+The main `Between` scheme now connects directly to UF's public display counts and date-specific LibCal hours, independently of Supabase. The logo/app icon and Find/detail/saved screens have been updated. Earlier Demo screenshots and results below document the first implementation; the new source evidence supersedes their data-provider limitation.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| UF-connected iPhone 17 Pro / iOS 26.2 | 18 passed: 17 domain/source tests + native real-network UF flow | `evidence/uf-data-test-summary.json` |
+| Updated UI, iPhone 16e / iOS 18.5 | 21 passed: 17 domain/source tests + 4 complete Demo UI flows | `evidence/uf-ui-ios18-summary.json` |
+| Final-source domain + largest-text native flow, iOS 26.2 | 18 passed: 17 domain/source tests + UF flow at accessibility-extra-extra-extra-large | `evidence/uf-large-text-summary.json` |
+| Actual native cached UF values | All six building counts and all six published date-specific schedules present | `evidence/uf-native-data.json` |
+| New app icon | 1024×1024 RGB, no alpha, asset compilation succeeded | AppIcon.appiconset |
+
+The source tests use a captured factual public-hours fixture for repeatability and verify continuous Marston opening, West's overnight closing, other library hours, closure, 24h schedule expiry, malformed/by-appointment unknowns, strict display count parsing and absent sensor timestamps. The live native UI test receives actual counts/hours over HTTPS and checks detail provenance; no fixture or fake report is injected into this build. Counts fluctuate, so screenshots are retrieval-time evidence, not promises about current occupancy.
+
+New captures: `15-Official-UF-Find.png`, `16-Official-UF-Details.png`, `17-Official-UF-Dark.png`, `18-Official-UF-LargeText.png`, `19-Official-UF-iPad.png`. The iPad capture was visually inspected with map/list side by side; dark appearance and largest text were also visually inspected. See UF_DATA.md for source URLs, refresh behavior, lack of sensor timestamps and provider-contract limits. No backend schema or authenticated endpoint changed in this update; prior backend checks remain the relevant evidence.
+
 ## Environment and native results
 
 Xcode 26.3 (17C529), Apple Swift 6.2.4, iOS SDK 26.2. Deployment target iOS 18. XcodeGen 2.44.1. Official supabase-swift pinned to 2.55.4 with its resolved transitive dependencies committed in the project lockfile.

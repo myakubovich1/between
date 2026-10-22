@@ -6,6 +6,7 @@ struct LocalSnapshot: Codable, Sendable {
     var fetchedAt: Date
     var demoReports: [CommunityObservation]?
     var catalog: [Place]?
+    var officialOccupancy: [String: OfficialOccupancy]?
 }
 actor LocalCache {
     private let mode: String

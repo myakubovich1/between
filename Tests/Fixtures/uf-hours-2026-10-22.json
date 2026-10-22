@@ -1,0 +1,1054 @@
+{
+  "locations": [
+    {
+      "lid": 8626,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "2pm",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "2pm",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lid": 8627,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "2pm",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "2pm",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lid": 8871,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "1pm",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "7pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "1pm",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "11:30pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "7:30am",
+                  "to": "7pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lid": 7728,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "6pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "1am"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "8am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "6pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lid": 8622,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "11:59pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "24hours",
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "12am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "6pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "11:59pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "24hours",
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "12am",
+                  "to": "10pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "10am",
+                  "to": "6pm"
+                }
+              ],
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lid": 8625,
+      "weeks": [
+        {
+          "Sunday": {
+            "date": "2026-10-18",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-19",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-20",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-21",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-22",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": true
+            }
+          },
+          "Friday": {
+            "date": "2026-10-23",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-24",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        },
+        {
+          "Sunday": {
+            "date": "2026-10-25",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          },
+          "Monday": {
+            "date": "2026-10-26",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Tuesday": {
+            "date": "2026-10-27",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Wednesday": {
+            "date": "2026-10-28",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Thursday": {
+            "date": "2026-10-29",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Friday": {
+            "date": "2026-10-30",
+            "times": {
+              "status": "open",
+              "hours": [
+                {
+                  "from": "9am",
+                  "to": "5pm"
+                }
+              ],
+              "currently_open": false
+            }
+          },
+          "Saturday": {
+            "date": "2026-10-31",
+            "times": {
+              "status": "closed",
+              "currently_open": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

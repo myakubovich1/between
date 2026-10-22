@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Color {
-    static let brandFill = Color(red: 28.0/255, green: 107.0/255, blue: 90.0/255)
+    static let brandFill = Color(red: 18.0/255, green: 63.0/255, blue: 53.0/255)
     static let forest = Color("Forest")
     static let metadata = Color("Metadata")
     static let canvas = Color("Canvas")
@@ -55,36 +55,73 @@ struct PrimaryButton: View {
 }
 struct PlaceCard: View {
     @Environment(AppStore.self) private var store
+    @Environment(\.dynamicTypeSize) private var typeSize
     var recommendation: Recommendation
     var open: () -> Void
     private var place: Place { recommendation.place }
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: place.symbol).font(.body).foregroundStyle(Color.forest).frame(width: 38, height: 38).background(Color.softForest, in: RoundedRectangle(cornerRadius: 12))
+                Button(action: open) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(place.shortName).font(.headline).foregroundStyle(Color.ink)
+                        Text(store.config.isDemo ? "Demo hours" : place.hoursLabel(at: store.now)).font(.caption).foregroundStyle(Color.metadata)
+                    }.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading).contentShape(Rectangle())
+                }.buttonStyle(.plain).accessibilityIdentifier("place-\(place.id)")
+                Button { store.toggleSave(place) } label: {
+                    Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).foregroundStyle(Color.forest)
+                }.buttonStyle(.plain).accessibilityLabel(store.favorites.contains(place.id) ? "Unsave \(place.name)" : "Save \(place.name)")
+            }
             Button(action: open) {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .top) {
-                        Image(systemName: place.symbol).font(.title3).foregroundStyle(Color.forest).frame(width: 44, height: 44).background(Color.softForest, in: RoundedRectangle(cornerRadius: 13))
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(place.shortName).font(.headline).foregroundStyle(Color.ink).multilineTextAlignment(.leading)
-                            Text("\(Int(recommendation.journey.to)) min walk\(store.config.isDemo ? " · demo route" : recommendation.journey.estimated ? " · estimate" : "")").font(.caption).foregroundStyle(Color.metadata)
+                let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12)) : AnyLayout(HStackLayout(alignment: .center, spacing: 16))
+                layout {
+                    VStack(alignment: .leading, spacing: 6) {
+                        if store.config.isDemo {
+                            StatusLabel(evidence: store.status(place: place.id), now: store.now)
+                            EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
+                        } else {
+                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now)
                         }
-                        Spacer(minLength: 0)
+                        Label("\(Int(recommendation.journey.to)) min walk\(recommendation.journey.estimated ? " · est." : "")", systemImage: "figure.walk").font(.caption).foregroundStyle(Color.metadata)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                    VStack(alignment: .trailing, spacing: 0) {
+                        Text("\(recommendation.studyMinutes)").font(.system(size: 36, weight: .semibold, design: .rounded)).monospacedDigit().foregroundStyle(Color.forest)
+                        Text(recommendation.uncertain ? "min possible*" : "min to study").font(.caption2).foregroundStyle(Color.metadata)
                     }
-                    StatusLabel(evidence: store.status(place: place.id), now: store.now)
-                    HStack(alignment: .firstTextBaseline, spacing: 4) {
-                        Text("\(recommendation.studyMinutes)").font(.title2.weight(.semibold)).monospacedDigit().foregroundStyle(Color.forest)
-                        Text(recommendation.uncertain ? "min possible study*" : "min to settle in").font(.caption).foregroundStyle(Color.metadata)
-                    }
-                    Text(recommendation.uncertain ? "*Check hours & entry before you go" : store.config.isDemo ? "Open during this demo plan" : "Open for this plan").font(.caption).foregroundStyle(Color.metadata)
-                    if store.filters.preferredNoise != nil && (!store.status(place: place.id).current(at: store.now) || store.status(place: place.id).noise == nil) {
-                        Text("Sound preference not yet confirmed").font(.caption).foregroundStyle(Color.metadata)
-                    }
-                    EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
-                }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
-            }.buttonStyle(.plain).accessibilityIdentifier("place-\(place.id)")
-            Button { store.toggleSave(place) } label: { Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").font(.body).frame(width: 44, height: 44).foregroundStyle(Color.forest) }.buttonStyle(.plain).accessibilityLabel(store.favorites.contains(place.id) ? "Unsave \(place.name)" : "Save \(place.name)")
-        }
-        .padding(16).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 22)).overlay(RoundedRectangle(cornerRadius: 22).stroke(.primary.opacity(0.06)))
+                }.contentShape(Rectangle())
+            }.buttonStyle(.plain)
+            if !store.config.isDemo {
+                Divider()
+                HStack(alignment: .firstTextBaseline) {
+                    Label(store.status(place: place.id).label(at: store.now), systemImage: "bubble.left").font(.caption).foregroundStyle(Color.metadata)
+                    Spacer(minLength: 4)
+                    Image(systemName: "arrow.up.right").font(.caption.weight(.semibold)).foregroundStyle(Color.forest)
+                }
+            }
+            if recommendation.uncertain { Text("*Confirm entry\(place.hours == nil ? " & hours" : "") before you go").font(.caption2).foregroundStyle(Color.metadata) }
+        }.padding(18).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
+            .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.forest.opacity(0.08)))
+    }
+}
+struct OfficialCountLabel: View {
+    var observation: OfficialOccupancy?
+    var now: Date
+    var expanded = false
+    var body: some View {
+        VStack(alignment: .leading, spacing: expanded ? 10 : 4) {
+            if let observation, let count = observation.count {
+                Label("\(count.formatted()) people in building", systemImage: "person.2").font(expanded ? .title3.weight(.semibold) : .subheadline.weight(.semibold)).foregroundStyle(Color.ink)
+                Text("UF count · retrieved \(max(0, Int(now.timeIntervalSince(observation.retrievedAt) / 60)))m ago").font(.caption).foregroundStyle(Color.metadata)
+                Text("Sensor update time unavailable").font(.caption2).foregroundStyle(Color.metadata)
+                if expanded {
+                    Text("This is the published building count, not a count of available seats. Counts can lag; a fresh retrieval doesn’t establish the sensor’s age.").font(.footnote).foregroundStyle(Color.metadata)
+                }
+            } else {
+                Label("UF count unavailable", systemImage: "person.2").font(.subheadline.weight(.semibold)).foregroundStyle(Color.metadata)
+                Text("Check UF’s occupancy page").font(.caption).foregroundStyle(Color.metadata)
+            }
+        }.accessibilityElement(children: .combine)
     }
 }
 struct NoticeView: View {

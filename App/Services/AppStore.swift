@@ -10,6 +10,11 @@ final class AppStore {
     let config: AppConfiguration
     var places: [Place] = []
     var evidence: [Evidence] = []
+    var officialOccupancy: [String: OfficialOccupancy] = [:]
+    var officialHoursFetchedAt: Date?
+    var communityAvailable = false
+    var officialIssue: String?
+    let ufData = UFLibraryData()
     var favorites: Set<String> = []
     var filters = Filters()
     var plan = TimePlan()
@@ -103,7 +108,11 @@ final class AppStore {
                 if !(config.isDemo && ProcessInfo.processInfo.arguments.contains("-ui-testing")), let snapshot = try await cache.read() {
                     if config.isDemo, let reports = snapshot.demoReports { demoReports = reports; recalculateDemo() }
                     else { evidence = snapshot.evidence }
-                    if !config.isDemo, let catalog = snapshot.catalog { places = catalog }
+                    if !config.isDemo, let catalog = snapshot.catalog {
+                        places = catalog
+                        officialHoursFetchedAt = catalog.compactMap { $0.hours?.fetchedAt }.max()
+                        officialOccupancy = snapshot.officialOccupancy ?? [:]
+                    }
                     lastFetched = snapshot.fetchedAt
                 }
             } catch { logger.error("Cache restore failed; bundled catalog retained."); notice = "Couldn’t restore cached conditions. Your saved places are safe; refresh to try again." }
@@ -160,23 +169,51 @@ final class AppStore {
                 if demoOffline { throw URLError(.notConnectedToInternet) }
                 recalculateDemo()
             } else {
-                guard let live else { throw AppFailure.message("Live backend is not configured. Open the Between-Demo scheme for the isolated presentation, or add Config/Local.xcconfig.") }
-                let catalog: [Place] = try await live.request("catalog")
-                let fetched = try await live.summaries()
+                // UF data works independently of the optional community-report backend.
+                async let publishedCounts = ufData.occupancy()
+                async let publishedSchedule = ufData.hours()
+                var catalog = places
+                var fetchedEvidence = evidence
+                var backendAvailable = false
+                if let live {
+                    do {
+                        let remote: [Place] = try await live.request("catalog")
+                        fetchedEvidence = try await live.summaries()
+                        catalog = remote.map { item in
+                            var updated = item
+                            updated.hours = places.first { $0.id == item.id }?.hours ?? item.hours
+                            return updated
+                        }; backendAvailable = true
+                    } catch { /* Keep UF browsing available; community state is labeled separately. */ }
+                }
+                var hoursIssue: String?
+                do {
+                    let publishedHours = try await publishedSchedule
+                    for i in catalog.indices {
+                        // Keep source-specific cached hours if a catalog refresh has no schedule.
+                        catalog[i].hours = publishedHours[catalog[i].id] ?? places.first { $0.id == catalog[i].id }?.hours
+                    }
+                } catch { hoursIssue = "UF hours couldn’t refresh. Check the official hours before visiting." }
+                let counts = await publishedCounts
                 guard summaryGeneration.accepts(ticket), !Task.isCancelled else { return }
                 let catalogChanged = places != catalog
-                places = catalog
-                evidence = fetched
+                places = catalog; evidence = fetchedEvidence
+                officialOccupancy.merge(counts, uniquingKeysWith: { _, newer in newer })
+                officialHoursFetchedAt = catalog.compactMap { $0.hours?.fetchedAt }.max()
+                communityAvailable = backendAvailable
+                let countsCurrent = counts.values.contains { Date().timeIntervalSince($0.retrievedAt) < 120 }
+                officialIssue = hoursIssue ?? (countsCurrent ? nil : "UF building counts couldn’t refresh. Check the retrieval time before using a saved count.")
                 if catalogChanged { scheduleRoutes() }
+                if hoursIssue != nil && !countsCurrent { throw URLError(.notConnectedToInternet) }
             }
             guard summaryGeneration.accepts(ticket), !Task.isCancelled else { return }
             offline = false
             lastFetched = now
-            try await cache.write(.init(evidence: evidence, fetchedAt: now, demoReports: config.isDemo ? demoReports : nil, catalog: config.isDemo ? nil : places))
+            try await cache.write(.init(evidence: evidence, fetchedAt: now, demoReports: config.isDemo ? demoReports : nil, catalog: config.isDemo ? nil : places, officialOccupancy: config.isDemo ? nil : officialOccupancy))
         } catch is CancellationError {} catch {
             guard summaryGeneration.accepts(ticket) else { return }
             offline = true
-            if evidence.isEmpty && !config.isDemo { self.error = error.localizedDescription }
+            if !config.isDemo { officialIssue = "UF data couldn’t refresh. Showing saved information where available." }
         }
     }
     func searchChanged() {

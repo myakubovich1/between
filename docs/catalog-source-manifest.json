@@ -3,11 +3,11 @@
   "releaseCurationComplete": false,
   "coordinateMethod": "Apple CLGeocoder of published street addresses. Not confirmed entrances. No precise route/accessibility promise.",
   "unknown": [
-    "Date-specific hours and exceptions",
     "General access eligibility",
     "Wi-Fi and outlet presence",
     "Precise usable entrances",
-    "Official occupancy permission and API contract"
+    "Sensor observation timestamps absent from current public display feed",
+    "Contracted provider API/reuse agreement for public distribution"
   ],
   "excluded": [
     "UF Jacksonville library",
@@ -279,5 +279,12 @@
         }
       ]
     }
-  ]
+  ],
+  "dynamicSources": {
+    "hours": "https://api3.libcal.com/api_hours_grid.php?iid=6&format=json&weeks=2",
+    "occupancySourcePage": "https://www.uflib.ufl.edu/status/",
+    "adapter": "App/Services/UFLibraryData.swift",
+    "details": "docs/UF_DATA.md",
+    "checked": "2026-10-22"
+  }
 }

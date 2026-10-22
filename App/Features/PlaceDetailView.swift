@@ -32,6 +32,15 @@ struct PlaceDetailView: View {
                         if let route { MapPolyline(route.polyline).stroke(Color.forest, lineWidth: 5) }
                     }.mapStyle(.standard(pointsOfInterest: .excludingAll)).frame(height: 170).clipShape(RoundedRectangle(cornerRadius: 22))
                 }
+                if !store.config.isDemo {
+                    Surface {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack { Eyebrow(text: "Official UF occupancy"); Spacer(); Image(systemName: "building.2.crop.circle").foregroundStyle(Color.forest) }
+                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, expanded: true)
+                            Link(destination: UFLibraryData.sourceURL) { Label("View UF’s occupancy page", systemImage: "arrow.up.right.square").font(.subheadline).frame(minHeight: 44) }
+                        }
+                    }
+                }
                 if !place.zones.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         Eyebrow(text: "Choose your space")
@@ -49,6 +58,7 @@ struct PlaceDetailView: View {
                 Surface {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack { Eyebrow(text: zoneID == nil ? "Building reports" : "This zone’s reports"); Spacer(); Image(systemName: "person.2.wave.2").foregroundStyle(Color.forest) }
+                        if !store.config.isDemo && !store.communityAvailable { Text("Student reports are currently unavailable.").font(.caption).foregroundStyle(Color.metadata) }
                         StatusLabel(evidence: evidence, now: store.now)
                         if evidence.current(at: store.now), let noise = evidence.noise { Label(noise.label, systemImage: "waveform").font(.subheadline) }
                         else { Text("Current noise not reported").font(.subheadline).foregroundStyle(Color.metadata) }
@@ -79,7 +89,10 @@ struct PlaceDetailView: View {
                 }
                 VStack(alignment: .leading, spacing: 14) {
                     Eyebrow(text: "Before you go")
-                    Label(store.config.isDemo ? "Open during this synthetic demo plan" : "Hours not confirmed for this date", systemImage: "clock").font(.subheadline)
+                    Label(store.config.isDemo ? "Open during this synthetic demo plan" : (store.places.first { $0.id == place.id } ?? place).hoursLabel(at: store.now), systemImage: "clock").font(.subheadline)
+                    if let fetched = store.officialHoursFetchedAt, !store.config.isDemo {
+                        Text("UF LibCal schedule · retrieved " + CampusClock.timeLabel(fetched)).font(.caption).foregroundStyle(Color.metadata)
+                    }
                     Link("Check official library hours", destination: place.hoursURL).font(.subheadline).frame(minHeight: 44)
                     Label(place.access.label, systemImage: "door.left.hand.open").font(.subheadline)
                     Label("Outlets: \(place.amenities.outlets == true ? "Present; availability varies" : "Not confirmed")", systemImage: "powerplug").font(.subheadline)

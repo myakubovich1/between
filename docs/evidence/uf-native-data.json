@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-10-22T18:48:10.449739+00:00",
+  "mode": "development",
+  "source": "Native app persisted results from actual HTTPS feeds",
+  "counts": {
+    "afa": {
+      "count": 40,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    },
+    "smathers": {
+      "count": 0,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    },
+    "marston": {
+      "count": 1027,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    },
+    "education": {
+      "count": 216,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    },
+    "health": {
+      "count": 148,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    },
+    "west": {
+      "count": 693,
+      "sourceName": "UF Libraries \u00b7 SafeSpace",
+      "retrievedAt": "2026-10-22T18:47:56Z"
+    }
+  },
+  "hours": {
+    "marston": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 4
+    },
+    "west": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 14
+    },
+    "smathers": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 10
+    },
+    "afa": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 12
+    },
+    "education": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 12
+    },
+    "health": {
+      "fetchedAt": "2026-10-22T18:46:53Z",
+      "intervalCount": 14
+    }
+  },
+  "communityReporters": 0
+}

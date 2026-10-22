@@ -95,3 +95,33 @@ struct DomainTests {
         #expect(RecommendationEngine.recommendations(places:[p],journeys:["p":.init(to:29,onward:20,estimated:true)],evidence:[:],filters:.init(),plan:.init(),now:now).isEmpty)
     }
 }
+
+struct UFSourceTests {
+    private func date(_ value: String) -> Date { ISO8601DateFormatter().date(from: value)! }
+    @Test func publishedSchedulesOvernightContinuousAndClosures() throws {
+        let url = try #require(Bundle(for: BundleLocator.self).url(forResource: "uf-hours-2026-10-22", withExtension: "json"))
+        let hours = try UFHoursParser.parse(Data(contentsOf: url), fetchedAt: date("2026-10-22T18:00:00Z"))
+        #expect(hours.count == 6)
+        #expect(hours["marston"]?.closing(at: date("2026-10-22T23:00:00Z")) == .open(until: date("2026-10-24T02:00:00Z")))
+        #expect(hours["west"]?.closing(at: date("2026-10-23T04:30:00Z")) == .open(until: date("2026-10-23T05:00:00Z")))
+        #expect(hours["afa"]?.closing(at: date("2026-10-22T18:00:00Z")) == .open(until: date("2026-10-23T02:00:00Z")))
+        #expect(hours["smathers"]?.closing(at: date("2026-10-23T01:00:00Z")) == .closed)
+        #expect(hours["afa"]?.closing(at: date("2026-10-24T18:00:00Z")) == .unknown) // Cached schedule >24h requires refresh.
+    }
+    @Test func badOrAppointmentDatesStayUnknown() throws {
+        let data = Data(#"{"locations":[{"lid":8626,"weeks":[{"A":{"date":"2026-10-22","times":{"status":"closed"}},"B":{"date":"2026-10-23","times":{"status":"byappointment"}},"C":{"date":"2026-10-24","times":{"status":"open","hours":[{"from":"bad","to":"5pm"}]}},"D":{"date":"2026-10-25","times":{"status":"24hours"}}}]}]}"#.utf8)
+        let hours = try #require(UFHoursParser.parse(data, fetchedAt: date("2026-10-23T12:00:00Z"))["afa"])
+        #expect(hours.closing(at: date("2026-10-23T14:00:00Z")) == .unknown)
+        #expect(hours.closing(at: date("2026-10-24T11:00:00Z")) == .unknown)
+    }
+    @Test func displayCountsAreStrictAndNeverSensorFresh() throws {
+        #expect(try UFLibraryData.parseCount(Data("709".utf8)) == 709)
+        for bad in ["-1", "NaN", "709 people", "<html>502</html>", "", "999999999", "2.5"] {
+            #expect(throws: (any Error).self) { try UFLibraryData.parseCount(Data(bad.utf8)) }
+        }
+        let now = date("2026-10-22T18:00:00Z")
+        let observation = OfficialOccupancy(sourceName: "UF Libraries", count: 709, observedAt: nil, retrievedAt: now)
+        #expect(!observation.isFresh(at: now))
+    }
+}
+private final class BundleLocator: NSObject {}
