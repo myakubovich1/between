@@ -26,7 +26,7 @@ Shared schemes and the resolved official supabase-swift 2.55.4 dependency are in
 
 ## Share with iPhone testers
 
-Use [the team testing guide](docs/TEAM-TESTING.md) for TestFlight setup and tester instructions. Teammates need iOS 18+ and TestFlight. The source repository is public; a signed TestFlight beta has not been uploaded yet.
+Use [the team testing guide](docs/TEAM-TESTING.md) for TestFlight setup and tester instructions. Teammates need iOS 18+ and TestFlight. The source repository is public. Version 1.0.0 (1) was uploaded and processed on October 29, 2026, then submitted for external TestFlight review. Installation invitations depend on Apple's approval.
 
 ## Local shared backend
 
