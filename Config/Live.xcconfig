@@ -1,7 +1,7 @@
 BETWEEN_NAME = Between
 SUPABASE_URL =
 SUPABASE_PUBLISHABLE_KEY =
-PRIVACY_URL =
+PRIVACY_URL = https:/$()/github.com/myakubovich1/between/blob/main/docs/BETA-PRIVACY.md
 TERMS_URL =
-SUPPORT_URL =
+SUPPORT_URL = https:/$()/github.com/myakubovich1/between/issues
 #include? "Local.xcconfig"
