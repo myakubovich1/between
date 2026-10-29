@@ -8,7 +8,7 @@
 - Screenshots: actual native simulator captures from the development builds. Historical Demo captures retain their labels. New UF captures show actual fetched published counts and schedules. They are verification artifacts; App Store screenshots must accurately represent the final configured release.
 - Third-party source dependencies: official supabase-swift 2.55.4 and the exact transitive versions in Package.resolved; Edge jose 6.2.13 and backend-test supabase-js 2.118.0. Root license/notice files from resolved Swift checkouts are preserved under `docs/third-party/`. Review final distribution acknowledgments for any changed dependencies. The backend test SDK is not bundled into the iOS app.
 
-No external publication or open-source license for the original app has been assumed. The owner should decide distribution/licensing and validate the provisional name before public release.
+The repository is publicly visible at the owner’s request. No open-source license has been selected for the original app. Distribution/licensing and validation of the provisional name remain owner decisions.
 
 ## Palette update — October 28, 2026
 

@@ -24,6 +24,10 @@ The optional community backend can run locally. Hosted deployment requires your 
 
 Shared schemes and the resolved official supabase-swift 2.55.4 dependency are included. Xcode resolves remaining packages automatically. `project.yml` reproduces the project with XcodeGen 2.44.1; no manual target assembly is needed. The display name is configurable in `Config/*.xcconfig`.
 
+## Share with iPhone testers
+
+Use [the team testing guide](docs/TEAM-TESTING.md) for TestFlight setup and tester instructions. Teammates need iOS 18+ and TestFlight. The source repository is public; a signed TestFlight beta has not been uploaded yet.
+
 ## Local shared backend
 
 Install Docker Desktop and Supabase CLI (tested 2.121.0), then from this folder:
