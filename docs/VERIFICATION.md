@@ -138,3 +138,12 @@ Final screenshots: [booking directory](screenshots/UF-Booking-Directory.png), [o
 The new test can be run with `-only-testing:BetweenUITests/BetweenUITests/testBookingPortalOpensUFAndReturnsToBetween`, scheme Between, Development configuration. `scripts/test-live-ios.sh` now includes this method alongside the four previous native methods; only the three methods described above were rerun in this update. The existing local-copy Xcode build workaround was used again for the iCloud-backed source folder.
 
 Actual UF sign-in/MFA, final reservation and cancellation require the student's account and were not performed. Between intentionally uses the default browser and receives no private reservation result or UF credentials. The [integration analysis](UF-BOOKING-PORTAL.md) explains the approach and alternatives.
+
+
+## October 29, 2026: Open Interval logo
+
+The image-generation master was exported to the existing AppIcon and BrandMark asset slots. The Development build succeeded after recompiling the actual asset catalog; no asset/compiler errors were reported. The 1024×1024 icon and 384×384 BrandMark are opaque PNGs with no alpha. The master is 1254×1254.
+
+The rebuilt app was installed and inspected on iPhone 17 Pro / iOS 26.2: Find in light/dark, the You profile mark, and the system home-screen app icon all showed the new artwork. See [light Find](screenshots/Between-new-logo-light.png), [dark Find](screenshots/Between-new-logo-dark.png), and [profile](screenshots/Between-new-logo-profile.png). The previous marks and original prompt are archived in docs/brand/archive.
+
+This is an asset-only change; the preceding booking/domain suite was not rerun. No app logic or source-service changes were made. Full design rationale, asset sizes and prompts are in [the logo update](brand/LOGO-UPDATE.md) and [generation record](brand/PROMPT.md).

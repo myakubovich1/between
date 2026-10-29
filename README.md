@@ -2,11 +2,11 @@
 
 A native SwiftUI iPhone/iPad app for finding somewhere useful to study between commitments. iOS 18 minimum. Built for UF students fitting study time between classes. Includes Find, Saved and You, real UF occupancy, opening schedules and reservable-room searches, campus-building destinations, MapKit walking directions, a study-gap countdown, local favorites and offline caching.
 
-The interface uses Canvas, Mist, Cornflower, Pear, and Black, with appearance-aware light and dark themes. See the [palette implementation and verification](docs/PALETTE-UPDATE.md).
+The interface uses Canvas, Mist, Cornflower, Pear, and Black, with appearance-aware light and dark themes. See the [palette implementation and verification](docs/PALETTE-UPDATE.md) and the [new logo identity](docs/brand/LOGO-UPDATE.md).
 
 <p>
-  <img src="docs/screenshots/UF-Booking-Find.png" alt="Between in light appearance" width="280" />
-  <img src="docs/screenshots/UF-Booking-Dark.png" alt="Between in dark appearance" width="280" />
+  <img src="docs/screenshots/Between-new-logo-light.png" alt="Between in light appearance" width="280" />
+  <img src="docs/screenshots/Between-new-logo-dark.png" alt="Between in dark appearance" width="280" />
 </p>
 
 Screenshots show the normal UF-connected Development app.
@@ -61,7 +61,7 @@ Copy `Config/Local.xcconfig.example` to the ignored `Config/Local.xcconfig`; add
 - `scripts/verify-live-data.sh` checks eleven actual UF counts, six schedules and four room-search locations over HTTPS.
 - `python3 scripts/release_preflight.py` fails until actual release inputs and signoffs exist.
 - [Verification report](docs/VERIFICATION.md): commands, measured results, screenshots and unrun checks.
-- [UF data connection](docs/UF_DATA.md) and [new brand artwork](docs/brand/Between-logo.png).
+- [UF data connection](docs/UF_DATA.md) and [new brand artwork](docs/brand/Between-Open-Interval.png).
 - [Asset provenance and dependency notices](docs/ASSETS.md).
 - [Design guide](docs/DESIGN.md), [demo script](docs/DEMO.md), [catalog sources](docs/catalog-source-manifest.json), [privacy/data flow](docs/PRIVACY.md), [draft policies](docs/POLICIES_DRAFT.md), [App Store copy](docs/APP_STORE.md).
 
