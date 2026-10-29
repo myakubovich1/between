@@ -51,25 +51,25 @@ struct FindView: View {
                     VStack(alignment: .leading, spacing: 1) {
                         Text("between").font(.system(.largeTitle, design: .rounded, weight: .bold)).tracking(-1.8)
                         HStack(spacing: 4) {
-                            Circle().fill(Color.forest).frame(width: 5, height: 5)
+                            Circle().fill(Color.ink).frame(width: 5, height: 5)
                             Text("UNIVERSITY OF FLORIDA").font(.system(size: 9, weight: .bold)).tracking(1.6)
                         }.foregroundStyle(Color.metadata)
                     }
                     Spacer()
                     Button { withAnimation(.easeInOut(duration: 0.2)) { mapShown.toggle() } } label: {
-                        Image(systemName: mapShown ? "list.bullet" : "map").frame(width: 46, height: 46).background(Color(.secondarySystemGroupedBackground), in: Circle())
+                        Image(systemName: mapShown ? "list.bullet" : "map").frame(width: 46, height: 46).background(Color.surface, in: Circle())
                     }.accessibilityLabel(mapShown ? "Show list only" : "Show map").accessibilityIdentifier("toggle-map")
                 }
                 HStack(spacing: 10) {
                     Image(systemName: "magnifyingglass").foregroundStyle(Color.metadata)
                     TextField("Find a campus spot", text: $store.query).accessibilityIdentifier("search").onChange(of: store.query) { store.searchChanged() }.submitLabel(.search)
                     if !store.query.isEmpty { Button { store.query = "" } label: { Image(systemName: "xmark.circle.fill").frame(width: 44, height: 44) }.accessibilityLabel("Clear search") }
-                }.padding(.horizontal, 14).frame(minHeight: 48).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14))
+                }.padding(.horizontal, 14).frame(minHeight: 48).background(Color.surface, in: RoundedRectangle(cornerRadius: 14))
                 Button { sheet = .plan } label: {
                     HStack(spacing: 12) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("A little time. A good place.").font(.system(.headline, design: .serif, weight: .medium))
-                            Text(store.next.map { "Then to \($0.shortName)" } ?? "Find room for a little focus.").font(.caption).foregroundStyle(.white.opacity(0.8))
+                            Text(store.next.map { "Then to \($0.shortName)" } ?? "Find room for a little focus.").font(.caption).foregroundStyle(Color.onBrand.opacity(0.75))
                         }
                         Spacer(minLength: 4)
                         VStack(spacing: 0) {
@@ -77,7 +77,7 @@ struct FindView: View {
                             Text("MIN GAP").font(.system(size: 8, weight: .bold)).tracking(1)
                         }
                         Image(systemName: "chevron.down").font(.caption.weight(.bold))
-                    }.padding(.horizontal, 18).padding(.vertical, 14).foregroundStyle(.white).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 20))
+                    }.padding(.horizontal, 18).padding(.vertical, 14).foregroundStyle(Color.onBrand).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 20))
                 }.buttonStyle(.plain).accessibilityIdentifier("time-plan")
             }.padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 12)
             ScrollView(.horizontal, showsIndicators: false) {
@@ -127,7 +127,7 @@ struct FindView: View {
                 if let c = result.place.coordinate {
                     Annotation(result.place.shortName, coordinate: c.cl) {
                         Button { selected = result.id; path = [result.id] } label: {
-                            Image(systemName: result.place.symbol).font(.body.weight(.semibold)).foregroundStyle(selected == result.id ? Color.brandFill : .white).frame(width: 44, height: 44).background(selected == result.id ? Color.white : Color.brandFill, in: RoundedRectangle(cornerRadius: 15)).overlay(RoundedRectangle(cornerRadius: 15).stroke(.white, lineWidth: 3)).shadow(color: .black.opacity(0.15), radius: 6, y: 3)
+                            Image(systemName: result.place.symbol).font(.body.weight(.semibold)).foregroundStyle(Color.onBrand).frame(width: 44, height: 44).background(selected == result.id ? Color.pear : Color.brandFill, in: RoundedRectangle(cornerRadius: 15)).overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.canvas, lineWidth: 3)).shadow(color: .black.opacity(0.15), radius: 6, y: 3)
                         }.buttonStyle(.plain).accessibilityLabel("Open \(result.place.name)")
                     }.tag(result.id)
                 }

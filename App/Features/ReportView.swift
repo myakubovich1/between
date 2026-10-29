@@ -22,7 +22,7 @@ struct ReportView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     if accepted {
                         VStack(spacing: 16) {
-                            Image(systemName: "checkmark.circle.fill").font(.system(size: 64)).foregroundStyle(Color.forest)
+                            Image(systemName: "checkmark.circle.fill").font(.system(size: 64)).foregroundStyle(Color.ink)
                             Text(store.config.isDemo ? "Demo report saved" : "Thanks for the heads-up").font(.title2.weight(.bold))
                             Text(store.config.isDemo ? "This update only changed the isolated demo store." : "The server accepted your observation. It will help someone find their next spot.").font(.subheadline).foregroundStyle(Color.metadata).multilineTextAlignment(.center)
                             PrimaryButton(title: "Back to the place", symbol: "arrow.turn.up.left") { dismiss() }
@@ -47,8 +47,8 @@ struct ReportView: View {
                                         Image(systemName: option.symbol).frame(width: 24)
                                         Text(option.label).font(.body.weight(.medium))
                                         Spacer()
-                                        Image(systemName: seat == option ? "checkmark.circle.fill" : "circle").foregroundStyle(seat == option ? Color.forest : .secondary)
-                                    }.foregroundStyle(Color.ink).padding(16).frame(minHeight: 56).background(seat == option ? Color.softForest : Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16)).overlay(RoundedRectangle(cornerRadius: 16).stroke(seat == option ? Color.forest : .clear, lineWidth: 1.5))
+                                        Image(systemName: seat == option ? "checkmark.circle.fill" : "circle").foregroundStyle(seat == option ? Color.ink : .secondary)
+                                    }.foregroundStyle(Color.ink).padding(16).frame(minHeight: 56).background(seat == option ? Color.highlight : Color.surface, in: RoundedRectangle(cornerRadius: 16)).overlay(RoundedRectangle(cornerRadius: 16).stroke(seat == option ? Color.ink : .clear, lineWidth: 1.5))
                                 }.buttonStyle(.plain).accessibilityIdentifier("seat-\(option.rawValue)").accessibilityAddTraits(seat == option ? .isSelected : [])
                             }
                         }

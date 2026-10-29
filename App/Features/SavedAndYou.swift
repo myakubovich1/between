@@ -127,7 +127,7 @@ struct DeleteAccountView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 24) {
-                Image(systemName: "person.crop.circle.badge.minus").font(.system(size: 50)).foregroundStyle(Color.forest)
+                Image(systemName: "person.crop.circle.badge.minus").font(.system(size: 50)).foregroundStyle(Color.ink)
                 Text("Leave without a trail.").font(.largeTitle.weight(.bold))
                 Text("Delete your account, reports, flags and mute list. Refresh sessions are revoked and Apple authorization is revoked before deletion completes. Your local saved places remain unless you clear them separately.")
                 Text("Confirm with Apple to finish deleting. If revocation or deletion fails, this screen reports the error; it will not claim success.").font(.footnote).foregroundStyle(Color.metadata)

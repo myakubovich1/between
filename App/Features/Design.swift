@@ -1,16 +1,21 @@
 import SwiftUI
 
+// Filled brand colors keep black labels in both appearances.
 extension Color {
-    static let brandFill = Color(red: 18.0/255, green: 63.0/255, blue: 53.0/255)
-    static let forest = Color("Forest")
+    static let cornflower = Color("Cornflower")
+    static let pear = Color("Pear")
+    static let brandFill = Color.cornflower
+    static let onBrand = Color.black
     static let metadata = Color("Metadata")
     static let canvas = Color("Canvas")
     static let ink = Color("Ink")
-    static let softForest = Color("SoftForest")
+    static let surface = Color("Mist")
+    static let highlight = Color("Highlight")
 }
+
 struct Surface<Content: View>: View {
     @ViewBuilder var content: Content
-    var body: some View { content.padding(18).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 22)).overlay(RoundedRectangle(cornerRadius: 22).stroke(.primary.opacity(0.05))) }
+    var body: some View { content.padding(18).background(Color.surface, in: RoundedRectangle(cornerRadius: 22)).overlay(RoundedRectangle(cornerRadius: 22).stroke(.primary.opacity(0.05))) }
 }
 struct Eyebrow: View {
     var text: String
@@ -22,7 +27,7 @@ struct StatusLabel: View {
     var body: some View {
         Label(evidence.label(at: now), systemImage: evidence.current(at: now) ? (evidence.differs ? "arrow.left.arrow.right" : evidence.seat?.symbol ?? "questionmark.circle") : "questionmark.circle")
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(evidence.current(at: now) ? Color.forest : Color.metadata)
+            .foregroundStyle(evidence.current(at: now) ? Color.ink : Color.metadata)
     }
 }
 struct EvidenceCaption: View {
@@ -41,7 +46,7 @@ struct Pill: View {
     var active = false
     var action: () -> Void
     var body: some View {
-        Button(action: action) { Label(title, systemImage: symbol).font(.subheadline.weight(.medium)).padding(.horizontal, 14).frame(minHeight: 44).background(active ? Color.brandFill : Color(.secondarySystemGroupedBackground), in: Capsule()).foregroundStyle(active ? Color.white : Color.ink).overlay(Capsule().stroke(.primary.opacity(active ? 0 : 0.10))) }
+        Button(action: action) { Label(title, systemImage: symbol).font(.subheadline.weight(.medium)).padding(.horizontal, 14).frame(minHeight: 44).background(active ? Color.pear : Color.surface, in: Capsule()).foregroundStyle(active ? Color.onBrand : Color.ink).overlay(Capsule().stroke(active ? Color.black : Color.ink.opacity(0.10), lineWidth: active ? 1.5 : 1)) }
             .buttonStyle(.plain).accessibilityAddTraits(active ? .isSelected : [])
     }
 }
@@ -50,7 +55,7 @@ struct PrimaryButton: View {
     var symbol: String
     var action: () -> Void
     var body: some View {
-        Button(action: action) { Label(title, systemImage: symbol).font(.headline).frame(maxWidth: .infinity, minHeight: 52).foregroundStyle(.white).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 16)) }.buttonStyle(.plain)
+        Button(action: action) { Label(title, systemImage: symbol).font(.headline).frame(maxWidth: .infinity, minHeight: 52).foregroundStyle(Color.onBrand).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 16)) }.buttonStyle(.plain)
     }
 }
 struct PlaceCard: View {
@@ -62,7 +67,7 @@ struct PlaceCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: place.symbol).font(.body).foregroundStyle(Color.forest).frame(width: 38, height: 38).background(Color.softForest, in: RoundedRectangle(cornerRadius: 12))
+                Image(systemName: place.symbol).font(.body).foregroundStyle(Color.ink).frame(width: 38, height: 38).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12))
                 Button(action: open) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(place.shortName).font(.headline).foregroundStyle(Color.ink)
@@ -70,7 +75,7 @@ struct PlaceCard: View {
                     }.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading).contentShape(Rectangle())
                 }.buttonStyle(.plain).accessibilityIdentifier("place-\(place.id)")
                 Button { store.toggleSave(place) } label: {
-                    Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).foregroundStyle(Color.forest)
+                    Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).foregroundStyle(Color.ink)
                 }.buttonStyle(.plain).accessibilityLabel(store.favorites.contains(place.id) ? "Unsave \(place.name)" : "Save \(place.name)")
             }
             Button(action: open) {
@@ -86,7 +91,7 @@ struct PlaceCard: View {
                         Label("\(Int(recommendation.journey.to)) min walk\(recommendation.journey.estimated ? " · est." : "")", systemImage: "figure.walk").font(.caption).foregroundStyle(Color.metadata)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     VStack(alignment: .trailing, spacing: 0) {
-                        Text("\(recommendation.studyMinutes)").font(.system(size: 36, weight: .semibold, design: .rounded)).monospacedDigit().foregroundStyle(Color.forest)
+                        Text("\(recommendation.studyMinutes)").font(.system(size: 36, weight: .semibold, design: .rounded)).monospacedDigit().foregroundStyle(Color.ink).padding(.horizontal, 10).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12))
                         Text(recommendation.uncertain ? "min possible*" : "min to study").font(.caption2).foregroundStyle(Color.metadata)
                     }
                 }.contentShape(Rectangle())
@@ -96,12 +101,12 @@ struct PlaceCard: View {
                 HStack(alignment: .firstTextBaseline) {
                     Label(store.status(place: place.id).label(at: store.now), systemImage: "bubble.left").font(.caption).foregroundStyle(Color.metadata)
                     Spacer(minLength: 4)
-                    Image(systemName: "arrow.up.right").font(.caption.weight(.semibold)).foregroundStyle(Color.forest)
+                    Image(systemName: "arrow.up.right").font(.caption.weight(.semibold)).foregroundStyle(Color.ink)
                 }
             }
             if recommendation.uncertain { Text("*Confirm entry\(place.hours == nil ? " & hours" : "") before you go").font(.caption2).foregroundStyle(Color.metadata) }
-        }.padding(18).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
-            .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.forest.opacity(0.08)))
+        }.padding(18).background(Color.surface, in: RoundedRectangle(cornerRadius: 24))
+            .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.ink.opacity(0.08)))
     }
 }
 struct OfficialCountLabel: View {
@@ -127,7 +132,7 @@ struct OfficialCountLabel: View {
 struct NoticeView: View {
     var title: String
     var symbol: String = "info.circle"
-    var body: some View { Label(title, systemImage: symbol).font(.footnote).frame(maxWidth: .infinity, alignment: .leading).padding(12).background(Color.softForest, in: RoundedRectangle(cornerRadius: 12)).accessibilityElement(children: .combine) }
+    var body: some View { Label(title, systemImage: symbol).font(.footnote).frame(maxWidth: .infinity, alignment: .leading).padding(12).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12)).accessibilityElement(children: .combine) }
 }
 
 struct DemoBanner: View {
@@ -136,7 +141,7 @@ struct DemoBanner: View {
             Image(systemName: "sparkle")
             Text("Demo data").fontWeight(.semibold)
             Text("· UF campus").foregroundStyle(Color.metadata)
-        }.font(.caption2).frame(maxWidth: .infinity).padding(.vertical, 5).background(Color.softForest).accessibilityIdentifier("demo-label")
+        }.font(.caption2).frame(maxWidth: .infinity).padding(.vertical, 5).background(Color.highlight).accessibilityIdentifier("demo-label")
     }
 }
 struct DemoSheetLabel: ViewModifier {

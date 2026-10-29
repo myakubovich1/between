@@ -6,7 +6,7 @@ struct BetweenApp: App {
     @Environment(\.scenePhase) private var scenePhase
     var body: some Scene {
         WindowGroup {
-            RootView().environment(store).tint(Color.forest)
+            RootView().environment(store).tint(Color.ink).foregroundStyle(Color.ink)
                 .task(id: scenePhase) { if scenePhase == .active { await store.runForeground() } }
         }
     }

@@ -19,9 +19,9 @@ struct PlaceDetailView: View {
             VStack(alignment: .leading, spacing: 24) {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Label("UNIVERSITY OF FLORIDA", systemImage: "mappin.circle").font(.caption2.weight(.bold)).tracking(1.3).foregroundStyle(Color.forest)
+                        Label("UNIVERSITY OF FLORIDA", systemImage: "mappin.circle").font(.caption2.weight(.bold)).tracking(1.3).foregroundStyle(Color.ink)
                         Spacer()
-                        Button { store.toggleSave(place) } label: { Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).background(Color.softForest, in: Circle()) }.accessibilityLabel(store.favorites.contains(place.id) ? "Unsave place" : "Save place").accessibilityIdentifier("detail-save")
+                        Button { store.toggleSave(place) } label: { Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).background(Color.highlight, in: Circle()) }.accessibilityLabel(store.favorites.contains(place.id) ? "Unsave place" : "Save place").accessibilityIdentifier("detail-save")
                     }
                     Text(place.name).font(.system(.largeTitle, design: .rounded, weight: .bold)).tracking(-1)
                     Text(place.note).font(.subheadline).foregroundStyle(Color.metadata).fixedSize(horizontal: false, vertical: true)
@@ -29,13 +29,13 @@ struct PlaceDetailView: View {
                 if let coordinate = place.coordinate {
                     Map(initialPosition: .region(.init(center: coordinate.cl, span: .init(latitudeDelta: 0.003, longitudeDelta: 0.003)))) {
                         Marker(place.shortName, systemImage: place.symbol, coordinate: coordinate.cl).tint(Color.brandFill)
-                        if let route { MapPolyline(route.polyline).stroke(Color.forest, lineWidth: 5) }
+                        if let route { MapPolyline(route.polyline).stroke(Color.ink, lineWidth: 5) }
                     }.mapStyle(.standard(pointsOfInterest: .excludingAll)).frame(height: 170).clipShape(RoundedRectangle(cornerRadius: 22))
                 }
                 if !store.config.isDemo {
                     Surface {
                         VStack(alignment: .leading, spacing: 12) {
-                            HStack { Eyebrow(text: "Official UF occupancy"); Spacer(); Image(systemName: "building.2.crop.circle").foregroundStyle(Color.forest) }
+                            HStack { Eyebrow(text: "Official UF occupancy"); Spacer(); Image(systemName: "building.2.crop.circle").foregroundStyle(Color.ink) }
                             OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, expanded: true)
                             Link(destination: UFLibraryData.sourceURL) { Label("View UF’s occupancy page", systemImage: "arrow.up.right.square").font(.subheadline).frame(minHeight: 44) }
                         }
@@ -47,7 +47,7 @@ struct PlaceDetailView: View {
                         Picker("Floor or zone", selection: $zoneID) {
                             Text("Building-wide").tag(Optional<String>.none)
                             ForEach(place.zones) { zone in Text(zone.name + (zone.access == .graduate ? " · restricted" : "")).tag(Optional(zone.id)) }
-                        }.pickerStyle(.menu).frame(maxWidth: .infinity, alignment: .leading).padding(10).background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14)).accessibilityIdentifier("zone-picker")
+                        }.pickerStyle(.menu).frame(maxWidth: .infinity, alignment: .leading).padding(10).background(Color.surface, in: RoundedRectangle(cornerRadius: 14)).accessibilityIdentifier("zone-picker")
                         if let zone = place.zones.first(where: { $0.id == zoneID }) {
                             Text(zone.access.label).font(.caption).foregroundStyle(Color.metadata)
                             if !zone.access.allows(store.filters.eligibility) { NoticeView(title: "This zone doesn’t match your entry eligibility.", symbol: "lock") }
@@ -57,7 +57,7 @@ struct PlaceDetailView: View {
                 }
                 Surface {
                     VStack(alignment: .leading, spacing: 12) {
-                        HStack { Eyebrow(text: zoneID == nil ? "Building reports" : "This zone’s reports"); Spacer(); Image(systemName: "person.2.wave.2").foregroundStyle(Color.forest) }
+                        HStack { Eyebrow(text: zoneID == nil ? "Building reports" : "This zone’s reports"); Spacer(); Image(systemName: "person.2.wave.2").foregroundStyle(Color.ink) }
                         if !store.config.isDemo && !store.communityAvailable { Text("Student reports are currently unavailable.").font(.caption).foregroundStyle(Color.metadata) }
                         StatusLabel(evidence: evidence, now: store.now)
                         if evidence.current(at: store.now), let noise = evidence.noise { Label(noise.label, systemImage: "waveform").font(.subheadline) }
@@ -72,7 +72,7 @@ struct PlaceDetailView: View {
                         VStack(alignment: .leading, spacing: 14) {
                             Eyebrow(text: "Your \(store.plan.available)-minute gap")
                             HStack(alignment: .firstTextBaseline, spacing: 6) {
-                                Text("\(recommendation.studyMinutes)").font(.system(size: 48, weight: .semibold, design: .rounded)).foregroundStyle(Color.forest)
+                                Text("\(recommendation.studyMinutes)").font(.system(size: 48, weight: .semibold, design: .rounded)).foregroundStyle(Color.ink)
                                 Text("minutes to study").font(.headline)
                             }
                             HStack(alignment: .top, spacing: 8) {
@@ -116,7 +116,7 @@ struct PlaceDetailView: View {
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 12) {
                 PrimaryButton(title: routing ? "Finding route…" : "Directions", symbol: "figure.walk") { directionTask?.cancel(); directionTask = Task { await directions() } }.disabled(routing)
-                Button { sheet = .report } label: { Label("Report", systemImage: "plus.bubble").font(.headline).frame(minWidth: 100, minHeight: 52).padding(.horizontal, 8).background(Color.softForest, in: RoundedRectangle(cornerRadius: 16)) }.accessibilityIdentifier("report-conditions")
+                Button { sheet = .report } label: { Label("Report", systemImage: "plus.bubble").font(.headline).frame(minWidth: 100, minHeight: 52).padding(.horizontal, 8).background(Color.highlight, in: RoundedRectangle(cornerRadius: 16)) }.accessibilityIdentifier("report-conditions")
             }.padding(.horizontal, 20).padding(.vertical, 12).background(.bar)
         }
         .sheet(item: $sheet) { sheet in
@@ -130,7 +130,7 @@ struct PlaceDetailView: View {
         }
     }
     private func planPart(_ name: String, _ value: String, _ symbol: String) -> some View {
-        VStack(alignment: .leading, spacing: 5) { Image(systemName: symbol).foregroundStyle(Color.forest); Text(value).font(.headline).monospacedDigit(); Text(name).font(.caption2).foregroundStyle(Color.metadata).fixedSize(horizontal: false, vertical: true) }.frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 5) { Image(systemName: symbol).foregroundStyle(Color.ink); Text(value).font(.headline).monospacedDigit(); Text(name).font(.caption2).foregroundStyle(Color.metadata).fixedSize(horizontal: false, vertical: true) }.frame(maxWidth: .infinity, alignment: .leading)
     }
     private func directions() async {
         routing = true; defer { routing = false }
@@ -151,7 +151,7 @@ struct RouteView: View {
         VStack(spacing: 16) {
             Map {
                 if let coordinate = place.coordinate { Marker(place.shortName, coordinate: coordinate.cl).tint(Color.brandFill) }
-                if let route { MapPolyline(route.polyline).stroke(Color.forest, lineWidth: 6) }
+                if let route { MapPolyline(route.polyline).stroke(Color.ink, lineWidth: 6) }
             }.mapControls { MapCompass(); MapScaleView() }
             VStack(alignment: .leading, spacing: 12) {
                 if let route { Text("\(Int(ceil(route.expectedTravelTime / 60))) min walking").font(.title2.weight(.bold)); Text(Measurement(value: route.distance, unit: UnitLength.meters), format: .measurement(width: .abbreviated, usage: .road)).font(.subheadline) }

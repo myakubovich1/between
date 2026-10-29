@@ -11,7 +11,7 @@ struct PlanView: View {
                     Text("A little time can go a long way.").font(.title2.weight(.bold)).listRowBackground(Color.clear)
                     HStack(spacing: 8) {
                         ForEach([30, 45, 60, 90], id: \.self) { minutes in
-                            Button { plan.available = minutes } label: { Text("\(minutes)m").font(.headline).frame(maxWidth: .infinity, minHeight: 46).background(plan.available == minutes ? Color.brandFill : Color.softForest, in: RoundedRectangle(cornerRadius: 12)).foregroundStyle(plan.available == minutes ? Color.white : Color.forest) }.buttonStyle(.plain).accessibilityLabel("\(minutes) minutes").accessibilityIdentifier("duration-\(minutes)")
+                            Button { plan.available = minutes } label: { Text("\(minutes)m").font(.headline).frame(maxWidth: .infinity, minHeight: 46).background(plan.available == minutes ? Color.brandFill : Color.highlight, in: RoundedRectangle(cornerRadius: 12)).foregroundStyle(plan.available == minutes ? Color.onBrand : Color.ink) }.buttonStyle(.plain).accessibilityLabel("\(minutes) minutes").accessibilityIdentifier("duration-\(minutes)")
                         }
                     }
                     Stepper("Custom: \(plan.available) minutes", value: $plan.available, in: 15...240, step: 5)
@@ -27,7 +27,7 @@ struct PlanView: View {
                 }
                 Section {
                     HStack(alignment: .top) {
-                        Image(systemName: "clock.badge.checkmark").font(.title2).foregroundStyle(Color.forest)
+                        Image(systemName: "clock.badge.checkmark").font(.title2).foregroundStyle(Color.ink)
                         VStack(alignment: .leading, spacing: 6) {
                             Text("More useful minutes").font(.headline)
                             Text("A 45-minute gap, 6-minute walk there, 7 minutes onward and 5 minutes to spare leaves 27 minutes to study.").font(.subheadline).foregroundStyle(Color.metadata)

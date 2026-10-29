@@ -2,9 +2,18 @@
 
 A native SwiftUI iPhone/iPad app for finding somewhere useful to study between commitments. iOS 18 minimum. Includes Find, Saved and You, MapKit walking directions, time budgets, six Gainesville libraries, separate floor reports, structured contributions, local favorites, preferences, offline caching and an isolated Demo store.
 
+The interface uses Canvas, Mist, Cornflower, Pear, and Black, with appearance-aware light and dark themes. See the [palette implementation and verification](docs/PALETTE-UPDATE.md).
+
+<p>
+  <img src="docs/screenshots/Palette-light.png" alt="Between in light appearance" width="280" />
+  <img src="docs/screenshots/Palette-dark.png" alt="Between in dark appearance" width="280" />
+</p>
+
+Screenshots use the explicitly labeled Demo configuration.
+
 **The default app now connects to real UF data:** published building counts for six Gainesville libraries and date-specific LibCal hours. No backend credentials or sign-in are needed for UF browsing. Counts show retrieval age and explicitly disclose that the current display feed supplies no sensor timestamp. See [UF data sources and behavior](docs/UF_DATA.md).
 
-The optional community backend runs locally on this Mac; hosted project creation previously failed at the Supabase provider. Real Apple sign-in/revocation, device signing, physical-device checks and final release curation remain owner setup steps.
+The optional community backend can run locally. Hosted deployment requires your own backend configuration. Real Apple sign-in/revocation, device signing, physical-device checks and final release curation remain owner setup steps.
 
 ## Run the app
 
@@ -43,7 +52,7 @@ The JSON status file contains local server credentials: keep it out of Git and s
 
 ## Connect a development or release backend
 
-On this Mac, the ignored `Config/Local.xcconfig` is configured for the running localhost backend and its publishable key; the source ZIP omits machine-specific configuration. For a hosted project, copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`; add your project's HTTPS URL and publishable key. Choose **Between** (or the equivalent **Between-Live**). Live failures never substitute Demo data. Configure Apple provider and the native bundle ID in Supabase; enable the Sign in with Apple entitlement for your Developer Team. The live scheme archives with Release settings. See [release setup](docs/RELEASE.md) for Apple token revocation, public URLs, signed-device testing and TestFlight.
+Copy `Config/Local.xcconfig.example` to the ignored `Config/Local.xcconfig`; add your project's HTTPS URL and publishable key. Machine-specific configuration and credentials are excluded from this repository. Choose **Between** (or the equivalent **Between-Live**). Live failures never substitute Demo data. Configure Apple provider and the native bundle ID in Supabase; enable the Sign in with Apple entitlement for your Developer Team. The live scheme archives with Release settings. See [release setup](docs/RELEASE.md) for Apple token revocation, public URLs, signed-device testing and TestFlight.
 
 ## Verify and hand off
 

@@ -10,16 +10,20 @@ Ranking factors: preference fit 30%, usable study time 25%, recent seat evidence
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| Canvas | #F7F7F4 | #111A17 | Main content background |
-| Ink | #1B2422 | #E6EFEA | Primary content |
-| Forest | #1C6B5A | #77D5BA | Accent text and symbols |
-| SoftForest | #E8F0E9 | #20382F | Quiet supporting surfaces |
-| Metadata | #59645F | #B3C1BA | Essential secondary text |
-| BrandFill | #123F35 | #123F35 | Filled buttons with white text |
+| Canvas | #FBFBF8 | #000000 | Main content background |
+| Ink | #000000 | #FBFBF8 | Primary content, links and symbols |
+| Mist | #DBE3E9 | #20272D | Cards, search fields and neutral surfaces |
+| Cornflower / BrandFill | #6AA6DA | #6AA6DA | Time card, filled actions and map markers |
+| Pear | #E1E5AC | #E1E5AC | Selected filter pills and brand dot |
+| Highlight | #E1E5AC | #343820 | Study minutes, notices and supporting icon surfaces |
+| Metadata | #4E5962 | #BFC9D1 | Essential secondary text |
+| OnBrand | #000000 | #000000 | Labels on Cornflower and Pear fills |
 
-SF system/rounded titles, native controls and SF Symbols; no downloaded fonts or photography. Spacing 4/8/12/16/24/32pt; margins 20pt; typical radius 14–22pt. Semantic surfaces support system appearance. Native bars and system sheets adopt platform materials; content-heavy cards are opaque. Explicit light/dark accent fills preserve contrast rather than placing white text on the light dark-mode accent. The custom icon is an original geometric lowercase “b”/gap composition and does not embed an SF Symbol or competitor asset.
+The light palette follows the supplied Canvas / Mist / Cornflower / Pear / Black reference. Dark appearance uses black canvas and cool neutral surfaces with the same brand fills. Essential text on blue or pear is black; the pale blue is not used as small text on Canvas. `Forest` and `SoftForest` assets remain as compatibility aliases to Ink and Highlight.
 
-The default UF-connected Find opens in list mode with a new doorway/book brand mark, compact forest time card, generous cream surfaces and larger study-minute numerals. A map toggle expands campus context. `PlaceCard` orders identity and actual opening hours, the separately labeled UF building count, walk/study time, community reports and entry caveat. Save is a sibling button, not nested inside the navigation button. `StatusLabel` always uses words and an SF Symbol; gray/metadata means missing, never empty seats. `EvidenceCaption` uses independent reporter count and observation age. `Surface`, `Pill`, `Eyebrow`, `NoticeView` and `PrimaryButton` supply shared layouts. All primary hit regions are at least 44pt.
+SF system/rounded titles, native controls and SF Symbols; no downloaded fonts or photography. Spacing 4/8/12/16/24/32pt; margins 20pt; typical radius 14–22pt. Semantic surfaces support system appearance. Native bars and system sheets adopt platform materials; content-heavy cards are opaque. Filled brand controls use black labels in both appearances to preserve contrast. The custom icon is an original geometric lowercase “b”/gap composition and does not embed an SF Symbol or competitor asset.
+
+The default UF-connected Find opens in list mode with a new doorway/book brand mark, compact Cornflower time card, generous Canvas and Mist surfaces and larger study-minute numerals. A map toggle expands campus context. `PlaceCard` orders identity and actual opening hours, the separately labeled UF building count, walk/study time, community reports and entry caveat. Save is a sibling button, not nested inside the navigation button. `StatusLabel` always uses words and an SF Symbol; gray/metadata means missing, never empty seats. `EvidenceCaption` uses independent reporter count and observation age. `Surface`, `Pill`, `Eyebrow`, `NoticeView` and `PrimaryButton` supply shared layouts. All primary hit regions are at least 44pt.
 
 Labels distinguish “Plenty of seats / Some seats / Almost full / Full”, “Reports differ”, “No recent reports” and “Reports have expired”. Optional sound labels remain separate. One reporter is described as one student report. Community categories never become occupancy percentages, desk counts, adjacent-seat guarantees or accuracy claims.
 

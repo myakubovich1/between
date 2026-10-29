@@ -9,3 +9,7 @@
 - Third-party source dependencies: official supabase-swift 2.55.4 and the exact transitive versions in Package.resolved; Edge jose 6.2.13 and backend-test supabase-js 2.118.0. Root license/notice files from resolved Swift checkouts are preserved under `docs/third-party/`. Review final distribution acknowledgments for any changed dependencies. The backend test SDK is not bundled into the iOS app.
 
 No external publication or open-source license for the original app has been assumed. The owner should decide distribution/licensing and validate the provisional name before public release.
+
+## Palette update — October 28, 2026
+
+The app icon and header logo use sibling PaletteIcon.png / PaletteBrandMark.png assets recolored with OpenAI image generation from the existing logo. The original green files are preserved under docs/brand/Before-palette-*.png. The SwiftUI theme uses the exact supplied hex values; generated artwork may have slight tonal variation.
