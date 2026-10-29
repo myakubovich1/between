@@ -11,7 +11,13 @@ struct AppConfiguration: Sendable {
         func value(_ key: String) -> String { Bundle.main.object(forInfoDictionaryKey: key) as? String ?? "" }
         return .init(mode: Mode(rawValue: value("BetweenMode")) ?? .release, name: Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Between", url: URL(string: value("SupabaseURL")), key: value("SupabasePublishableKey"))
     }
-    var isDemo: Bool { mode == .demo }
+    var isDemo: Bool {
+        #if DEMO
+        mode == .demo
+        #else
+        false
+        #endif
+    }
     var configured: Bool {
         guard let url, !key.isEmpty else { return false }
         return url.scheme == "https" || (mode == .development && url.scheme == "http" && ["localhost", "127.0.0.1"].contains(url.host ?? ""))

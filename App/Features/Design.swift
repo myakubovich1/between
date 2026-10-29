@@ -41,13 +41,14 @@ struct EvidenceCaption: View {
     }
 }
 struct Pill: View {
+    @Environment(\.betweenReducedMotion) private var reduceMotion
     var title: String
     var symbol: String
     var active = false
     var action: () -> Void
     var body: some View {
         Button(action: action) { Label(title, systemImage: symbol).font(.subheadline.weight(.medium)).padding(.horizontal, 14).frame(minHeight: 44).background(active ? Color.pear : Color.surface, in: Capsule()).foregroundStyle(active ? Color.onBrand : Color.ink).overlay(Capsule().stroke(active ? Color.black : Color.ink.opacity(0.10), lineWidth: active ? 1.5 : 1)) }
-            .buttonStyle(.plain).accessibilityAddTraits(active ? .isSelected : [])
+            .buttonStyle(BetweenPressStyle()).animation(BetweenMotion.animation(reduceMotion), value: active).accessibilityAddTraits(active ? .isSelected : [])
     }
 }
 struct PrimaryButton: View {
@@ -55,12 +56,13 @@ struct PrimaryButton: View {
     var symbol: String
     var action: () -> Void
     var body: some View {
-        Button(action: action) { Label(title, systemImage: symbol).font(.headline).frame(maxWidth: .infinity, minHeight: 52).foregroundStyle(Color.onBrand).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 16)) }.buttonStyle(.plain)
+        Button(action: action) { Label(title, systemImage: symbol).font(.headline).frame(maxWidth: .infinity, minHeight: 52).foregroundStyle(Color.onBrand).background(Color.brandFill, in: RoundedRectangle(cornerRadius: 16)) }.buttonStyle(BetweenPressStyle())
     }
 }
 struct PlaceCard: View {
     @Environment(AppStore.self) private var store
     @Environment(\.dynamicTypeSize) private var typeSize
+    @Environment(\.betweenReducedMotion) private var reduceMotion
     var recommendation: Recommendation
     var open: () -> Void
     private var place: Place { recommendation.place }
@@ -76,7 +78,7 @@ struct PlaceCard: View {
                 }.buttonStyle(.plain).accessibilityIdentifier("place-\(place.id)")
                 Button { store.toggleSave(place) } label: {
                     Image(systemName: store.favorites.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width: 44, height: 44).foregroundStyle(Color.ink)
-                }.buttonStyle(.plain).accessibilityLabel(store.favorites.contains(place.id) ? "Unsave \(place.name)" : "Save \(place.name)")
+                }.buttonStyle(BetweenPressStyle()).accessibilityLabel(store.favorites.contains(place.id) ? "Unsave \(place.name)" : "Save \(place.name)")
             }
             Button(action: open) {
                 let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12)) : AnyLayout(HStackLayout(alignment: .center, spacing: 16))
@@ -86,17 +88,22 @@ struct PlaceCard: View {
                             StatusLabel(evidence: store.status(place: place.id), now: store.now)
                             EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
                         } else {
-                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now)
+                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, refreshFailed: store.occupancyFailures.contains(place.id), loading: store.refreshing && !store.hasRefreshedOfficial)
                         }
-                        Label("\(Int(recommendation.journey.to)) min walk\(recommendation.journey.estimated ? " · est." : "")", systemImage: "figure.walk").font(.caption).foregroundStyle(Color.metadata)
+                        if store.hasOrigin {
+                            Label("\(Int(recommendation.journey.to)) min walk\(recommendation.journey.estimated ? " · est." : "")", systemImage: "figure.walk").font(.caption).foregroundStyle(Color.metadata)
+                        } else { Label("Set a start for walking time", systemImage: "mappin.circle").font(.caption).foregroundStyle(Color.metadata) }
+                        if place.reservationURL != nil { Label("Bookable rooms or carrels", systemImage: "calendar").font(.caption).foregroundStyle(Color.metadata) }
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text("\(recommendation.studyMinutes)").font(.system(size: 36, weight: .semibold, design: .rounded)).monospacedDigit().foregroundStyle(Color.ink).padding(.horizontal, 10).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12))
-                        Text(recommendation.uncertain ? "min possible*" : "min to study").font(.caption2).foregroundStyle(Color.metadata)
+                    if store.hasOrigin {
+                    VStack(alignment: .trailing, spacing: 4) {
+                        Text("\(recommendation.studyMinutes)").font(.system(size: 36, weight: .semibold, design: .rounded)).monospacedDigit().contentTransition(.numericText()).animation(BetweenMotion.animation(reduceMotion), value: recommendation.studyMinutes).foregroundStyle(Color.ink).padding(.horizontal, 10).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12))
+                        Text("min study est.").font(.caption2).foregroundStyle(Color.metadata)
+                    }
                     }
                 }.contentShape(Rectangle())
             }.buttonStyle(.plain)
-            if !store.config.isDemo {
+            if !store.config.isDemo && store.communityAvailable {
                 Divider()
                 HStack(alignment: .firstTextBaseline) {
                     Label(store.status(place: place.id).label(at: store.now), systemImage: "bubble.left").font(.caption).foregroundStyle(Color.metadata)
@@ -104,27 +111,34 @@ struct PlaceCard: View {
                     Image(systemName: "arrow.up.right").font(.caption.weight(.semibold)).foregroundStyle(Color.ink)
                 }
             }
-            if recommendation.uncertain { Text("*Confirm entry\(place.hours == nil ? " & hours" : "") before you go").font(.caption2).foregroundStyle(Color.metadata) }
+            if place.hours == nil { Text("Confirm opening hours before you leave.").font(.caption2).foregroundStyle(Color.metadata) }
         }.padding(18).background(Color.surface, in: RoundedRectangle(cornerRadius: 24))
             .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.ink.opacity(0.08)))
     }
 }
 struct OfficialCountLabel: View {
+    @Environment(\.betweenReducedMotion) private var reduceMotion
     var observation: OfficialOccupancy?
     var now: Date
     var expanded = false
+    var refreshFailed = false
+    var loading = false
+    var area = "building"
     var body: some View {
         VStack(alignment: .leading, spacing: expanded ? 10 : 4) {
             if let observation, let count = observation.count {
-                Label("\(count.formatted()) people in building", systemImage: "person.2").font(expanded ? .title3.weight(.semibold) : .subheadline.weight(.semibold)).foregroundStyle(Color.ink)
-                Text("UF count · retrieved \(max(0, Int(now.timeIntervalSince(observation.retrievedAt) / 60)))m ago").font(.caption).foregroundStyle(Color.metadata)
-                Text("Sensor update time unavailable").font(.caption2).foregroundStyle(Color.metadata)
+                let current = observation.hasRecentRetrieval(at: now) && !refreshFailed
+                Label("\(count.formatted()) \(count == 1 ? "person" : "people") in \(area)", systemImage: "person.2")
+                    .font(expanded ? .title3.weight(.semibold) : .subheadline.weight(.semibold)).foregroundStyle(Color.ink)
+                    .contentTransition(.numericText()).animation(BetweenMotion.animation(reduceMotion), value: count)
+                Text("\(current ? "UF count" : "Saved UF count") · retrieved \(max(0, Int(now.timeIntervalSince(observation.retrievedAt) / 60)))m ago").font(.caption).foregroundStyle(Color.metadata)
+                if !current { Label("Refresh unavailable · count may be old", systemImage: "clock.badge.exclamationmark").font(.caption).foregroundStyle(Color.metadata) }
                 if expanded {
-                    Text("This is the published building count, not a count of available seats. Counts can lag; a fresh retrieval doesn’t establish the sensor’s age.").font(.footnote).foregroundStyle(Color.metadata)
+                    Text("UF publishes people counts, not available seats. Its display provides no sensor timestamp, so retrieval time does not establish the age of the measurement.").font(.footnote).foregroundStyle(Color.metadata)
                 }
             } else {
-                Label("UF count unavailable", systemImage: "person.2").font(.subheadline.weight(.semibold)).foregroundStyle(Color.metadata)
-                Text("Check UF’s occupancy page").font(.caption).foregroundStyle(Color.metadata)
+                Label(loading ? "Loading UF count…" : "UF count unavailable", systemImage: loading ? "arrow.triangle.2.circlepath" : "person.2").font(.subheadline.weight(.semibold)).foregroundStyle(Color.metadata)
+                if !loading { Text("Check UF’s occupancy page").font(.caption).foregroundStyle(Color.metadata) }
             }
         }.accessibilityElement(children: .combine)
     }
@@ -176,3 +190,45 @@ struct DemoSheetLabel: ViewModifier {
 #Preview("Cards · long name, expired evidence") { PlaceComponentPreview() }
 #Preview("Cards · accessibility and dark mode") { PlaceComponentPreview().dynamicTypeSize(.accessibility2).preferredColorScheme(.dark) }
 #endif
+
+/// Short, interruptible native motion, with a full opt-out for Reduce Motion.
+enum BetweenMotion {
+    static func animation(_ reduced: Bool) -> Animation? { reduced ? nil : .spring(response: 0.36, dampingFraction: 0.88) }
+}
+struct BetweenPressStyle: ButtonStyle {
+    @Environment(\.betweenReducedMotion) private var reduceMotion
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(!reduceMotion && configuration.isPressed ? 0.975 : 1)
+            .opacity(configuration.isPressed ? 0.82 : 1)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.16), value: configuration.isPressed)
+    }
+}
+struct ClosedLibraryCard: View {
+    let place: Place
+    let now: Date
+    let action: () -> Void
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                Image(systemName: "moon.zzz").frame(width: 38, height: 38).background(Color.highlight, in: RoundedRectangle(cornerRadius: 12))
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(place.shortName).font(.headline)
+                    Text("Closed · " + place.nextOpeningLabel(at: now)).font(.caption).foregroundStyle(Color.metadata)
+                }
+                Spacer(minLength: 4)
+                Image(systemName: "chevron.right").font(.caption)
+            }.foregroundStyle(Color.ink).padding(18).frame(maxWidth: .infinity, alignment: .leading).background(Color.surface, in: RoundedRectangle(cornerRadius: 22))
+        }.buttonStyle(BetweenPressStyle()).accessibilityIdentifier("closed-\(place.id)")
+    }
+}
+
+private struct BetweenReducedMotionKey: EnvironmentKey {
+    static let defaultValue = false
+}
+extension EnvironmentValues {
+    var betweenReducedMotion: Bool {
+        get { self[BetweenReducedMotionKey.self] }
+        set { self[BetweenReducedMotionKey.self] = newValue }
+    }
+}

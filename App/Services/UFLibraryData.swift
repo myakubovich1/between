@@ -1,54 +1,101 @@
 import Foundation
 
-/// Public read-only feeds used by UF's own library pages. No Supabase or sign-in required.
+/// HTTPS requests to public read-only UF sources. HTTP errors and malformed responses never become zeros.
+enum UFHTTP {
+    static func fetch(_ url: URL, maxBytes: Int) async throws -> Data {
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 15)
+        request.setValue("Between/1.1 (UF public library data)", forHTTPHeaderField: "User-Agent")
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode), !data.isEmpty, data.count <= maxBytes else { throw URLError(.badServerResponse) }
+        try Task.checkCancellation()
+        return data
+    }
+}
+struct OccupancyBatch: Sendable {
+    var observations: [String: OfficialOccupancy]
+    var failed: Set<String>
+}
 actor UFLibraryData: OfficialOccupancyProvider {
+    typealias Fetch = @Sendable (URL, Int) async throws -> Data
     static let hoursURL = URL(string: "https://api3.libcal.com/api_hours_grid.php?iid=6&format=json&weeks=2")!
     static let sourceURL = URL(string: "https://www.uflib.ufl.edu/status/")!
     static let locations: [String: Int] = ["afa": 8626, "education": 8627, "health": 8871, "west": 7728, "marston": 8622, "smathers": 8625]
-    // Public display identifiers embedded in UF's status page; these are not API credentials.
-    static let displays: [String: String] = ["west": "6be1325f", "marston": "6d60eb03", "health": "dc7c5f6a", "afa": "bb2a5b5e", "education": "53b6c442", "smathers": "7cbdd017"]
+    // Mapped from the target elements in UF's published status page; IDs are public display identifiers.
+    static let targets = ["west":"currocclw", "marston":"currocc", "health":"currocchscl", "afa":"curroccafa", "education":"curroccedu", "smathers":"curroccsmath", "smathers-lacc":"currocclacc", "smathers-grand":"curroccgrr", "smathers-map":"curroccmap", "smathers-panama":"curroccpanama", "marston-makerspace":"curroccmake"]
+    static let displays = ["west":"6be1325f", "marston":"6d60eb03", "health":"dc7c5f6a", "afa":"bb2a5b5e", "education":"53b6c442", "smathers":"7cbdd017", "smathers-lacc":"4f04eaf6", "smathers-grand":"476d11b2", "smathers-map":"a3bad28d", "smathers-panama":"5ca0acf1", "marston-makerspace":"c90fca36"]
+    private let fetch: Fetch
     private var cachedHours: [String: Hours] = [:]
     private var hoursFetched: Date?
-    private var counts: [String: OfficialOccupancy] = [:]
+    private var hoursTask: Task<[String: Hours], Error>?
+    private var lastBatch: OccupancyBatch?
     private var attemptedCounts: Date?
-
-    func observation(for placeID: String) async throws -> OfficialOccupancy? {
-        await occupancy()[placeID]
-    }
-    private func fetch(_ url: URL, maxBytes: Int) async throws -> Data {
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 12)
-        request.setValue("Between/1.0 (UF library public display)", forHTTPHeaderField: "User-Agent")
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode), data.count <= maxBytes else { throw URLError(.badServerResponse) }
-        return data
-    }
-    func hours(at now: Date = Date()) async throws -> [String: Hours] {
-        if let hoursFetched, now.timeIntervalSince(hoursFetched) < 6 * 3600 { return cachedHours }
-        let data = try await fetch(Self.hoursURL, maxBytes: 2_000_000)
-        let parsed = try UFHoursParser.parse(data, fetchedAt: now)
-        guard !parsed.isEmpty else { throw URLError(.cannotParseResponse) }
-        cachedHours = parsed; hoursFetched = now
-        return parsed
-    }
-    func occupancy(at now: Date = Date()) async -> [String: OfficialOccupancy] {
-        // Share a bounded refresh across foreground timers, manual refresh and realtime updates.
-        if let attemptedCounts, now.timeIntervalSince(attemptedCounts) < 60 { return counts }
-        attemptedCounts = now
-        await withTaskGroup(of: (String, OfficialOccupancy?).self) { group in
-            for (place, display) in Self.displays {
-                group.addTask {
-                    do {
-                        let url = URL(string: "https://display.safespace.io/value/live/\(display)")!
-                        let data = try await self.fetch(url, maxBytes: 128)
-                        let value = try Self.parseCount(data)
-                        // The display exposes no sensor timestamp. Retrieval is never promoted to observation time.
-                        return (place, OfficialOccupancy(sourceName: "UF Libraries · SafeSpace", count: value, percent: nil, observedAt: nil, retrievedAt: Date()))
-                    } catch { return (place, nil) }
-                }
-            }
-            for await (place, value) in group { if let value { counts[place] = value } }
+    private var countsTask: Task<OccupancyBatch, Never>?
+    private var manifest: [String: String] = UFLibraryData.displays
+    private var manifestFetched: Date?
+    init(fetch: @escaping Fetch = { try await UFHTTP.fetch($0, maxBytes: $1) }) { self.fetch = fetch }
+    func observation(for placeID: String) async throws -> OfficialOccupancy? { await occupancy().observations[placeID] }
+    func hours(at now: Date = Date(), force: Bool = false) async throws -> [String: Hours] {
+        if !force, let hoursFetched, now.timeIntervalSince(hoursFetched) >= 0, now.timeIntervalSince(hoursFetched) < 3600 { return cachedHours }
+        if let hoursTask { return try await hoursTask.value }
+        let fetch = fetch
+        let task = Task {
+            let parsed = try UFHoursParser.parse(await fetch(Self.hoursURL, 2_000_000), fetchedAt: now)
+            guard parsed.count == Self.locations.count else { throw URLError(.cannotParseResponse) }
+            return parsed
         }
-        return counts
+        hoursTask = task
+        defer { hoursTask = nil }
+        let result = try await task.value
+        cachedHours = result; hoursFetched = now
+        return result
+    }
+    func occupancy(at now: Date = Date(), force: Bool = false) async -> OccupancyBatch {
+        if let countsTask { return await countsTask.value }
+        if !force, let attemptedCounts, now.timeIntervalSince(attemptedCounts) >= 0, now.timeIntervalSince(attemptedCounts) < 60, let lastBatch { return lastBatch }
+        let fetch = fetch
+        let task = Task {
+            let resolved = await refreshedManifest(at: now)
+            return await withTaskGroup(of: (String, OfficialOccupancy?).self, returning: OccupancyBatch.self) { group in
+                for (place, display) in resolved {
+                    group.addTask {
+                        do {
+                            let url = URL(string: "https://display.safespace.io/value/live/" + display)!
+                            let count = try Self.parseCount(await fetch(url, 128))
+                            return (place, OfficialOccupancy(sourceName: "UF Libraries · SafeSpace", count: count, observedAt: nil, retrievedAt: now))
+                        } catch { return (place, nil) }
+                    }
+                }
+                var result = OccupancyBatch(observations: [:], failed: [])
+                for await (place, observation) in group {
+                    if let observation { result.observations[place] = observation } else { result.failed.insert(place) }
+                }
+                return result
+            }
+        }
+        countsTask = task
+        let result = await task.value
+        lastBatch = result; attemptedCounts = now; countsTask = nil
+        return result
+    }
+    private func refreshedManifest(at now: Date) async -> [String: String] {
+        if manifestFetched == nil || now.timeIntervalSince(manifestFetched!) > 86400 {
+            if let data = try? await fetch(Self.sourceURL, 250_000) {
+                manifest.merge(Self.parseManifest(data), uniquingKeysWith: { _, new in new })
+                manifestFetched = now
+            }
+        }
+        return manifest
+    }
+    nonisolated static func parseManifest(_ data: Data) -> [String: String] {
+        guard let html = String(data: data, encoding: .utf8) else { return [:] }
+        var output: [String: String] = [:]
+        for script in LibCalRoomParser.matches("<script[^>]*>(.*?)</script>", html) {
+            guard let display = LibCalRoomParser.matches( #"https://display\.safespace\.io/value/live/([a-f0-9]{8})"#, script[1]).first,
+                  let target = LibCalRoomParser.matches(#"getElementById\(['"]([^'"]+)['"]\)"#, script[1]).first,
+                  let place = Self.targets.first(where: { $0.value == target[1] })?.key else { continue }
+            output[place] = display[1]
+        }
+        return output
     }
     nonisolated static func parseCount(_ data: Data) throws -> Int {
         guard let text = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty,

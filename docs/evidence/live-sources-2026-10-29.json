@@ -1,0 +1,119 @@
+{
+  "buildingSchedules" : 6,
+  "counts" : {
+    "afa" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "education" : {
+      "count" : 1,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "health" : {
+      "count" : 8,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston" : {
+      "count" : 8,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston-makerspace" : {
+      "count" : 14,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers" : {
+      "count" : 7,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-grand" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-lacc" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-map" : {
+      "count" : 10,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-panama" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    },
+    "west" : {
+      "count" : 4,
+      "retrievedAt" : "2026-10-29T10:46:54Z",
+      "sensorTimestampSupplied" : false
+    }
+  },
+  "failedCounts" : [
+
+  ],
+  "retrievedAt" : "2026-10-29T10:46:55Z",
+  "rooms" : {
+    "education" : {
+      "names" : [
+
+      ],
+      "parsed" : 0,
+      "total" : 0,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=07:30&gid=7509&lid=4455&m=t&start=07:00"
+    },
+    "health" : {
+      "names" : [
+
+      ],
+      "parsed" : 0,
+      "total" : 0,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=07:30&gid=8476&lid=4913&m=t&start=07:00"
+    },
+    "marston" : {
+      "names" : [
+        "L127 - Nebula",
+        "L133 - Torque",
+        "L132 - Sonar",
+        "L121 - Googol",
+        "L119 - Eclipse",
+        "L125 - Lichen",
+        "L131 - Riparian",
+        "L201G - Argon",
+        "L118 - Diode",
+        "L201E - Xenon",
+        "L115 - Algae",
+        "L116 - Byte",
+        "L201F - Krypton",
+        "L123 - Isotope",
+        "L120 - Filial",
+        "L134 - Vector",
+        "L126 - Mole",
+        "L124 - Karst",
+        "L117 - Chitin",
+        "L135 - Zygote",
+        "L122 - Hypotenuse",
+        "L201D - Helium"
+      ],
+      "parsed" : 22,
+      "total" : 22,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=07:30&gid=7502&lid=4316&m=t&start=07:00"
+    },
+    "west" : {
+      "names" : [
+
+      ],
+      "parsed" : 0,
+      "total" : 0,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=07:30&gid=7520&lid=4458&m=t&start=07:00"
+    }
+  }
+}

@@ -3,7 +3,7 @@ import Foundation
 enum RecommendationEngine {
     static func studyMinutes(now: Date, plan: TimePlan, journey: Journey, hours: HoursState) -> Int {
         let arrival = now.addingTimeInterval(journey.to * 60)
-        var finish = now.addingTimeInterval(Double(plan.available - plan.buffer) * 60 - journey.onward * 60)
+        var finish = plan.deadline(at: now).addingTimeInterval(-Double(plan.buffer) * 60 - journey.onward * 60)
         switch hours {
         case .closed: return 0
         case .open(let closing): finish = min(finish, closing)
@@ -11,18 +11,25 @@ enum RecommendationEngine {
         }
         return max(0, Int(floor(finish.timeIntervalSince(arrival) / 60)))
     }
+    static func isQuiet(_ place: Place, filters: Filters) -> Bool {
+        place.quiet || place.zones.contains { $0.quiet && ($0.access.allows(filters.eligibility) || ($0.access == .unknown && !filters.confirmedAccess)) }
+    }
+    static func matchesNeeds(_ place: Place, filters: Filters) -> Bool {
+        (!filters.quiet || isQuiet(place, filters: filters)) &&
+        (!filters.outlets || place.amenities.outlets == true) &&
+        (!filters.wifi || place.amenities.wifi == true) &&
+        (!filters.group || place.amenities.group == true) &&
+        (filters.reservableRooms != true || place.reservationURL != nil) &&
+        (!filters.confirmedAccess || place.access != .unknown) &&
+        (place.access == .unknown || place.access.allows(filters.eligibility))
+    }
     static func recommendations(places: [Place], journeys: [String: Journey], evidence: [String: Evidence], filters: Filters, plan: TimePlan, now: Date) -> [Recommendation] {
         places.compactMap { place in
             guard let journey = journeys[place.id], journey.to <= Double(filters.maxWalk) else { return nil }
             // A quiet requirement can match an eligible verified quiet zone without inventing current noise.
-            let quiet = place.quiet || place.zones.contains { $0.quiet && $0.access.allows(filters.eligibility) }
-            guard !filters.quiet || quiet,
-                  !filters.outlets || place.amenities.outlets == true,
-                  !filters.wifi || place.amenities.wifi == true,
-                  !filters.group || place.amenities.group == true else { return nil }
+            let quiet = isQuiet(place, filters: filters)
+            guard matchesNeeds(place, filters: filters) else { return nil }
             let accessUnknown = place.access == .unknown
-            guard !filters.confirmedAccess || !accessUnknown else { return nil }
-            guard accessUnknown || place.access.allows(filters.eligibility) else { return nil }
             let hours = place.hours?.closing(at: now.addingTimeInterval(journey.to * 60)) ?? .unknown
             if case .closed = hours { return nil }
             if filters.openNow {

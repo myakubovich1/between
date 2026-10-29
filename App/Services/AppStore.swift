@@ -8,19 +8,25 @@ import OSLog
 @MainActor @Observable
 final class AppStore {
     let config: AppConfiguration
+    var selectedTab = 0
     var places: [Place] = []
     var evidence: [Evidence] = []
     var officialOccupancy: [String: OfficialOccupancy] = [:]
     var officialHoursFetchedAt: Date?
+    var occupancyFailures: Set<String> = []
+    var hasRefreshedOfficial = false
     var communityAvailable = false
     var officialIssue: String?
     let ufData = UFLibraryData()
+    let roomData = StudyRoomService()
     var favorites: Set<String> = []
     var filters = Filters()
     var plan = TimePlan()
     var query = ""
     var committedQuery = ""
     var originID = "marston"
+    var manualOrigin: CampusDestination?
+    var hasChosenOrigin = false
     var usesLocation = false
     var journeys: [String: Journey] = [:]
     var signedIn = false
@@ -52,28 +58,60 @@ final class AppStore {
     private var summaryGeneration = RequestGeneration()
     private var fixedDemoTime: Date { ISO8601DateFormatter().date(from: "2026-10-22T18:00:00Z") ?? launchedAt }
     var now: Date { config.isDemo ? fixedDemoTime.addingTimeInterval(displayTime.timeIntervalSince(launchedAt) + demoOffset) : displayTime }
-    var origin: Coordinate? { usesLocation ? location.sample.map { .init(latitude: $0.latitude, longitude: $0.longitude) } : places.first { $0.id == originID }?.coordinate }
-    var originName: String { usesLocation ? "My location" : places.first { $0.id == originID }?.shortName ?? "UF campus · manual origin" }
+    var origin: Coordinate? {
+        guard hasChosenOrigin else { return nil }
+        return usesLocation ? location.sample.map { .init(latitude: $0.latitude, longitude: $0.longitude) } : manualOrigin?.coordinate ?? places.first { $0.id == originID }?.coordinate
+    }
+    var originName: String { guard hasChosenOrigin else { return "Choose a starting point" }; return usesLocation ? "My location" : manualOrigin?.name ?? places.first { $0.id == originID }?.shortName ?? "UF campus" }
     var next: Place? { places.first { $0.id == plan.nextID } }
+    var nextName: String? { plan.nextDestination?.name ?? next?.shortName }
+    var nextCoordinate: Coordinate? { plan.nextDestination?.coordinate ?? next?.coordinate }
+    var hasOrigin: Bool { origin != nil }
+    var remainingMinutes: Int { plan.remainingMinutes(at: now) }
+    var queryMatches: [Place] { places.filter { $0.matches(committedQuery) } }
+    func chooseOrigin(_ destination: CampusDestination) {
+        manualOrigin = destination; hasChosenOrigin = true; usesLocation = false; location.clear()
+        if let data = try? JSONEncoder().encode(destination) { UserDefaults.standard.set(data, forKey: "between.\(config.mode.rawValue).origin") }
+        if plan.endsAt == nil { plan.endsAt = (config.isDemo ? now : Date()).addingTimeInterval(Double(plan.available) * 60) }
+        persistPreferences()
+    }
+    func chooseCurrentLocation() {
+        usesLocation = true; hasChosenOrigin = true
+        if plan.endsAt == nil { plan.endsAt = (config.isDemo ? now : Date()).addingTimeInterval(Double(plan.available) * 60) }
+        persistPreferences()
+    }
+    func commitSearch() { searchTask?.cancel(); committedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines) }
+    func clearSearch() {
+        searchTask?.cancel(); query = ""; committedQuery = ""
+    }
     var evidenceByPlace: [String: Evidence] { Dictionary(evidence.filter { $0.zoneID == nil }.map { ($0.placeID, $0) }, uniquingKeysWith: { _, newer in newer }) }
-    var results: [Recommendation] {
-        RecommendationEngine.recommendations(places: places.filter { $0.matches(committedQuery) }, journeys: journeys, evidence: evidenceByPlace, filters: filters, plan: plan, now: now)
+    var closedPlaces: [Place] {
+        guard !filters.openNow else { return [] }
+        return places.filter { $0.matches(committedQuery) && $0.hours?.closing(at: now) == .closed && RecommendationEngine.matchesNeeds($0, filters: filters) }.sorted { $0.shortName < $1.shortName }
+    }
+    var results: [Recommendation] { recommendations(using: filters) }
+    func recommendations(using filters: Filters) -> [Recommendation] {
+        var effectiveFilters = filters
+        if !hasOrigin { effectiveFilters.maxWalk = 30; effectiveFilters.minimumStudy = 0 }
+        return RecommendationEngine.recommendations(places: queryMatches, journeys: journeys, evidence: evidenceByPlace, filters: effectiveFilters, plan: plan, now: now)
     }
     init(config: AppConfiguration = .current) {
         self.config = config
         cache = LocalCache(mode: config.mode.rawValue)
         live = !config.isDemo && config.configured ? LiveService(config: config) : nil
         favorites = Set(UserDefaults.standard.stringArray(forKey: "between.\(config.mode.rawValue).favorites") ?? [])
+        if let data = UserDefaults.standard.data(forKey: "between.\(config.mode.rawValue).origin"), let origin = try? JSONDecoder().decode(CampusDestination.self, from: data) { manualOrigin = origin; hasChosenOrigin = true }
         if let data = UserDefaults.standard.data(forKey: "between.filters"), let saved = try? JSONDecoder().decode(Filters.self, from: data) { filters = saved }
         if let data = UserDefaults.standard.data(forKey: "between.plan"), let saved = try? JSONDecoder().decode(TimePlan.self, from: data) { plan = saved }
         do {
             guard let url = Bundle.main.url(forResource: "catalog", withExtension: "json") else { throw AppFailure.message("The campus catalog is missing. Reinstall the app.") }
             places = try JSONDecoder.between.decode([Place].self, from: Data(contentsOf: url))
         } catch { self.error = error.localizedDescription }
-        if config.isDemo && ProcessInfo.processInfo.arguments.contains("-ui-testing") {
-            favorites = []; filters = Filters(); plan = TimePlan()
+        if ProcessInfo.processInfo.arguments.contains("-ui-testing") {
+            favorites = []; filters = Filters(); plan = TimePlan(); manualOrigin = nil; hasChosenOrigin = false
         }
         if config.isDemo {
+            hasChosenOrigin = true
             // Synthetic hours are only added inside the isolated Demo configuration.
             for i in places.indices {
                 places[i].hours = Hours(intervals: [.init(start: fixedDemoTime.addingTimeInterval(-3600 * 6), end: fixedDemoTime.addingTimeInterval(3600 * 8))], verifiedFrom: fixedDemoTime.addingTimeInterval(-3600 * 6), verifiedUntil: fixedDemoTime.addingTimeInterval(3600 * 8))
@@ -107,10 +145,11 @@ final class AppStore {
             do {
                 if !(config.isDemo && ProcessInfo.processInfo.arguments.contains("-ui-testing")), let snapshot = try await cache.read() {
                     if config.isDemo, let reports = snapshot.demoReports { demoReports = reports; recalculateDemo() }
-                    else { evidence = snapshot.evidence }
+                    else if live != nil { evidence = snapshot.evidence }
                     if !config.isDemo, let catalog = snapshot.catalog {
-                        places = catalog
-                        officialHoursFetchedAt = catalog.compactMap { $0.hours?.fetchedAt }.max()
+                        // Restore only live schedules; a cache must not replace updated bundled identities/policies.
+                        for i in places.indices { places[i].hours = catalog.first { $0.id == places[i].id }?.hours }
+                        officialHoursFetchedAt = places.compactMap { $0.hours?.fetchedAt }.min()
                         officialOccupancy = snapshot.officialOccupancy ?? [:]
                     }
                     lastFetched = snapshot.fetchedAt
@@ -121,13 +160,15 @@ final class AppStore {
         await checkAppleCredential()
         await refresh()
         scheduleRoutes()
+        let communityTask = Task { @MainActor [weak self] in await self?.refreshCommunity() }
         let realtimeTask = Task { @MainActor [weak self] in await self?.listenRealtime() }
         let clockTask = Task { @MainActor [weak self] in await self?.runExpiryClock() }
         let authTask = Task { @MainActor [weak self] in await self?.observeAuth() }
-        defer { realtimeTask.cancel(); clockTask.cancel(); authTask.cancel() }
+        defer { realtimeTask.cancel(); clockTask.cancel(); authTask.cancel(); communityTask.cancel() }
         while !Task.isCancelled {
             do { try await Task.sleep(for: .seconds(60)) } catch { break }
             await refresh()
+            await refreshCommunity()
         }
         routeTask?.cancel()
         location.clear()
@@ -155,66 +196,55 @@ final class AppStore {
         let changes = channel.postgresChange(AnyAction.self, schema: "public", table: "status_versions", filter: .eq("campus_id", value: "uf"))
         do {
             try await channel.subscribeWithError()
-            for await _ in changes { if Task.isCancelled { break }; await refresh() }
+            for await _ in changes { if Task.isCancelled { break }; await refreshCommunity() }
         } catch { /* The bounded foreground refresh remains active. */ }
         await live.client.removeChannel(channel)
     }
-    func refresh() async {
+    /// Official sources publish independently of optional community backend latency or configuration.
+    func refresh(force: Bool = false) async {
         displayTime = Date()
         let ticket = summaryGeneration.next()
         refreshing = true
         defer { if summaryGeneration.accepts(ticket) { refreshing = false } }
-        do {
-            if config.isDemo {
-                if demoOffline { throw URLError(.notConnectedToInternet) }
-                recalculateDemo()
-            } else {
-                // UF data works independently of the optional community-report backend.
-                async let publishedCounts = ufData.occupancy()
-                async let publishedSchedule = ufData.hours()
-                var catalog = places
-                var fetchedEvidence = evidence
-                var backendAvailable = false
-                if let live {
-                    do {
-                        let remote: [Place] = try await live.request("catalog")
-                        fetchedEvidence = try await live.summaries()
-                        catalog = remote.map { item in
-                            var updated = item
-                            updated.hours = places.first { $0.id == item.id }?.hours ?? item.hours
-                            return updated
-                        }; backendAvailable = true
-                    } catch { /* Keep UF browsing available; community state is labeled separately. */ }
-                }
-                var hoursIssue: String?
-                do {
-                    let publishedHours = try await publishedSchedule
-                    for i in catalog.indices {
-                        // Keep source-specific cached hours if a catalog refresh has no schedule.
-                        catalog[i].hours = publishedHours[catalog[i].id] ?? places.first { $0.id == catalog[i].id }?.hours
-                    }
-                } catch { hoursIssue = "UF hours couldn’t refresh. Check the official hours before visiting." }
-                let counts = await publishedCounts
-                guard summaryGeneration.accepts(ticket), !Task.isCancelled else { return }
-                let catalogChanged = places != catalog
-                places = catalog; evidence = fetchedEvidence
-                officialOccupancy.merge(counts, uniquingKeysWith: { _, newer in newer })
-                officialHoursFetchedAt = catalog.compactMap { $0.hours?.fetchedAt }.max()
-                communityAvailable = backendAvailable
-                let countsCurrent = counts.values.contains { Date().timeIntervalSince($0.retrievedAt) < 120 }
-                officialIssue = hoursIssue ?? (countsCurrent ? nil : "UF building counts couldn’t refresh. Check the retrieval time before using a saved count.")
-                if catalogChanged { scheduleRoutes() }
-                if hoursIssue != nil && !countsCurrent { throw URLError(.notConnectedToInternet) }
-            }
+        if config.isDemo {
+            if demoOffline { offline = true; return }
+            recalculateDemo(); offline = false; lastFetched = now
+        } else {
+            async let publishedCounts = ufData.occupancy(force: force)
+            async let publishedSchedule: [String: Hours]? = try? ufData.hours(force: force)
+            let (batch, schedule) = await (publishedCounts, publishedSchedule)
             guard summaryGeneration.accepts(ticket), !Task.isCancelled else { return }
-            offline = false
-            lastFetched = now
-            try await cache.write(.init(evidence: evidence, fetchedAt: now, demoReports: config.isDemo ? demoReports : nil, catalog: config.isDemo ? nil : places, officialOccupancy: config.isDemo ? nil : officialOccupancy))
-        } catch is CancellationError {} catch {
-            guard summaryGeneration.accepts(ticket) else { return }
-            offline = true
-            if !config.isDemo { officialIssue = "UF data couldn’t refresh. Showing saved information where available." }
+            displayTime = Date()
+            var catalog = places
+            if let schedule {
+                for i in catalog.indices { catalog[i].hours = schedule[catalog[i].id] }
+            }
+            let changed = catalog != places
+            places = catalog
+            officialOccupancy.merge(batch.observations, uniquingKeysWith: { _, newer in newer })
+            occupancyFailures = batch.failed
+            hasRefreshedOfficial = true
+            officialHoursFetchedAt = catalog.compactMap { $0.hours?.fetchedAt }.min()
+            let buildingFailures = batch.failed.intersection(Set(UFLibraryData.locations.keys))
+            var issues: [String] = []
+            if schedule == nil { issues.append("UF hours could not refresh; saved hours may be out of date.") }
+            if !buildingFailures.isEmpty { issues.append("\(buildingFailures.count) library count\(buildingFailures.count == 1 ? "" : "s") could not refresh. Saved counts are labeled.") }
+            officialIssue = issues.isEmpty ? nil : issues.joined(separator: " ")
+            offline = schedule == nil && batch.observations.isEmpty
+            if !batch.observations.isEmpty || schedule != nil { lastFetched = now }
+            if changed { scheduleRoutes() }
         }
+        do {
+            try await cache.write(.init(evidence: evidence, fetchedAt: now, demoReports: config.isDemo ? demoReports : nil, catalog: config.isDemo ? nil : places, officialOccupancy: config.isDemo ? nil : officialOccupancy))
+        } catch { notice = "Live information loaded, but could not be saved for offline use." }
+    }
+    private func refreshCommunity() async {
+        guard let live, !config.isDemo else { communityAvailable = false; return }
+        do {
+            let summaries = try await live.summaries()
+            try Task.checkCancellation()
+            evidence = summaries; communityAvailable = true
+        } catch { communityAvailable = false }
     }
     func searchChanged() {
         searchTask?.cancel()
@@ -236,15 +266,18 @@ final class AppStore {
     func resetLocal() {
         favorites = []
         UserDefaults.standard.removeObject(forKey: "between.\(config.mode.rawValue).favorites")
-        filters = Filters(); plan = TimePlan(); persistPreferences()
+        filters = Filters(); plan = TimePlan(); manualOrigin = nil; hasChosenOrigin = false; usesLocation = false; location.clear()
+        UserDefaults.standard.removeObject(forKey: "between.\(config.mode.rawValue).origin")
+        persistPreferences()
         Task { try? await cache.clear() }
     }
     func computeEstimatedJourneys() {
         let demoWalks: [String: Double] = ["marston": 6, "west": 8, "smathers": 9, "afa": 7, "education": 14, "health": 19, "newell": 5, "reitz": 12]
         journeys = Dictionary(places.compactMap { place in
-            guard let destination = place.coordinate, let origin else { return nil }
-            let to = config.isDemo ? demoWalks[place.id] ?? 10 : max(1, ceil(origin.distance(to: destination) / 75))
-            let onward = next?.coordinate.map { config.isDemo ? 7 : max(1, ceil(destination.distance(to: $0) / 75)) } ?? 0
+            guard let destination = place.coordinate else { return nil }
+            guard let origin else { return (place.id, Journey(to: 0, onward: 0, estimated: true)) }
+            let to = config.isDemo ? demoWalks[place.id] ?? 10 : (origin.distance(to: destination) < 20 ? 0 : max(1, ceil(origin.distance(to: destination) / 75)))
+            let onward = nextCoordinate.map { config.isDemo ? 7 : (destination.distance(to: $0) < 20 ? 0 : max(1, ceil(destination.distance(to: $0) / 75))) } ?? 0
             return (place.id, Journey(to: to, onward: onward, estimated: true))
         }, uniquingKeysWith: { _, new in new })
     }
@@ -253,8 +286,8 @@ final class AppStore {
         let ticket = generation.next()
         computeEstimatedJourneys()
         guard !config.isDemo, let origin else { return }
-        let shortlist = results.prefix(4).map(\.place)
-        let nextCoordinate = next?.coordinate
+        let shortlist = places.filter { $0.coordinate != nil && $0.hours?.closing(at: now) != .closed }
+        let nextCoordinate = self.nextCoordinate
         routeTask = Task { [weak self] in
             guard let self else { return }
             for place in shortlist {

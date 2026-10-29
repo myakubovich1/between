@@ -78,8 +78,13 @@ struct Place: Codable, Hashable, Identifiable, Sendable {
         switch hours?.closing(at: date) ?? .unknown {
         case .unknown: "Hours not confirmed"
         case .closed: "Closed now"
-        case .open(let end): "Open until " + CampusClock.timeLabel(end) + (CampusClock.sameDay(date, end) ? "" : " · " + CampusClock.dayLabel(end))
+        case .open(let end): "Open until " + (CampusClock.sameDay(date, end) ? "" : CampusClock.dayLabel(end) + " ") + CampusClock.timeLabel(end)
         }
+    }
+    func nextOpeningLabel(at now: Date) -> String {
+        guard let hours, let fetched = hours.fetchedAt, now.timeIntervalSince(fetched) < 86400,
+              let next = hours.intervals.first(where: { $0.start > now }) else { return "Check the published schedule" }
+        return "Opens " + (CampusClock.sameDay(now, next.start) ? "" : CampusClock.dayLabel(next.start) + " ") + CampusClock.timeLabel(next.start)
     }
     var symbol: String { category == "library" ? "books.vertical" : "building.2" }
     func matches(_ query: String) -> Bool {
@@ -144,6 +149,10 @@ struct OfficialOccupancy: Codable, Sendable {
     var percent: Double?
     var observedAt: Date?
     var retrievedAt: Date
+    func hasRecentRetrieval(at now: Date, limit: TimeInterval = 120) -> Bool {
+        let age = now.timeIntervalSince(retrievedAt)
+        return age >= 0 && age < limit
+    }
     func isFresh(at now: Date, limit: TimeInterval = 300) -> Bool {
         observedAt.map { now.timeIntervalSince($0) >= 0 && now.timeIntervalSince($0) < limit } ?? false
     }
@@ -165,12 +174,26 @@ struct Filters: Codable, Equatable, Sendable {
     var maxWalk = 30
     var eligibility: Access = .uf
     var minimumStudy = 15
-    var count: Int { [openNow, quiet, outlets, wifi, group, confirmedAccess, preferredNoise != nil, maxWalk < 30, eligibility != .uf].filter { $0 }.count }
+    var reservableRooms: Bool? = nil
+    var count: Int { [openNow, quiet, outlets, wifi, group, confirmedAccess, preferredNoise != nil, maxWalk < 30, eligibility != .uf, minimumStudy != 15, reservableRooms == true].filter { $0 }.count }
+}
+struct CampusDestination: Codable, Hashable, Identifiable, Sendable {
+    var id: String
+    var name: String
+    var coordinate: Coordinate
+    var address: String?
+    var abbreviation: String? = nil
+    var sourceURL: URL? = nil
 }
 struct TimePlan: Codable, Equatable, Sendable {
     var available = 45
     var buffer = 5
     var nextID: String?
+    var nextDestination: CampusDestination? = nil
+    var endsAt: Date? = nil
+    func deadline(at now: Date) -> Date { endsAt ?? now.addingTimeInterval(Double(available) * 60) }
+    func remainingMinutes(at now: Date) -> Int { max(0, min(available, Int(ceil(deadline(at: now).timeIntervalSince(now) / 60)))) }
+    var hasNextDestination: Bool { nextID != nil || nextDestination != nil }
 }
 struct Journey: Sendable {
     var to: Double

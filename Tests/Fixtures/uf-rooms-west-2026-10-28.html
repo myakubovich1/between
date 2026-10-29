@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- iid: 6 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <link href="https://static-assets-us.libcal.com/bootstrap_23/bootstrap3_16.min.css" rel="stylesheet">
+
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://static-assets-us.libcal.com/css_165/LibCal_public.min.css" rel="stylesheet">
+    <link href="https://static-assets-us.libcal.com/css_165/print.min.css" rel="stylesheet" media="print">
+
+<script src="https://static-assets-us.libcal.com/jquery_16/jquery.min.js"></script>
+
+
+    <script src="https://static-assets-us.libcal.com/bootstrap_23/bootstrap3.min.js"></script>
+    <script src="https://static-assets-us.libcal.com/js_165/LibCal_public.min.js"></script>
+        <script>
+    springSpace.dateFormat = "dddd, MMMM D, YYYY";
+    springSpace.dateShortFormat = "dddd, MMMM D, YYYY";
+    springSpace.timeFormat = "h:mma";
+    springSpace.timezone = 'America/New_York';
+    springSpace.currency = "USD";
+
+    springSpace.language = 'en'; // en
+    springSpace.locale = 'en-US'; // en-US
+
+    springSpace.phpTimeFormat = 'g:ia';
+
+    springSpace.bootstrapAsset = 'https://static-assets-us.libcal.com/bootstrap_23/bootstrap3_16.min.css';
+    springSpace.publicCssAsset = 'https://static-assets-us.libcal.com/css_165/LibCal_public.min.css';
+    springSpace.adminCssAsset = 'https://static-assets-us.libcal.com/css_165/LibCal_admin.min.css';
+</script>
+        <title>
+                    Search Spaces - Library West -
+                LibCal -
+        UF Libraries
+    </title>
+    <style>
+            #s-lc-public-banner {
+            padding: 0;
+            margin: 0;
+        }
+
+        .s-lc-public-footer {
+            margin: 0;
+        }
+    </style>
+            <style type="text/css">
+#banner {
+    width:100%;
+    background:#4593bf url(https://www.uflib.ufl.edu/images/bg/blue12.gif) repeat-x;
+    height: 40px;
+    position:relative;
+    margin:0;
+    padding:0;
+    border-bottom:1px solid #ccc;
+    }
+
+ul#bannernav {color:#fff;
+    float:right;
+    font-size:1em;  /* 0.80em */
+    /* margin:10px 0 0 0; */
+    padding:0 10px 0 0;
+    list-style:none;
+    }
+
+ul#bannernav li{
+    margin:0;
+    display:inline;
+    border-right:1px solid #fff;
+    padding:0 8px 0 8px;
+    }
+
+ul#bannernav li.last-item {
+    border:none;
+    }
+
+ul#bannernav a:link{
+    color:#fff;
+    text-decoration:none;
+    border:none;
+    }
+
+ul#bannernav a:visited{
+    color:#fff;
+    text-decoration:none;
+    border:none;
+    }
+
+ul#bannernav a:hover{
+    color:#fff;
+    text-decoration:underline;
+    border:none;
+    }
+
+h1#uflogo {
+    margin:0;
+    padding:0;
+    float:left;
+    width:45px;
+    height:39px;
+    overflow:hidden;
+    position:relative;
+}
+
+h1#uflogo span {
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:11;
+    width:45px;
+    height:39px;
+    margin:0;
+    padding:0;
+    background:url(https://www.uflib.ufl.edu/images/uf-uf9.gif) top left no-repeat;
+            cursor:pointer;
+}
+
+h1#liblogo {
+    float:left;
+    margin:0;
+    padding:0;
+    width:246px;
+    height:39px;
+    overflow:hidden;
+    position:relative;
+}
+
+h1#liblogo span {
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:11;
+    width:246px;
+    height:39px;
+    margin:0;
+    padding:0;
+    background:url(https://www.uflib.ufl.edu/images/uf-uflib9.gif) top left no-repeat;
+        cursor:pointer;
+}
+
+#topnav {
+    background-image: url("https://www.uflib.ufl.edu/images/lets-talk/ltblue-grad3.jpg");
+    background-color: #f3f8fe;
+    background-repeat: repeat-x;
+    /*background-color: #ff9062;*/
+    width: 100%;
+    height: 10px;
+    border-top:2px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+#topnav p{
+    padding: 3px 0 4px 10px;
+    margin: 0;
+    color: #0021a5;
+    font-size:12px;
+    }
+
+#site_title {
+       font-size: 20px;
+       padding: 10px;
+       font-weight: normal;
+       color:#000000;
+       }
+
+#banner a { text-decoration:none; }
+
+.s-lib-footer {
+font-size: .9em;
+padding-top: 5px;
+padding-bottom: 5px;
+border-top: 1px solid #bbb;
+background-color: #fff;
+width: 99%;
+}
+</style>
+<style>#s-lg-guide-main { padding-top: 0px; }</style>
+
+<style>
+/* font color in Hours monthly view */
+.s-lc-hm-loc {  color: #292929; }
+</style>
+
+<style>
+footer {
+  background-color: White;
+  min-width: 0;
+  font-size: 13px;
+}
+footer {
+  clear: both;
+}
+
+.gift {
+    float: right;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+#footer-links {
+    text-align: left;
+    margin: 0 auto;
+    padding:0;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-top: 6px solid #fb7611;
+    white-space:normal;
+    position: relative;
+    color: #444444;
+    font-size: 0.90em;
+}
+#footer-links ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+#footer-links li {
+    display:inline;
+    margin:0px;
+    padding: 0 8px 0 5px;
+    border-right:solid #999999 1px;
+}
+#footer-links li.lastitem {
+    border-right:none;
+}
+#footer-links p {
+    margin: 0;
+    padding: 5px 5px 0 5px;
+}
+#footer-links a:link {
+    text-decoration:none;
+    color:#444444;
+}
+#footer-links a:visited {
+    text-decoration:none;
+    color:#444444;
+}
+#footer-links a:hover {
+    text-decoration:underline;
+    color:#444444;
+}
+img {
+    border: none;
+}
+/*
+.uf-monogram {
+    background: url("https://uflib.ufl.edu/wordpress/files/2021/05/uf_monogram.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 48px;
+    width: 48px;
+  margin-top: -27px;
+    left: 480px;
+    margin: 0 auto;
+}
+*/
+#fullUFLogo {
+    float: right;
+    padding-right: 15px;
+}
+</style>
+<style>
+p {
+     font-size: 14px;
+     font-family: sans-serif;
+     word-break: break-word;
+}
+
+/* Change the color of the text that shows the library name (also defined as main event titles/text in Springshare) (?) in the monthly hours view - MD 11/05/25 */
+.cal-event a, .cal-event-box a {
+    color: #000000 !important; /* Black color */
+}
+
+</style>
+
+
+
+</head>
+<body id="equip_" class="s-lc-public s-lc-public-page-5">
+
+
+<a id="s-lc-public-skiplink" class="s-lc-skiplink alert-info" href="#s-lc-public-title-area">Skip to Main Content</a>
+
+<div id="s-lc-public-cust-header" role="banner"><div id="banner">
+     <table cellpadding='0' cellspacing='0' width='100%'>
+          <tr>
+               <td width='33%'>
+                    <a href="http://www.ufl.edu" title="University of Florida Homepage">
+                         <img src='https://www.uflib.ufl.edu/images/uf-uf9.gif' style='float:left; border:0px; width:45px;' />
+                    </a>
+
+                    <a href="http://www.uflib.ufl.edu" title="George A. Smathers Libraries" style='font-size:large; color:#FFFFFF; font-family:"Times New Roman", Times, serif; line-height:39px; padding-left:5px;'>
+                             <strong>George A. Smathers Libraries</strong>
+                    </a>
+               </td>
+
+               <td width='34%' align='center'>
+&nbsp;
+               </td>
+
+               <td width='33%'>
+                    <ul id="bannernav">
+                         <li><a href="https://uflib.ufl.edu/directory/">Library Directory</a> </li>
+                         <li class="last-item"><a href="https://uflib.ufl.edu/using-the-libraries/off-campus-access/">Off-Campus Access</a></li>
+                    </ul>
+               </td>
+          </tr>
+     </table>
+</div></div>
+<div class="container">
+
+    <div id="s-lc-public-bc" class="row">
+        <div class="col-md-12">
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb">
+                    <li><a href="https://uflib.ufl.edu/">UF Libraries</a></li>
+
+                    <li class="s-lc-desktop-only"><a href="https://libcal.uflib.ufl.edu" >LibCal</a></li>
+
+                                            <li><a href="/r/search" >Search Spaces</a></li>
+
+                                            <li class="active s-lc-desktop-only" aria-current="page">Search Spaces - Library West</li>
+
+                                        </ol>
+            </nav>
+        </div>
+    </div>
+
+    <noscript>
+        <div class="alert alert-danger" id="noscript">Your browser has javascript disabled. Without javascript some functions will not work.</div>
+    </noscript>
+
+    <main aria-label="Main Content">
+        <div id="s-lc-public-title-area">
+                <div id="s-lc-public-title" class="row">
+    <div class="col-md-12">
+        <h1 id="s-lc-public-pt" class="s-lc-eq-booking-header">
+            <div class="s-lc-eq-booking-title">
+                Search Spaces -
+
+                                    <div class="s-lc-eq-location-name">
+                        Library West
+
+                        <small>
+                            <a href="/r/search?change-location">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span class="sr-only">
+                                    Change Location                                </span>
+                            </a>
+                        </small>
+                    </div>
+                            </div>
+
+                    </h1>
+    </div>
+</div>
+
+        </div>
+
+            <div id="s-lc-public-main" class="s-lc-public-main">
+        <div id="s-lc-public-page-content" class="row">
+            <div class="col-md-4">
+                <div id="s-lc-filter-summary" class="s-lc-mobile-only">
+                    <a href="javascript:void(0)" id="s-lc-interactive-filters-show" class="pull-right">
+                        Edit Search
+                    </a>
+
+                    <h2 class="s-lc-sub-header margin-top-none">
+                        Search Options
+                    </h2>
+
+                    <div class="s-lc-filters-used margin-bottom-med">
+            <span class="label label-default label-as-badge margin-right-med">
+            Study Rooms
+        </span>
+
+
+    <span class="label label-default label-as-badge margin-right-med">
+                            All Spaces (not seats)
+            </span>
+
+    <span class="label label-default label-as-badge margin-right-med">
+        Wednesday, October 28, 2026
+    </span>
+
+    <span class="label label-default label-as-badge margin-right-med">
+        10:30pm
+        -
+        11:00pm
+    </span>
+
+
+</div>
+                </div>
+
+                <div id="s-lc-interactive-filters" class="s-lc-desktop-only">
+                    <div class="s-lc-search-filters margin-bottom-med">
+    <ul class="nav nav-tabs margin-bottom-med s-lc-search-pills" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#by-time" id="tab-by-time" data-toggle="tab" role="tab"
+               aria-controls="by-time" aria-selected="true"
+               tabindex="0">
+                Search by Time
+            </a>
+        </li>
+
+        <li role="presentation">
+            <a href="#by-space" id="tab-by-space" data-toggle="tab" role="tab"
+               aria-controls="by-space" aria-selected="false"
+               tabindex="-1">
+                Search by Space
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="by-time"
+             role="tabpanel" aria-labelledby="tab-by-time">
+
+
+<form id="s-lc-search-filters" role="search" method="get" action="?" autocomplete="off">
+    <input type="hidden" name="m" value="t">
+
+    <input type="hidden" id="s-lc-location" name="lid" value="4458">
+
+
+            <div class="form-group " id="s-lc-group_container">
+            <label id="s-lc-group_fi_label" class=" control-label " for="s-lc-group">
+            Category
+
+                    </label>
+
+                <select
+        id="s-lc-group"
+        name="gid"
+        class="form-control "
+        title=""
+                                                    >
+
+    <option value="0" selected="selected">Show All</option>
+
+
+
+
+
+
+
+
+                <option value="7520" selected="selected">Study Rooms
+
+
+</option>
+                    <option value="8874">One Button Studio
+
+
+</option>
+                    <option value="8875">Bloomberg Workstation
+
+
+</option>
+
+
+    </select>
+
+
+
+
+    </div>
+
+    <div class="form-group " id="s-lc-type_container">
+            <label id="s-lc-type_fi_label" class=" control-label " for="s-lc-type">
+            Capacity
+
+                    </label>
+
+                <select
+        id="s-lc-type"
+        name="capacity"
+        class="form-control "
+        title=""
+        required="required"                                            >
+
+
+
+    <option value="0" selected="selected">All Spaces (not seats)</option>
+
+
+
+
+
+                <option value="1">Space For 1 person
+
+
+</option>
+                    <option value="2">Space For 2-4 people
+
+
+</option>
+                    <option value="3">Space For 5-8 people
+
+
+</option>
+                    <option value="4">Space For 9+ people
+
+
+</option>
+
+
+    </select>
+
+
+
+
+    </div>
+
+
+    <div class="form-group " id="s-lc-date_container">
+            <label id="s-lc-date_fi_label" class=" control-label " for="s-lc-date">
+            Date
+
+                    </label>
+
+                <input
+        type="date"
+        id="s-lc-date"
+        name="date"
+        aria-labelledby="s-lc-date_fi_label"
+        value="2026-10-28"
+        autocomplete="off"
+        class="form-control s-lc-native-date "
+                                        required="required"            >
+
+
+
+
+    </div>
+
+            <div id="s-lc-search-daily" style="display: none;">
+            <div class="form-group " id="s-lc-date-end_container">
+            <label id="s-lc-date-end_fi_label" class=" control-label " for="s-lc-date-end">
+            Until
+
+                    </label>
+
+                <input
+        type="date"
+        id="s-lc-date-end"
+        name="date-end"
+        aria-labelledby="s-lc-date-end_fi_label"
+        value="2026-10-28"
+        autocomplete="off"
+        class="form-control s-lc-native-date "
+                                                    >
+
+
+
+
+    </div>
+        </div>
+
+        <div id="s-lc-search-hourly" class="row" >
+            <div class="col-xs-6">
+                <div class="form-group " id="s-lc-time-start_container">
+            <label id="s-lc-time-start_fi_label" class=" control-label " for="s-lc-time-start">
+            From
+
+                    </label>
+
+                <input
+        type="time"
+        id="s-lc-time-start"
+        name="start"
+        aria-labelledby="s-lc-time-start_fi_label"
+        value="22:30"
+        autocomplete="off"
+        class="form-control s-lc-native-time "
+                                required="required"    >
+
+
+
+
+    </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="form-group " id="s-lc-time-end_container">
+            <label id="s-lc-time-end_fi_label" class=" control-label " for="s-lc-time-end">
+            Until
+
+                    </label>
+
+                <input
+        type="time"
+        id="s-lc-time-end"
+        name="end"
+        aria-labelledby="s-lc-time-end_fi_label"
+        value="23:00"
+        autocomplete="off"
+        class="form-control s-lc-native-time "
+                                required="required"    >
+
+
+
+
+    </div>
+            </div>
+        </div>
+
+    <div id="s-lc-search-filters-container" class="form-group">
+                    <div class="">
+
+    <label class="checkbox checkbox-inline s-lc-search-filter-checkbox" for="flt-time-2789">
+        <input type="checkbox" id="flt-time-2789" name="filters[]" class="s-lc-checkbox-alignment-fix" value="2789">
+        <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
+        Accessible Seat/Space
+    </label>
+            </div>
+            </div>
+
+
+    <div class="form-group margin-bottom-none">
+        <button class="btn btn-block btn-default" type="submit" id="s-lc-go" >
+            <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+            Search
+        </button>
+    </div>
+</form>
+        </div>
+
+        <div class="tab-pane " id="by-space"
+             role="tabpanel" aria-labelledby="tab-by-space">
+
+
+<form id="s-lc-by-space-search-filters" role="search" method="get" action="?" autocomplete="off">
+    <input type="hidden" name="m" value="s">
+
+    <input type="hidden" id="s-lc-by-space-location" name="lid" value="4458">
+
+
+    <div class="form-group " id="s-lc-by-space-item_container">
+            <label id="s-lc-by-space-item_fi_label" class=" control-label " for="s-lc-by-space-item">
+            Seat/Space Name
+
+                    </label>
+
+
+
+            <input id="s-lc-by-space-item" name="search" value="" type="text"  placeholder="Enter seat/space name" class="form-control " autocomplete="off">
+
+
+
+
+
+
+    </div>
+
+            <div class="form-group " id="s-lc-by-space-group_container">
+            <label id="s-lc-by-space-group_fi_label" class=" control-label " for="s-lc-by-space-group">
+            Category
+
+                    </label>
+
+                <select
+        id="s-lc-by-space-group"
+        name="gid"
+        class="form-control "
+        title=""
+                                                    >
+
+    <option value="0" selected="selected">Show All</option>
+
+
+
+
+
+
+
+
+                <option value="7520" selected="selected">Study Rooms
+
+
+</option>
+                    <option value="8874">One Button Studio
+
+
+</option>
+                    <option value="8875">Bloomberg Workstation
+
+
+</option>
+
+
+    </select>
+
+
+
+
+    </div>
+
+    <div class="form-group " id="s-lc-by-space-type_container">
+            <label id="s-lc-by-space-type_fi_label" class=" control-label " for="s-lc-by-space-type">
+            Capacity
+
+                    </label>
+
+                <select
+        id="s-lc-by-space-type"
+        name="capacity"
+        class="form-control "
+        title=""
+        required="required"                                            >
+
+
+
+    <option value="0" selected="selected">All Spaces (not seats)</option>
+
+
+
+
+
+                <option value="1">Space For 1 person
+
+
+</option>
+                    <option value="2">Space For 2-4 people
+
+
+</option>
+                    <option value="3">Space For 5-8 people
+
+
+</option>
+                    <option value="4">Space For 9+ people
+
+
+</option>
+
+
+    </select>
+
+
+
+
+    </div>
+
+
+    <div id="s-lc-search-filters-container" class="form-group">
+                    <div class="">
+
+    <label class="checkbox checkbox-inline s-lc-search-filter-checkbox" for="flt-space-2789">
+        <input type="checkbox" id="flt-space-2789" name="filters[]" class="s-lc-checkbox-alignment-fix" value="2789">
+        <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
+        Accessible Seat/Space
+    </label>
+            </div>
+            </div>
+
+
+    <div class="form-group margin-bottom-none">
+        <button class="btn btn-block btn-default" type="submit" id="s-lc-by-space-go">
+            <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+            Search
+        </button>
+    </div>
+</form>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+
+<div class="panel panel-default" id="panel_container_desc">
+    <div class="panel-heading" data-toggle="collapse" href="#collapse-desc" aria-expanded="false" aria-controls="collapse-desc">
+        <a class="panel-title" data-toggle="collapse" href="#collapse-desc" aria-expanded="false" aria-controls="collapse-desc">
+            <i class="fa fa-chevron-right s-lc-panel-indicator" aria-hidden="true"></i>
+            Description
+        </a>
+    </div>
+
+    <div class="panel-collapse collapse" id="collapse-desc">
+        <div class="panel-body">
+                <div id="s-lc-location-description">
+        <p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Library West offers group study rooms and individual study carrels for student use.</span></span></span></p>
+
+<p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Patrons may book up to 4 30-minute blocks, for a total of 2 hours per day. This includes both group study rooms and individual study carrels combined. Bookings may last for a duration of 30 minutes to 2 hours (120 minutes). Only one space may be booked at a time. You may book up to 2 weeks in advance.</span></span></span><br />
+<span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif"></span></span></span></p>
+
+<p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Group study rooms are for 2 or more people. Patrons are not permitted to reserve them for the purpose of studying alone or taking an exam.</span></span></span></p>
+
+<p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Individual study carrels are for 1 person. Patrons are not permitted to reserve them for the purpose of studying with a group. The carrels do not lock, and the area may be prone to interruption, so we do not recommend them for taking an exam.</span></span></span></p>
+
+<p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Grid View of Booking Times - <a href="https://libcal.uflib.ufl.edu/r/new/preview" style="color:#467886; text-decoration:underline">https://libcal.uflib.ufl.edu/r/new/preview</a></span></span></span><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif"></span></span></span></p>
+
+<p style="margin-bottom:11px"><span style="font-size:14px;"><span style="line-height:115%"><span style="font-family:Aptos,sans-serif">Once your booking has been successfully submitted, you will receive an email from LibCal confirming your reservation. You can cancel your reservation at any point up until the reserved time via the link in the confirmation email. If you need assistance with booking a room, please contact Library West User Services at 352-273-2525.</span></span></span></p>
+
+    </div>
+
+    <div id="s-lc-group-description">
+        <p><span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:10.5pt"><span style="font-family:&quot;Arial&quot;,sans-serif">Library West offers 15 rooms to current UF students for group study and 12 carrels for individual study or Zoom calls. </span></span></span></span></p>
+
+    </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="s-lc-eq-search-results" aria-live="polite" class="margin-bottom-lg">
+                <h2 class="s-lc-section-header margin-top-none" tabindex="-1">
+            Showing 6 matches<span class="visible-md-inline visible-lg-inline">, 10:30pm - 11:00pm, Wednesday, October 28, 2026</span>
+        </h2>
+
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/235149?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=53bfba85298d164bfde1154e327b03ef&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://d68g328n4ug0e.cloudfront.net/misc/6/eq/item/2026_07_28_11_06_24.jpg" alt="Individual Study Carrel G-208" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/235149?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=53bfba85298d164bfde1154e327b03ef">
+                    Individual Study Carrel G-208
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:00pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    This space is for individual study use. Headphones and dry-erase boards with markers can be borrowed from the Circulation Desk.
+
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="235149">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="53bfba85298d164bfde1154e327b03ef">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        1
+    </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/235143?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=e34f766016c9e1b0caf5277b5545751e&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://d68g328n4ug0e.cloudfront.net/misc/6/eq/item/2026_07_28_10_47_06.jpg" alt="Individual Study Carrel G-202" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/235143?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=e34f766016c9e1b0caf5277b5545751e">
+                    Individual Study Carrel G-202
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:30pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    This space is for individual study use. Headphones and dry-erase boards with markers can be borrowed from the Circulation Desk.
+
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="235143">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="e34f766016c9e1b0caf5277b5545751e">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        1
+    </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/235147?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=6d8288cb21a010a3cba7f6e1ca1841d9&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://d68g328n4ug0e.cloudfront.net/misc/6/eq/item/2026_07_28_11_04_48.jpg" alt="Individual Study Carrel G-206" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/235147?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=6d8288cb21a010a3cba7f6e1ca1841d9">
+                    Individual Study Carrel G-206
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:30pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    This space is for individual study use. Headphones and dry-erase boards with markers can be borrowed from the Circulation Desk.
+
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="235147">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="6d8288cb21a010a3cba7f6e1ca1841d9">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        1
+    </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/235151?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=b54225df7e763181a13fe63595df4a06&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://d68g328n4ug0e.cloudfront.net/misc/6/eq/item/2026_07_28_11_07_13.jpg" alt="Individual Study Carrel G-210" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/235151?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=b54225df7e763181a13fe63595df4a06">
+                    Individual Study Carrel G-210
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:30pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    This space is for individual study use. Headphones and dry-erase boards with markers can be borrowed from the Circulation Desk.
+
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="235151">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="b54225df7e763181a13fe63595df4a06">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        1
+    </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/235150?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=57bef1daab5a1b3ad39bfaafb6935dae&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://d68g328n4ug0e.cloudfront.net/misc/6/eq/item/2026_07_28_11_06_50.jpg" alt="Individual Study Carrel G-209" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/235150?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=57bef1daab5a1b3ad39bfaafb6935dae">
+                    Individual Study Carrel G-209
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:30pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    This space is for individual study use. Headphones and dry-erase boards with markers can be borrowed from the Circulation Desk.
+
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="235150">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="57bef1daab5a1b3ad39bfaafb6935dae">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        1
+    </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="media s-lc-booking-suggestion" data-start="0" data-end="0" data-duration="0">
+    <div class="media-left s-lc-eq-image s-lc-desktop-only">
+                    <a href="/space/29502?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=d0a98129c87b4098be575cee00cdc11a&image=true" aria-hidden="true" tabindex="-1">
+                <img loading="lazy" class="media-object img-rounded" src="https://libapps.s3.amazonaws.com/accounts/291264/images/405.jpeg" alt="Group Study Rm. 405" />
+            </a>
+            </div>
+
+    <div class="media-body">
+        <h3 class="media-heading s-lc-suggestion-heading">
+                            <a href="/space/29502?start=2026-10-28%2022%3A30%3A00&amp;end=2026-10-28%2023%3A00%3A00&amp;checksum=d0a98129c87b4098be575cee00cdc11a">
+                    Group Study Rm. 405
+                </a>
+                    </h3>
+
+        <div class="s-lc-suggestion-body">
+            <div class="s-lc-booking-group">
+                Study Rooms
+                                            </div>
+
+                            <div class="s-lc-booking-times">
+
+                                            <span class="s-lc-booking-next-prev margin-right-med">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Previous Booking Ends at 10:30pm
+                        </span>
+
+                        <br class="s-lc-mobile-only">
+
+                                    </div>
+
+                            <div class="s-lc-booking-desc">
+                    Up to 6 people can study in Room 405 at a time. It has a 55-inch flat screen display, with AirMedia casting available. There is a large glass white board, and dry-erase markers can be borrowed from the Circulation Desk.
+
+Note: This study room is located...
+                </div>
+                    </div>
+
+        <div class="s-lc-suggestion-footer">
+            <div class="s-lc-booking-actions">
+                <form method="post" target="_top" action="/space/booking/form" autocomplete="off">
+                    <input type="hidden" name="eid" value="29502">
+                                        <input type="hidden" name="gid" value="7520">
+                    <input type="hidden" name="lid" value="4458">
+                    <input type="hidden" name="start" value="2026-10-28 22:30:00">
+                    <input type="hidden" name="end" value="2026-10-28 23:00:00">
+                    <input type="hidden" name="checksum" value="d0a98129c87b4098be575cee00cdc11a">
+                    <input type="hidden" name="method" value="40">
+                    <input type="hidden" name="returnUrl" value="">
+                    <input type="hidden" name="unavailableUrl" value="">
+
+
+                    <button type="submit" class="btn btn-primary btn-sm s-lc-font-size-standard s-lc-suggestion-book-now">
+                        Book Now
+                    </button>
+                </form>
+            </div>
+
+            <div class="s-lc-booking-icons">
+                    <span title="The capacity of this space">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        6
+    </span>
+
+                <span title="Accessible Seat/Space">
+            <i class="fa fa-wheelchair-alt" aria-hidden="true"></i>
+        </span>
+                </div>
+        </div>
+    </div>
+</div>
+            </div>
+
+
+<div id="s-lc-eq-form" style="clear:both; display: none;" aria-live="polite">
+</div>
+
+<div id="s-lc-eq-errors" class="alert alert-danger" style="display: none;" role="region" aria-live="polite">
+</div>
+
+<div id="s-lc-eq-success" style="display: none;" aria-live="polite" tabindex="-1">
+</div>
+                            </div>
+        </div>
+    </div>
+    </main>
+
+    <footer id="s-lc-public-footer" class="row s-lc-public-footer">
+        <div id="s-lc-public-footer-brand">
+    <span title="libcal-us-3">Powered by</span> <a href="https://www.springshare.com" class="s-lc-link-in-text">Springshare</a>.
+</div>
+
+<div id="s-lc-public-footer-rights">
+    All rights reserved.
+</div>
+
+    <div id="s-lc-footer-support-link">
+        <a href="mailto:webmaster@uflib.ufl.edu">Report a tech support issue.</a>
+    </div>
+
+
+        <div id="s-lc-public-footer-admin-links" role="navigation" aria-label="Admin Footer">
+                            <a id="s-lc-sign-in" href="https://ufl.libapps.com/libapps/login.php?site_id=4162&amp;target=">Login to LibApps</a>
+                    </div>
+
+        <div class="s-lc-public-footer-actions">
+
+<div id="s-lc-language">
+    <select id="s-lc-language-selector" aria-label="Select Language">
+                <option value="ca" >català</option>
+                <option value="cy" >Cymraeg</option>
+                <option value="en" selected>English</option>
+                <option value="es" >español</option>
+                <option value="fr" >français</option>
+                <option value="ga" >Irish</option>
+                <option value="ja" >日本語 Nihongo</option>
+                <option value="nl" >Nederlands</option>
+                <option value="sl" >slovenski jezik</option>
+                <option value="vi" >Tiếng Việt</option>
+                <option value="zh" >中文 Zhōngwén</option>
+            </select>
+</div>
+</div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-272759-20"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-272759-20');
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DPWJ6V3EVH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DPWJ6V3EVH');
+</script>
+</div>
+
+<div id="s-lc-public-cust-footer"><!-- ACCESSIBLE FOOTER: Custom LibCal footer - Javascript back to 'Top Of Page', rather than #s-lc-public-title-area. Code for non javascript commented out below - MD 02/17/26 -->
+<footer id="custom-footer-links" role="contentinfo" aria-label="Library Footer">
+  <div class="container">
+
+    <div class="footer-row">
+      <!-- Column 1: Logo & Contact -->
+      <div class="footer-col branding-col">
+        <!-- Logo: Alt text describes function ("University of Florida Home Page") not just appearance -->
+        <a href="https://www.ufl.edu/">
+            <img src="https://www.uflib.ufl.edu/tools/_images/uf_logo_full.png" alt="University of Florida Home Page" class="footer-logo">
+        </a>
+        <p class="contact-text">
+            <!-- Libraries Name is a link to the homepage for better navigation -->
+            <!-- CLASS UPDATED: Removed special sizing to match body text -->
+            <strong><a href="https://uflib.ufl.edu/" class="library-header-link">George A. Smathers Libraries</a></strong><br>
+            University of Florida<br>
+            Gainesville, FL 32611<br>
+            <br>
+            <!-- Phone/Email: Explicit links allow "click to call" and "click to email" for accessibility -->
+            <strong>Phone:</strong> <a href="tel:18662816309" aria-label="Call Library Help">(866) 281-6309</a><br>
+            <strong>Email:</strong> <a href="mailto:ask@ufl.libanswers.com">ask@ufl.libanswers.com</a>
+        </p>
+        <div class="social-icons">
+            <!-- Social Icons: 'aria-label' is CRITICAL here so screen readers know where the link goes,
+                 since the icon itself is hidden from AT via 'aria-hidden' -->
+            <a href="https://www.facebook.com/uflib" aria-label="Follow UF Libraries on Facebook"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/uflib/" aria-label="Follow UF Libraries on Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/user/UFlibraries" aria-label="Subscribe to UF Libraries on YouTube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+            <a href="https://www.linkedin.com/company/smatherslibraries/" aria-label="Follow UF Libraries on LinkedIn"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <!-- H3s used for column headers to allow screen reader users to jump by Heading -->
+        <h3>Quick Links</h3>
+        <ul class="footer-list">
+          <!-- Links use descriptive text, avoiding "Click Here" -->
+          <li><a href="https://libcal.uflib.ufl.edu/hours/">Library Hours</a></li>
+          <li><a href="https://catalog.ufl.edu">Library Catalog</a></li>
+          <li><a href="https://uflib.ufl.edu/using-the-libraries/studyareas/">Study and Testing Spaces</a></li>
+          <li><a href="https://www.uflib.ufl.edu/status/">Library Occupancy Status</a></li>
+          <li><a href="https://uflib.ufl.edu/using-the-libraries/accessibility/">Accessibility Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Information (Moved from Col 4) -->
+      <div class="footer-col">
+        <h3>Information</h3>
+        <ul class="footer-list">
+           <li><a href="https://uflib.ufl.edu/my-accounts/">Library Accounts</a></li>
+           <li><a href="https://uflib.ufl.edu/find/">Find Library Resources</a></li>
+           <li><a href="https://uflib.ufl.edu/libraries-collections/">Libraries and Collections</a></li>
+           <li><a href="https://uflib.ufl.edu/using-the-libraries/">Using the Libraries</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Policies, License & Back to Top -->
+      <div class="footer-col">
+        <h3>Policies</h3>
+        <ul class="footer-list">
+          <li><a href="http://privacy.ufl.edu/privacy-policies-and-procedures/onlineinternet-privacy-statement/">UF Privacy Policy</a></li>
+          <li><a href="https://policies.google.com/privacy">Google Privacy Policy</a></li>
+          <li><a href="https://uflib.ufl.edu/about/user-policies/">Library User Policies</a></li>
+        </ul>
+
+        <!-- Creative Commons License -->
+        <div class="license-section" style="margin-top: 25px; margin-bottom: 20px;">
+           <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
+               <img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png">
+           </a>
+        </div>
+
+        <!-- Universal Back to Top Button -->
+        <div style="margin-top: 30px;">
+             <!--
+             BACKUP: Static HTML version if not using Javascript.
+             This targets a specific ID (#s-lc-public-title-area) common in LibCal/LibGuides.
+             Uncomment if JS is forbidden or failing.
+             <a href="#s-lc-public-title-area" class="back-to-top-btn">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i> Back to Top
+             </a>
+             -->
+
+             <!--
+             PRIMARY: JS Version.
+             1. Uses scrollIntoView for smooth scrolling on all browsers.
+             2. Sets tabindex='-1' on body to allow programmatic focus.
+             3. Explicitly moves focus to body to reset tab order for keyboard users.
+             -->
+             <a href="#" class="back-to-top-btn" onclick="document.body.scrollIntoView({ behavior: 'smooth' }); document.body.setAttribute('tabindex','-1'); document.body.focus(); return false;" aria-label="Scroll to top of page">
+                <i class="fa fa-arrow-up" aria-hidden="true"></i> Back to Top
+             </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright Bar -->
+    <div class="footer-bottom">
+        &copy; <script>document.write(new Date().getFullYear())</script> University of Florida
+    </div>
+  </div>
+</footer>
+
+<style>
+/* 1. FOOTER CONTAINER - Navy Theme */
+#custom-footer-links {
+    background-color: #0F1D38; /* Deep Navy Background */
+    color: #f1f1f1;            /* Light Text: Contrast Ratio 13:1 (Passes AAA) */
+    border-top: 6px solid #E56A24; /* Burnt Orange Accent */
+    padding-top: 40px;
+    padding-bottom: 0;
+    margin-top: 50px;
+    font-size: 1.05rem; /* Increased size for readability */
+    line-height: 1.6;
+}
+
+/* 2. LAYOUT - 4 Columns */
+.footer-row {
+    display: flex;
+    flex-wrap: wrap; /* Allows stacking on mobile */
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 30px;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 240px; /* Prevents columns from becoming too narrow */
+}
+
+/* 3. TYPOGRAPHY & HEADINGS */
+.footer-col h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Slate Blue Divider used for non-text graphics (Ratio 3.3:1 - Passes Non-Text Contrast) */
+    border-bottom: 2px solid #506A9A;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.footer-logo {
+    width: 200px;
+    height: auto;
+    background: #fff; /* White bg ensures logo contrast against dark footer */
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* 4. LINKS & CONTACT INFO */
+.contact-text a {
+    color: #E56A24; /* Orange text for high priority contact info (Ratio 4.87:1 - Passes AA) */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/*
+   UPDATED: Library Header Link
+   Now inherits standard size/weight from parent <p> and uses consistent hover
+*/
+.library-header-link {
+    color: #fff !important; /* Starts white */
+    border-bottom: 2px solid transparent !important;
+}
+
+/* Consistent Hover State (Matches other links) */
+.library-header-link:hover,
+.library-header-link:focus {
+    color: #fff !important;
+    border-bottom: 2px solid #E56A24 !important; /* Thick Orange Underline */
+    background-color: rgba(229, 106, 36, 0.1);
+    text-decoration: none;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list li {
+    margin-bottom: 10px; /* Spacing prevents "link crowding" for touch users */
+    border-bottom: 1px solid #506A9A;
+    padding-bottom: 6px;
+}
+
+#custom-footer-links a {
+    color: #ddd; /* Off-white reduces eye strain compared to pure white */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+/* IMPROVED HOVER STATE (High Visibility) */
+/* Instead of just changing color, we add a thick underline and background glow */
+#custom-footer-links a:hover,
+#custom-footer-links a:focus {
+    color: #fff;
+    border-bottom: 2px solid #E56A24;
+    background-color: rgba(229, 106, 36, 0.1);
+    text-decoration: none;
+}
+
+/* High Contrast Focus Ring (Critical for Keyboard Navigation) */
+/* Forces an Orange ring even on dark backgrounds where browser default might fail */
+#custom-footer-links a:focus {
+    outline: 3px solid #E56A24 !important;
+    outline-offset: 4px;
+}
+
+/* 5. BACK TO TOP BUTTON STYLING */
+/* Styled as a button to distinguish it from navigation links */
+.back-to-top-btn {
+    display: inline-block;
+    background-color: transparent;
+    color: #E56A24 !important;
+    border: 2px solid #E56A24 !important;
+    padding: 10px 18px; /* Large touch target */
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.back-to-top-btn:hover,
+.back-to-top-btn:focus {
+    background-color: #E56A24 !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-bottom: 2px solid #E56A24 !important;
+}
+
+/* 6. SOCIAL ICONS */
+.social-icons {
+    margin-top: 20px;
+    font-size: 2rem; /* Large size for easy clicking */
+}
+
+.social-icons a {
+    margin-right: 20px;
+    color: #fff !important;
+    border-bottom: none !important;
+}
+
+.social-icons a:hover {
+    color: #E56A24 !important;
+    transform: scale(1.1);
+    background-color: transparent !important;
+}
+
+/* 7. BOTTOM COPYRIGHT BAR */
+.footer-bottom {
+    background-color: #0a1426;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.95rem;
+    color: #aaa;
+    border-top: 1px solid #506A9A;
+}
+
+/* 8. RESPONSIVE STACKING (Mobile Accessibility) */
+@media (max-width: 768px) {
+    .footer-row {
+        flex-direction: column; /* Stacks columns vertically */
+    }
+
+    .footer-col {
+        width: 100%;
+        margin-bottom: 30px;
+        /* Adds dividers between stacked columns to help low-vision users distinguish sections */
+        border-bottom: 1px solid #506A9A;
+        padding-bottom: 20px;
+    }
+
+    .footer-col:last-child {
+        border-bottom: none;
+    }
+
+    .footer-col h3 {
+        color: #E56A24; /* Highlights headings for easier scanning on small screens */
+    }
+}
+</style>
+
+<!--Ask Us slide out chatbot widget -->
+<script src="https://answers.uflib.ufl.edu/load_chat.php?hash=334039ff593f23d4bbfdd42be93aa8e5a19e4a56556c06aa14ee143416d419b7"></script>
+<div id="libchat_334039ff593f23d4bbfdd42be93aa8e5a19e4a56556c06aa14ee143416d419b7"></div></div>
+            <script>
+            var springyPage = {
+                searchFilters: {"zoneIdNameModelsByLocationId":{"11766":[{"id":3171,"name":"Library West: SW Corner 2nd Floor"}],"4913":[{"id":4814,"name":"First Floor"},{"id":4815,"name":"Second Floor"},{"id":4816,"name":"Third Floor"}]},"zoneIdNameModelsForGroup":[],"groupIdNameModelsByLocationId":{"4455":[{"id":7509,"name":"Study Rooms"},{"id":48866,"name":"Relaxation Room"}],"4458":[{"id":7520,"name":"Study Rooms"},{"id":8874,"name":"One Button Studio"},{"id":8875,"name":"Bloomberg Workstation"}],"4913":[{"id":8476,"name":"Individual Study Rooms"},{"id":9718,"name":"Group Study Rooms"},{"id":26971,"name":"HSCL Conference Rooms\/Computer Labs"}],"11766":[{"id":23448,"name":"Proctoring Booths"}],"20986":[{"id":44174,"name":"Borland Rooms"}],"4316":[{"id":7502,"name":"Study Rooms"}]},"capacityIndexesByLocation":{"4458":{"3":true,"2":true,"4":true,"1":true}},"searchFilters":{"2789":{"id":2789,"icon":"fa-wheelchair-alt","name":"Accessible Seat\/Space"}},"searchFilterMappingsByResource":{"1":{"28305":[2789],"29491":[2789],"29496":[2789],"29498":[2789],"29501":[2789],"29502":[2789],"29503":[2789],"29504":[2789],"29506":[2789],"29508":[2789],"33016":[2789],"33017":[2789],"40381":[2789]}}},
+                isDailySearchByGroupId: {"7520":false,"8874":false,"8875":false},
+                endTimeRulesByGroupId: {"7520":{"min":30,"max":120,"step":30},"8874":{"min":30,"max":120,"step":30},"8875":{"min":30,"max":120,"step":30}},
+                isUsingPeriodBookings: false,
+                returnUrl: window.location.pathname,
+                unavailableUrl: window.location.href,
+                locationId: 4458,
+                isLibAuthEnabled: 1,
+                bookingMethod: 40,
+                capacityAllSpaces: 0,
+                focusTarget: '#s-lc-eq-search-results h2',
+                text: {
+                    showAll: 'Show\u0020All',
+                    selectCategory: 'Select\u0020Category',
+                    allSpaces: 'All\u0020Spaces\u0020\u0028not\u0020seats\u0029',
+                    date: 'Date',
+                    from: 'From',
+                    periodNoGroup: 'Select\u0020Category',
+                    periodEmpty: 'Closed',
+                    periodLoading: 'Fetching\u0020period\u0020information',
+                    timeErrorMin: 'Value\u0020must\u0020be\u0020\u0025time\u0025\u0020or\u0020later',
+                    timeErrorMax: 'Value\u0020must\u0020be\u0020\u0025time\u0025\u0020or\u0020earlier',
+                },
+            };
+        </script>
+
+    <script defer src="https://static-assets-us.libcal.com/js_165/direct/public/equipment/search/periods.min.js"></script>
+    <script defer src="https://static-assets-us.libcal.com/js_165/direct/public/equipment/search/search.min.js"></script>
+
+
+
+</body>
+</html>

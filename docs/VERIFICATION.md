@@ -95,7 +95,29 @@ No completed physical VoiceOver traversal, Reduce Motion/Reduce Transparency dev
 - Real native Apple sign-in, provider credential revocation, Apple authorization-code exchange/revocation and the complete in-app deletion flow need the owner's Team/App ID/provider/server secrets and signed devices. Local Auth tests used disposable password accounts and do not claim Apple success.
 - Native two-Apple-client contribution → shared update → app-relaunch testing on a hosted backend remains blocked. A fresh HTTP fetch demonstrates local server persistence, not an actual native app restart with Apple authentication.
 - Public URLs/contact details, final privacy answers/log/backup review, distribution signing, TestFlight, App Store Connect submission and physical-device tests remain owner inputs.
-- Catalog usable entrances, actual date-specific hours/exceptions and general entry eligibility remain unverified. Unknown amenities remain null. The official occupancy feed is intentionally unavailable, not integrated.
+- Catalog usable entrances and general entry eligibility still need field verification. Unknown amenities remain null. The October 29 update below supersedes the earlier occupancy/hours limitation: public UF counts, schedules and room searches are integrated.
 - Offline/reconnect, sign-in cancellation, deletion failure and error-recovery implementations need complete real-device/manual validation with the configured release backend.
 
 Release preflight intentionally fails with the missing inputs rather than producing a false readiness claim. See `evidence/release-preflight.txt`, BACKEND.md and RELEASE.md.
+
+
+## October 29, 2026: live sources, student planning and motion update
+
+The earlier baseline sections are historical. This update integrates the public UF feeds into the normal app, and supersedes the earlier statement that occupancy/date-specific hours were unavailable. The standard Development app was used throughout these checks; no synthetic data was substituted.
+
+**33 tests passed, zero failures, zero skips:** 29 domain/source/transport tests and four native UI scenarios on iPhone 17 Pro, iOS 26.2 (arm64 simulator). The final result bundle was `BetweenVerifiedFinal.xcresult`; a portable summary is in [evidence/student-live-tests-2026-10-29.json](evidence/student-live-tests-2026-10-29.json).
+
+The native scenarios exercised:
+
+1. Choose Library West as an explicit origin → choose Turlington Hall from UF's building directory as the next class → apply the plan → submit an unsuccessful library search → clear it → recover from empty Saved back to Find.
+2. Real UF count with fresh retrieval label → map → Education row consistency after schedule refresh → West (open or closed according to actual campus time) → published weekly hours → real selected-time LibCal results, with source and freshness labels.
+3. Map/list changes using the same custom reduced-motion path read from the system preference. The debug launch override does not change the device's accessibility setting.
+4. Actual accessibility XXXL content-size layout → search → no matches → clear → recovered results. The test asserts that the accessibility-specific layout is active.
+
+Use `scripts/test-live-ios.sh <simulator-UUID>` to reproduce these selected tests. The equivalent Xcode invocation uses `-scheme Between -configuration Development`, `-only-testing:BetweenTests`, and the four test names in that script, with `CODE_SIGNING_ALLOWED=NO`. The source folder was copied out of iCloud Documents to a temporary local build directory because Xcode file coordination stalled on the iCloud-backed checkout. Source and project contents were mirrored before the final run.
+
+A separate production-service HTTPS runner, `scripts/verify-live-data.sh`, completed at **2026-10-29T10:46:55Z**: eleven counts, six complete schedules, and successful room searches for West, Marston, Education and Health Science. Marston returned 22 exact-time spaces for 7:00–7:30 AM campus time; the other three returned valid zero-result responses. These are observed results at that time, not fixed expectations. See [the saved source snapshot](evidence/live-sources-2026-10-29.json). Source fixtures test positive room results, zero results with other-time suggestions, returned-time mismatch, malformed data and the real UF campus-building record.
+
+Final manual visual checks covered settled map tiles and compact map controls, native card-to-detail navigation, the Rooms shortcut showing 22 real spaces and capacities, and light/dark appearance. The new `Live-*` screenshots show actual Development data; older palette/Demo screenshots remain historical. This is visual/functional simulator evidence, not a measured animation frame-rate or physical-device power test.
+
+The [student experience review](STUDENT-UX-REVIEW.md) documents audience hypotheses, the walkthrough findings and shipped fixes. No actual student interview study, physical VoiceOver traversal, physical Reduce Motion test, signed Apple account lifecycle or App Store release certification is claimed. UF supplies no sensor timestamp or guaranteed free-seat count. Reservations are completed only on UF's site.

@@ -1,0 +1,57 @@
+[
+  {
+    "BLDGCODE": "B800000267",
+    "BLDG": "0267",
+    "NAME": "Turlington Hall",
+    "ABBREV": "TUR",
+    "OFFICIAL_ROOM_NAME": "",
+    "LAT": 29.64921,
+    "LON": -82.34407,
+    "SITECODE": "S900000001",
+    "BLDG_NAME": "Turlington Hall"
+  },
+  {
+    "BLDGCODE": "B800012989",
+    "BLDG": "0065",
+    "NAME": "Heavener Hall",
+    "ABBREV": "HVNR",
+    "OFFICIAL_ROOM_NAME": "",
+    "LAT": 29.65172,
+    "LON": -82.34025,
+    "SITECODE": "S900000001",
+    "BLDG_NAME": "Heavener Hall"
+  },
+  {
+    "BLDGCODE": "B800000101",
+    "BLDG": "0101",
+    "NAME": "Norman Hall",
+    "ABBREV": "NRN",
+    "OFFICIAL_ROOM_NAME": "",
+    "LAT": 29.64685,
+    "LON": -82.33812,
+    "SITECODE": "S900000001",
+    "BLDG_NAME": "Norman Hall"
+  },
+  {
+    "BLDGCODE": "B800000686",
+    "BLDG": "0686",
+    "NAME": "Reitz Student Union",
+    "ABBREV": "REI",
+    "OFFICIAL_ROOM_NAME": "",
+    "LAT": 29.64631,
+    "LON": -82.34788,
+    "SITECODE": "S900000001",
+    "BLDG_NAME": "Reitz Student Union"
+  },
+  {
+    "BLDGCODE": "B800000013",
+    "BLDG": "0013",
+    "NAME": "Newell Hall",
+    "ABBREV": "NEW",
+    "OFFICIAL_ROOM_NAME": "",
+    "LAT": 29.64909,
+    "LON": -82.34508,
+    "SITECODE": "S900000001",
+    "BLDG_NAME": "Newell Hall"
+  }
+]

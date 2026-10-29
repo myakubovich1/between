@@ -8,16 +8,19 @@ struct SavedView: View {
             LazyVStack(alignment: .leading, spacing: 14) {
                 Text("Keep your good spots close.").font(.subheadline).foregroundStyle(Color.metadata).padding(.bottom, 12)
                 if store.favorites.isEmpty {
-                    ContentUnavailableView("Your next favorite is out there", systemImage: "bookmark", description: Text("Save a place from Find. It stays on this device, even when you browse as a guest.")).padding(.top, 50)
+                    ContentUnavailableView("Keep a good spot handy", systemImage: "bookmark", description: Text("Save a library from Find. Your favorites stay on this device without an account.")).padding(.top, 30)
+                    PrimaryButton(title: "Find a library", symbol: "magnifyingglass") { store.selectedTab = 0 }.accessibilityIdentifier("saved-find")
                 } else {
                     ForEach(store.places.filter { store.favorites.contains($0.id) }) { place in
                         NavigationLink { PlaceDetailView(place: place) } label: {
                             Surface {
                                 VStack(alignment: .leading, spacing: 10) {
                                     Label(place.shortName, systemImage: place.symbol).font(.headline).foregroundStyle(Color.ink)
-                                    if !store.config.isDemo { OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now) }
-                                    StatusLabel(evidence: store.status(place: place.id), now: store.now)
-                                    EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
+                                    if !store.config.isDemo { OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, refreshFailed: store.occupancyFailures.contains(place.id)) }
+                                    if store.config.isDemo || store.communityAvailable {
+                                        StatusLabel(evidence: store.status(place: place.id), now: store.now)
+                                        EvidenceCaption(evidence: store.status(place: place.id), now: store.now)
+                                    }
                                     Text(store.offline ? "Cached conditions · may be old" : "Check hours and entry before you go").font(.caption).foregroundStyle(Color.metadata)
                                 }.frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -45,21 +48,22 @@ struct YouView: View {
                 if !store.signedIn {
                     if store.config.isDemo {
                         Button("Use demo contributor") { store.signedIn = true }.frame(minHeight: 44)
-                    } else if store.live != nil {
+                    } else if store.communityAvailable {
                         SignInWithAppleButton(.signIn, onRequest: store.prepareApple) { result in Task { await store.completeApple(result) } }.frame(height: 50)
-                    } else { Text("Live sign-in needs your backend configuration. Guest discovery and local saves are available.").font(.footnote).foregroundStyle(Color.metadata) }
+                    } else { Text("Live library data and saved places are available without an account.").font(.footnote).foregroundStyle(Color.metadata) }
                 }
             }
             if !store.config.isDemo {
-                Section("Connected to UF") {
+                Section("UF library sources") {
                     Link(destination: UFLibraryData.sourceURL) { Label("UF Libraries occupancy", systemImage: "person.2") }
                     Link(destination: URL(string: "https://libcal.uflib.ufl.edu/hours/")!) { Label("Official opening hours", systemImage: "clock") }
-                    Text("Published building counts and date-specific schedules. Student reports are shown separately. Sensor timestamps aren’t supplied by UF’s current display feed.").font(.caption).foregroundStyle(Color.metadata)
+                    Link(destination: URL(string: "https://uflib.ufl.edu/using-the-libraries/studyareas/")!) { Label("Study spaces & reservations", systemImage: "calendar") }
+                    Text("Official building and area counts, date-specific hours, and room/carrel availability from UF’s public sources. Counts do not measure available seats. Sensor timestamps aren’t supplied by UF’s display feed.").font(.caption).foregroundStyle(Color.metadata)
                 }
             }
             Section("Make it yours") {
                 Button { filters = true } label: { Label("Study preferences", systemImage: "slider.horizontal.3") }.frame(minHeight: 44)
-                NavigationLink { MyReportsView() } label: { Label("My reports", systemImage: "text.bubble") }.disabled(!store.signedIn)
+                if store.signedIn { NavigationLink { MyReportsView() } label: { Label("My reports", systemImage: "text.bubble") } }
             }
             Section("Your data") {
                 NavigationLink { DataExplanationView() } label: { Label("What Between keeps", systemImage: "hand.raised") }
@@ -67,7 +71,6 @@ struct YouView: View {
                 publicLink("Privacy policy", key: "PrivacyURL")
                 publicLink("Terms of use", key: "TermsURL")
                 publicLink("Support", key: "SupportURL")
-                if store.config.publicURL("SupportURL") == nil { Text("Support and public policy details are unavailable in this development build.").font(.caption).foregroundStyle(Color.metadata) }
             }
             if store.signedIn {
                 Section("Account") {

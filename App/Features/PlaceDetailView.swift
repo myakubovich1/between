@@ -3,18 +3,22 @@ import MapKit
 
 struct PlaceDetailView: View {
     @Environment(AppStore.self) private var store
+    @Environment(\.betweenReducedMotion) private var reduceMotion
     @State private var zoneID: String?
     @State private var sheet: DetailSheet?
     @State private var route: MKRoute?
     @State private var routing = false
     @State private var routeError: String?
     @State private var showRoute = false
+    @State private var directionsAfterOrigin = false
     @State private var directionTask: Task<Void, Never>?
     let place: Place
-    enum DetailSheet: String, Identifiable { case report, evidence; var id: String { rawValue } }
+    private var publishedPlace: Place { store.places.first { $0.id == place.id } ?? place }
+    enum DetailSheet: String, Identifiable { case report, evidence, origin; var id: String { rawValue } }
     private var evidence: Evidence { store.status(place: place.id, zone: zoneID) }
-    private var recommendation: Recommendation? { RecommendationEngine.recommendations(places: [place], journeys: store.journeys, evidence: store.evidenceByPlace, filters: Filters(minimumStudy: 0), plan: store.plan, now: store.now).first }
+    private var recommendation: Recommendation? { RecommendationEngine.recommendations(places: [publishedPlace], journeys: store.journeys, evidence: store.evidenceByPlace, filters: Filters(minimumStudy: 0), plan: store.plan, now: store.now).first }
     var body: some View {
+        ScrollViewReader { proxy in
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 VStack(alignment: .leading, spacing: 12) {
@@ -36,7 +40,7 @@ struct PlaceDetailView: View {
                     Surface {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack { Eyebrow(text: "Official UF occupancy"); Spacer(); Image(systemName: "building.2.crop.circle").foregroundStyle(Color.ink) }
-                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, expanded: true)
+                            OfficialCountLabel(observation: store.officialOccupancy[place.id], now: store.now, expanded: true, refreshFailed: store.occupancyFailures.contains(place.id), loading: store.refreshing && !store.hasRefreshedOfficial)
                             Link(destination: UFLibraryData.sourceURL) { Label("View UF’s occupancy page", systemImage: "arrow.up.right.square").font(.subheadline).frame(minHeight: 44) }
                         }
                     }
@@ -55,6 +59,26 @@ struct PlaceDetailView: View {
                         }
                     }
                 }
+                if !store.config.isDemo {
+                    PublishedHoursView(place: publishedPlace, now: store.now)
+                    let areas = publishedPlace.zones.filter { UFLibraryData.displays[$0.id] != nil }
+                    if !areas.isEmpty {
+                        Surface {
+                            VStack(alignment: .leading, spacing: 16) {
+                                Eyebrow(text: "Counts within the library")
+                                ForEach(areas) { area in
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text(area.name).font(.headline)
+                                        OfficialCountLabel(observation: store.officialOccupancy[area.id], now: store.now, refreshFailed: store.occupancyFailures.contains(area.id), area: "area")
+                                    }
+                                }
+                                Text("Area counts may overlap with building totals. They are not added together.").font(.caption2).foregroundStyle(Color.metadata)
+                            }
+                        }
+                    }
+                    if RoomLocation.all[place.id] != nil { StudyRoomsView(place: publishedPlace).id("rooms") }
+                }
+                if store.config.isDemo || store.communityAvailable {
                 Surface {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack { Eyebrow(text: zoneID == nil ? "Building reports" : "This zone’s reports"); Spacer(); Image(systemName: "person.2.wave.2").foregroundStyle(Color.ink) }
@@ -67,10 +91,11 @@ struct PlaceDetailView: View {
                         Button { sheet = .evidence } label: { HStack { Text("Where this comes from"); Spacer(); Image(systemName: "chevron.right") }.font(.subheadline).frame(minHeight: 44) }.accessibilityIdentifier("evidence")
                     }
                 }
-                if let recommendation {
+                }
+                if store.hasOrigin, let recommendation {
                     Surface {
                         VStack(alignment: .leading, spacing: 14) {
-                            Eyebrow(text: "Your \(store.plan.available)-minute gap")
+                            Eyebrow(text: "Your \(store.remainingMinutes) minutes remaining")
                             HStack(alignment: .firstTextBaseline, spacing: 6) {
                                 Text("\(recommendation.studyMinutes)").font(.system(size: 48, weight: .semibold, design: .rounded)).foregroundStyle(Color.ink)
                                 Text("minutes to study").font(.headline)
@@ -83,7 +108,7 @@ struct PlaceDetailView: View {
                             }
                             Text(store.config.isDemo ? "Synthetic route times & hours · Demo data" : recommendation.journey.estimated ? "Walk times are distance-based estimates; check a walking route." : "Walk times from MapKit · allow extra time for finding a seat.").font(.caption).foregroundStyle(Color.metadata)
                             if recommendation.uncertain { Text("Possible study time only. Confirm hours and entry before you go.").font(.caption).foregroundStyle(Color.metadata) }
-                            if store.plan.nextID == nil { Text("Onward travel is excluded until you set a next destination.").font(.caption).foregroundStyle(Color.metadata) }
+                            if !store.plan.hasNextDestination { Text("Onward travel is excluded until you set a next destination.").font(.caption).foregroundStyle(Color.metadata) }
                         }
                     }
                 }
@@ -112,15 +137,35 @@ struct PlaceDetailView: View {
             }.padding(20).padding(.bottom, 12)
         }
         .background(Color.canvas)
+        .refreshable { await store.refresh(force: true) }
         .navigationTitle(place.shortName).navigationBarTitleDisplayMode(.inline).toolbar(.visible, for: .navigationBar)
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 12) {
-                PrimaryButton(title: routing ? "Finding route…" : "Directions", symbol: "figure.walk") { directionTask?.cancel(); directionTask = Task { await directions() } }.disabled(routing)
+                PrimaryButton(title: !store.hasOrigin ? "Set start" : routing ? "Finding route…" : "Directions", symbol: store.hasOrigin ? "figure.walk" : "mappin.circle") {
+                    if !store.hasOrigin { directionsAfterOrigin = true; sheet = .origin }
+                    else { directionTask?.cancel(); directionTask = Task { await directions() } }
+                }.disabled(routing)
+                if RoomLocation.all[place.id] != nil && !store.config.isDemo {
+                    Button { withAnimation(BetweenMotion.animation(reduceMotion)) { proxy.scrollTo("rooms", anchor: .top) } } label: {
+                        Label("Rooms", systemImage: "calendar").font(.headline).frame(minWidth: 90, minHeight: 52).padding(.horizontal, 10).background(Color.highlight, in: RoundedRectangle(cornerRadius: 16))
+                    }.buttonStyle(BetweenPressStyle()).accessibilityIdentifier("find-rooms")
+                }
+                if store.config.isDemo || store.communityAvailable {
                 Button { sheet = .report } label: { Label("Report", systemImage: "plus.bubble").font(.headline).frame(minWidth: 100, minHeight: 52).padding(.horizontal, 8).background(Color.highlight, in: RoundedRectangle(cornerRadius: 16)) }.accessibilityIdentifier("report-conditions")
+                }
             }.padding(.horizontal, 20).padding(.vertical, 12).background(.bar)
         }
-        .sheet(item: $sheet) { sheet in
-            Group { switch sheet { case .report: ReportView(place: place, initialZone: zoneID); case .evidence: EvidenceView(place: place, zone: zoneID) } }.modifier(DemoSheetLabel())
+        .sheet(item: $sheet, onDismiss: {
+            if directionsAfterOrigin {
+                directionsAfterOrigin = false
+                if store.hasOrigin { directionTask = Task { await directions() } }
+            }
+        }) { sheet in
+            Group { switch sheet {
+                case .report: ReportView(place: place, initialZone: zoneID)
+                case .evidence: EvidenceView(place: place, zone: zoneID)
+                case .origin: OriginView()
+            } }.modifier(DemoSheetLabel())
         }
         .sheet(isPresented: $showRoute) { NavigationStack { RouteView(place: place, route: route, error: routeError) }.modifier(DemoSheetLabel()) }
         .onDisappear { directionTask?.cancel() }
@@ -128,6 +173,7 @@ struct PlaceDetailView: View {
             let args = ProcessInfo.processInfo.arguments
             if let i = args.firstIndex(of: "-screen"), args.count > i + 1, args[i + 1] == "report" { sheet = .report }
         }
+    }
     }
     private func planPart(_ name: String, _ value: String, _ symbol: String) -> some View {
         VStack(alignment: .leading, spacing: 5) { Image(systemName: symbol).foregroundStyle(Color.ink); Text(value).font(.headline).monospacedDigit(); Text(name).font(.caption2).foregroundStyle(Color.metadata).fixedSize(horizontal: false, vertical: true) }.frame(maxWidth: .infinity, alignment: .leading)
@@ -154,6 +200,9 @@ struct RouteView: View {
                 if let route { MapPolyline(route.polyline).stroke(Color.ink, lineWidth: 6) }
             }.mapControls { MapCompass(); MapScaleView() }
             VStack(alignment: .leading, spacing: 12) {
+                if !store.usesLocation, let origin = store.origin, let destination = place.coordinate, origin.distance(to: destination) < 20 {
+                    Text("Your starting point is " + place.shortName + ".").font(.title3.weight(.semibold))
+                }
                 if let route { Text("\(Int(ceil(route.expectedTravelTime / 60))) min walking").font(.title2.weight(.bold)); Text(Measurement(value: route.distance, unit: UnitLength.meters), format: .measurement(width: .abbreviated, usage: .road)).font(.subheadline) }
                 if let error { NoticeView(title: error, symbol: "exclamationmark.triangle") }
                 Text("Address destination; the exact usable entrance and indoor route are not verified.").font(.caption).foregroundStyle(Color.metadata)

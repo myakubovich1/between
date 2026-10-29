@@ -13,7 +13,7 @@
       "latitude": 29.647966,
       "longitude": -82.3439126
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
@@ -24,39 +24,45 @@
     "zones": [
       {
         "id": "marston-1",
-        "name": "Floor 1 \u00b7 Collaborative",
+        "name": "Floor 1 · Collaborative",
         "quiet": false,
         "access": "uf"
       },
       {
         "id": "marston-2",
-        "name": "Floor 2 \u00b7 Collaborative",
+        "name": "Floor 2 · Collaborative",
         "quiet": false,
         "access": "uf"
       },
       {
         "id": "marston-3",
-        "name": "Floor 3 \u00b7 Collaborative",
+        "name": "Floor 3 · Collaborative",
         "quiet": false,
         "access": "uf"
       },
       {
         "id": "marston-4",
-        "name": "Floor 4 \u00b7 Quiet study",
+        "name": "Floor 4 · Silent study",
         "quiet": true,
         "access": "uf"
       },
       {
         "id": "marston-5",
-        "name": "Floor 5 \u00b7 Silent study",
+        "name": "Floor 5 · Silent study",
         "quiet": true,
         "access": "uf"
+      },
+      {
+        "id": "marston-makerspace",
+        "name": "Makerspace",
+        "quiet": false,
+        "access": "unknown"
       }
     ],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
-    "reservationURL": "https://libcal.uflib.ufl.edu/",
-    "note": "Five floors, with collaborative study on floors 1\u20133 and designated quiet or silent study on floors 4\u20135.",
+    "reservationURL": "https://libcal.uflib.ufl.edu/reserve/studyMSL",
+    "note": "Collaborative study on floors 1–3; silent study on floors 4–5. UF or Santa Fe ID required after 10pm. Reservable rooms use UF LibCal.",
     "sources": [
       {
         "url": "https://marston.uflib.ufl.edu/spaces/location-floorplans/",
@@ -67,6 +73,11 @@
         "url": "https://marston.uflib.ufl.edu/spaces/location-floorplans/",
         "checked": "2026-10-22",
         "facts": "Designated floor policies, not current sound conditions."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
       }
     ]
   },
@@ -84,7 +95,7 @@
       "latitude": 29.6515883,
       "longitude": -82.3429184
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
@@ -95,21 +106,21 @@
     "zones": [
       {
         "id": "west-4",
-        "name": "Floor 4 \u00b7 Quiet study",
+        "name": "Floor 4 · Quiet study",
         "quiet": true,
         "access": "uf"
       },
       {
         "id": "west-6",
-        "name": "Floor 6 \u00b7 Graduate study",
+        "name": "Floor 6 · Graduate study",
         "quiet": false,
         "access": "graduate"
       }
     ],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
-    "reservationURL": "https://libcal.uflib.ufl.edu/",
-    "note": "The fourth floor is designated for quiet study. The sixth floor is for graduate students.",
+    "reservationURL": "https://libcal.uflib.ufl.edu/reserve/studyLW",
+    "note": "Quiet study on floor 4; graduate access on floor 6. UF or Santa Fe ID required after 10pm. LibCal lists rooms and individual carrels; eligibility varies by space.",
     "sources": [
       {
         "url": "https://librarywest.uflib.ufl.edu/about/maps-and-addresses/",
@@ -120,6 +131,11 @@
         "url": "https://librarywest.uflib.ufl.edu/spaces/quiet-study-floor/",
         "checked": "2026-10-22",
         "facts": "Designated floor policies, not current sound conditions."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
       }
     ]
   },
@@ -137,7 +153,7 @@
       "latitude": 29.6508712,
       "longitude": -82.3418369
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
@@ -145,16 +161,46 @@
       "wifi": null,
       "group": null
     },
-    "zones": [],
+    "zones": [
+      {
+        "id": "smathers-grand",
+        "name": "Grand Reading Room",
+        "quiet": true,
+        "access": "unknown"
+      },
+      {
+        "id": "smathers-panama",
+        "name": "Panama Canal Gallery",
+        "quiet": true,
+        "access": "unknown"
+      },
+      {
+        "id": "smathers-lacc",
+        "name": "Latin American & Caribbean Collection",
+        "quiet": false,
+        "access": "unknown"
+      },
+      {
+        "id": "smathers-map",
+        "name": "Map & Imagery Library",
+        "quiet": false,
+        "access": "unknown"
+      }
+    ],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
     "reservationURL": null,
-    "note": "A historic library on the Plaza of the Americas. Check the official site for collection and reading-room access.",
+    "note": "General study in Map & Imagery and the Latin American and Caribbean Collection, with silent study in the Grand Reading Room and Panama Canal Gallery.",
     "sources": [
       {
         "url": "https://uflib.ufl.edu/libraries-collections/smathers-library/",
         "checked": "2026-10-22",
         "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
       }
     ]
   },
@@ -172,24 +218,34 @@
       "latitude": 29.6482392,
       "longitude": -82.3406005
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
       "outlets": null,
       "wifi": null,
-      "group": null
+      "group": false
     },
     "zones": [],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
     "reservationURL": null,
-    "note": "Located in the Architecture building. Confirm current hours and entry before walking over.",
+    "note": "Study spaces on both floors in an open-plan library. Extended group discussion is discouraged because sound carries.",
     "sources": [
       {
         "url": "https://afa.uflib.ufl.edu/",
         "checked": "2026-10-22",
         "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
+      },
+      {
+        "url": "https://afa.uflib.ufl.edu/services/study-space/",
+        "checked": "2026-10-28",
+        "facts": "Two floors of study areas; extended group discussion discouraged."
       }
     ]
   },
@@ -207,7 +263,7 @@
       "latitude": 29.6471628,
       "longitude": -82.3378873
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
@@ -215,16 +271,34 @@
       "wifi": null,
       "group": true
     },
-    "zones": [],
+    "zones": [
+      {
+        "id": "education-1",
+        "name": "Floor 1 · General & group study",
+        "quiet": false,
+        "access": "unknown"
+      },
+      {
+        "id": "education-2",
+        "name": "Floor 2 · Silent study",
+        "quiet": true,
+        "access": "unknown"
+      }
+    ],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
-    "reservationURL": "https://libcal.uflib.ufl.edu/",
-    "note": "Located in Norman Hall. Study-room information is available through the official library site.",
+    "reservationURL": "https://libcal.uflib.ufl.edu/reserve/studyEDU",
+    "note": "Group study rooms on floors 1 and 2, with a silent individual-study area on the second floor.",
     "sources": [
       {
         "url": "https://education.uflib.ufl.edu/",
         "checked": "2026-10-22",
         "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
       }
     ]
   },
@@ -242,24 +316,29 @@
       "latitude": 29.6399157,
       "longitude": -82.3434195
     },
-    "coordinateNote": "Address location from Apple geocoding \u00b7 entrance not verified",
+    "coordinateNote": "Address location from Apple geocoding · entrance not verified",
     "access": "unknown",
     "quiet": false,
     "amenities": {
       "outlets": null,
       "wifi": null,
-      "group": null
+      "group": true
     },
     "zones": [],
     "hours": null,
     "hoursURL": "https://libcal.uflib.ufl.edu/hours/",
-    "reservationURL": null,
-    "note": "Gainesville location. Entry rules may vary after staffed hours; check with the library.",
+    "reservationURL": "https://libcal.uflib.ufl.edu/reserve/individualstudyHSCL",
+    "note": "Individual study rooms and group rooms are reservable through UF LibCal. Choose individual or group rooms in the room search. Entry rules vary after staffed hours.",
     "sources": [
       {
         "url": "https://library.health.ufl.edu/",
         "checked": "2026-10-22",
         "facts": "Official venue identity and published address. Address geocoded using Apple CLGeocoder on 2026-10-22; precise entrance not verified."
+      },
+      {
+        "url": "https://uflib.ufl.edu/using-the-libraries/studyareas/",
+        "checked": "2026-10-28",
+        "facts": "Official study-area policies and library-specific reservation destinations. Designated sound policies do not measure current noise."
       }
     ]
   }

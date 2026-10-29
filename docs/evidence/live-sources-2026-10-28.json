@@ -1,0 +1,126 @@
+{
+  "buildingSchedules" : 6,
+  "counts" : {
+    "afa" : {
+      "count" : 9,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "education" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "health" : {
+      "count" : 18,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston" : {
+      "count" : 607,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston-makerspace" : {
+      "count" : 14,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers" : {
+      "count" : 69,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-grand" : {
+      "count" : 7,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-lacc" : {
+      "count" : 17,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-map" : {
+      "count" : 8,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-panama" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    },
+    "west" : {
+      "count" : 418,
+      "retrievedAt" : "2026-10-29T02:43:23Z",
+      "sensorTimestampSupplied" : false
+    }
+  },
+  "failedCounts" : [
+
+  ],
+  "retrievedAt" : "2026-10-29T02:43:23Z",
+  "rooms" : {
+    "education" : {
+      "names" : [
+
+      ],
+      "parsed" : 0,
+      "total" : 0,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-28&date-end=2026-10-28&end=23:30&gid=7509&lid=4455&m=t&start=23:00"
+    },
+    "health" : {
+      "names" : [
+        "C2-45N",
+        "C2-45G",
+        "C2-45J",
+        "C2-37 (webcam)",
+        "C2-45L",
+        "C2-40 (webcam)",
+        "C2-45O",
+        "C2-45B",
+        "C2-45I",
+        "C2-45A",
+        "C2-39 (webcam)",
+        "C2-45K",
+        "C2-45D",
+        "C2-45F",
+        "C2-45E",
+        "C2-36 (webcam)"
+      ],
+      "parsed" : 16,
+      "total" : 16,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-28&date-end=2026-10-28&end=23:30&gid=8476&lid=4913&m=t&start=23:00"
+    },
+    "marston" : {
+      "names" : [
+        "L124 - Karst",
+        "L131 - Riparian",
+        "L120 - Filial",
+        "L132 - Sonar",
+        "L127 - Nebula",
+        "L125 - Lichen"
+      ],
+      "parsed" : 6,
+      "total" : 6,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-28&date-end=2026-10-28&end=23:30&gid=7502&lid=4316&m=t&start=23:00"
+    },
+    "west" : {
+      "names" : [
+        "Individual Study Carrel G-210",
+        "Individual Study Carrel G-203",
+        "Group Study Rm. 417",
+        "Group Study Rm. 405",
+        "Individual Study Carrel G-202",
+        "Group Study Rm. 228",
+        "Individual Study Carrel G-209",
+        "Individual Study Carrel G-206",
+        "Individual Study Carrel G-208"
+      ],
+      "parsed" : 9,
+      "total" : 9,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-28&date-end=2026-10-28&end=23:30&gid=7520&lid=4458&m=t&start=23:00"
+    }
+  }
+}

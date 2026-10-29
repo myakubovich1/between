@@ -18,6 +18,7 @@ struct RouteResult {
 final class WalkingRoutes {
     private var cache: [String: (Date, RouteResult)] = [:]
     func route(from: Coordinate, to: Coordinate) async throws -> RouteResult {
+        if from.distance(to: to) < 20 { return .init(minutes: 0, route: nil, estimated: false) }
         let key = "\(from.latitude.rounded(toPlaces: 4)),\(from.longitude.rounded(toPlaces: 4)):\(to.latitude),\(to.longitude)"
         if let (date, result) = cache[key], Date().timeIntervalSince(date) < 180 { return result }
         let request = MKDirections.Request()
