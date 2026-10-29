@@ -6,6 +6,7 @@ xcodebuild test -project Between.xcodeproj -scheme Between -configuration Develo
   -destination "platform=iOS Simulator,id=$BETWEEN_DEVICE" \
   -derivedDataPath "${BETWEEN_DERIVED_DATA:-work/DerivedDataLive}" \
   -only-testing:BetweenTests \
+  -only-testing:BetweenUITests/BetweenUITests/testBookingPortalOpensUFAndReturnsToBetween \
   -only-testing:BetweenUITests/BetweenUITests/testStudentStartingPointNextClassAndSearchRecovery \
   -only-testing:BetweenUITests/BetweenUITests/testLiveRoomsHoursAndMotion \
   -only-testing:BetweenUITests/BetweenUITests/testLiveReducedMotionDiscovery \

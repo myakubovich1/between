@@ -6,6 +6,9 @@ struct StudyRoom: Identifiable, Codable, Sendable {
     var name: String
     var capacity: Int?
     var url: URL
+    // UF's selected-time link is kept only in memory and deliberately excluded from Codable.
+    var bookingURL: URL? = nil
+    private enum CodingKeys: String, CodingKey { case id, name, capacity, url }
 }
 struct RoomAvailability: Codable, Sendable {
     var rooms: [StudyRoom]
@@ -99,8 +102,10 @@ enum LibCalRoomParser {
                   let actualStart = formatter.date(from: rawStart[1]), let actualEnd = formatter.date(from: rawEnd[1]),
                   abs(actualStart.timeIntervalSince(start)) < 1, abs(actualEnd.timeIntervalSince(end)) < 1 else { throw URLError(.cannotParseResponse) }
             let capacity = matches("title=\"The capacity of this space\"[^>]*>(.*?)</span>", block).first.flatMap { Int(text($0[1])) }
-            // Stable official detail URL; never replay booking POSTs or persist checkout checksums.
-            let room = StudyRoom(id: link[2], name: name, capacity: capacity, url: URL(string: "https://libcal.uflib.ufl.edu/space/" + link[2])!)
+            // Retain the stable detail URL; the exact-time link is ephemeral and only opens in the browser.
+            let room = StudyRoom(id: link[2], name: name, capacity: capacity,
+                                 url: URL(string: "https://libcal.uflib.ufl.edu/space/" + link[2])!,
+                                 bookingURL: UFBookingPortal.roomURL(href: link[1], roomID: link[2], start: start, end: end))
             if !rooms.contains(where: { $0.id == room.id }) { rooms.append(room) }
         }
         let total = matches("Showing\\s+(\\d+)\\s+match", resultSection).first.flatMap { Int($0[1]) }

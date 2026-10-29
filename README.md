@@ -5,13 +5,13 @@ A native SwiftUI iPhone/iPad app for finding somewhere useful to study between c
 The interface uses Canvas, Mist, Cornflower, Pear, and Black, with appearance-aware light and dark themes. See the [palette implementation and verification](docs/PALETTE-UPDATE.md).
 
 <p>
-  <img src="docs/screenshots/Live-Find.png" alt="Between in light appearance" width="280" />
-  <img src="docs/screenshots/Live-Dark.png" alt="Between in dark appearance" width="280" />
+  <img src="docs/screenshots/UF-Booking-Find.png" alt="Between in light appearance" width="280" />
+  <img src="docs/screenshots/UF-Booking-Dark.png" alt="Between in dark appearance" width="280" />
 </p>
 
 Screenshots show the normal UF-connected Development app.
 
-**The default app now connects to real UF data:** building counts for six Gainesville libraries, five area counts, date-specific LibCal hours, and room/carrel availability for four libraries. No backend credentials or sign-in are needed for UF browsing. Counts show retrieval age and explicitly disclose that the current display feed supplies no sensor timestamp. See [live data and motion](docs/LIVE-DATA-AND-MOTION.md) and the [student experience review](docs/STUDENT-UX-REVIEW.md).
+**The default app now connects to real UF data:** building counts for six Gainesville libraries, five area counts, date-specific LibCal hours, and room/carrel availability for four libraries. No backend credentials or sign-in are needed for UF browsing. Counts show retrieval age and explicitly disclose that the current display feed supplies no sensor timestamp. See [live data and motion](docs/LIVE-DATA-AND-MOTION.md), the [student experience review](docs/STUDENT-UX-REVIEW.md), and [UF booking integration](docs/UF-BOOKING-PORTAL.md).
 
 The optional community backend can run locally. Hosted deployment requires your own backend configuration. Real Apple sign-in/revocation, device signing, physical-device checks and final release curation remain owner setup steps.
 
@@ -19,7 +19,7 @@ The optional community backend can run locally. Hosted deployment requires your 
 
 1. Open `Between.xcodeproj` in Xcode 26.3 or newer.
 2. Select **Between** and an available iPhone simulator, then Run. This fetches actual UF counts, opening schedules and selected-time room availability over HTTPS. It opens a clear library list; use the map button for the campus map.
-3. Choose a starting point, set your gap and optional next class/building. Compare options, inspect hours and rooms, save a place, or get walking directions.
+3. Choose a starting point, set your gap and optional next class/building. Compare options, inspect hours and rooms, save a place, or get walking directions. Use the calendar button for UF booking pages, or select a room/time and continue in the official UF portal.
 4. **Between-Demo** is optional for deterministic presentation and report tests; it alone uses synthetic reports/hours and always displays a Demo label.
 
 Shared schemes and the resolved official supabase-swift 2.55.4 dependency are included. Xcode resolves remaining packages automatically. `project.yml` reproduces the project with XcodeGen 2.44.1; no manual target assembly is needed. The display name is configurable in `Config/*.xcconfig`.
@@ -56,7 +56,7 @@ Copy `Config/Local.xcconfig.example` to the ignored `Config/Local.xcconfig`; add
 
 ## Verify and hand off
 
-- `scripts/test-live-ios.sh` runs domain/source tests and four native UF-connected flows, including accessibility-size search recovery.
+- `scripts/test-live-ios.sh` runs domain/source tests and five native UF-connected flows, including accessibility-size search recovery.
 - `scripts/test-ios.sh` runs the isolated Demo regression suite.
 - `scripts/verify-live-data.sh` checks eleven actual UF counts, six schedules and four room-search locations over HTTPS.
 - `python3 scripts/release_preflight.py` fails until actual release inputs and signoffs exist.

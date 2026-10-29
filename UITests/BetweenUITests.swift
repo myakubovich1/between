@@ -11,6 +11,49 @@ final class BetweenUITests: XCTestCase {
     @MainActor func capture(_ name: String, app: XCUIApplication) {
         let attachment=XCTAttachment(screenshot:app.screenshot());attachment.name=name;attachment.lifetime = .keepAlways;add(attachment)
     }
+    @MainActor func testBookingPortalOpensUFAndReturnsToBetween() throws {
+        let app = launch()
+        app.buttons["booking-portal"].tap()
+        XCTAssertTrue(app.navigationBars["UF room bookings"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["booking-library-marston"].firstMatch.exists)
+        capture("Booking-01-Portal-Directory", app: app)
+        app.descendants(matching: .any)["booking-library-marston"].firstMatch.tap()
+        let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+        XCTAssertTrue(safari.wait(for: .runningForeground, timeout: 15))
+        let web = safari.webViews.firstMatch
+        XCTAssertTrue(web.waitForExistence(timeout: 20))
+        let uf = safari.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Marston Science Library")).firstMatch
+        XCTAssertTrue(uf.waitForExistence(timeout: 25), "The official UF library portal must load in the browser")
+        capture("Booking-02-Official-UF-Portal", app: safari)
+        app.activate()
+        XCTAssertTrue(app.navigationBars["UF room bookings"].waitForExistence(timeout: 5))
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["time-plan"].waitForExistence(timeout: 5))
+        let search = app.textFields["search"]
+        search.tap(); search.typeText("Marston\n")
+        let place = app.buttons["place-marston"]
+        XCTAssertTrue(place.waitForExistence(timeout: 25)); place.tap()
+        app.buttons["find-rooms"].tap()
+        let result = app.descendants(matching: .any)["room-result-count"].firstMatch
+        XCTAssertTrue(result.waitForExistence(timeout: 25))
+        let room = app.buttons.matching(NSPredicate(format: "identifier MATCHES %@", "room-[0-9]+")).firstMatch
+        let hasRoom = room.exists
+        if hasRoom {
+            for _ in 0..<4 { if room.isHittable { break }; app.swipeUp() }
+            room.tap()
+        } else {
+            let button = app.buttons["book-selected-time"]
+            for _ in 0..<4 { if button.isHittable { break }; app.swipeUp() }
+            button.tap()
+        }
+        XCTAssertTrue(safari.wait(for: .runningForeground, timeout: 15))
+        let expected = hasRoom ? "Current Booking Time Selected" : "Marston Science Library"
+        XCTAssertTrue(safari.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", expected)).firstMatch.waitForExistence(timeout: 25))
+        capture("Booking-03-Selected-Time-On-UF", app: safari)
+        app.activate()
+        XCTAssertTrue(result.waitForExistence(timeout: 25))
+        capture("Booking-04-Returned-Rooms", app: app)
+    }
     @MainActor func testStudentStartingPointNextClassAndSearchRecovery() throws {
         let app = launch()
         if app.staticTexts["Demo data"].exists { throw XCTSkip("Use the live scheme.") }

@@ -121,3 +121,20 @@ A separate production-service HTTPS runner, `scripts/verify-live-data.sh`, compl
 Final manual visual checks covered settled map tiles and compact map controls, native card-to-detail navigation, the Rooms shortcut showing 22 real spaces and capacities, and light/dark appearance. The new `Live-*` screenshots show actual Development data; older palette/Demo screenshots remain historical. This is visual/functional simulator evidence, not a measured animation frame-rate or physical-device power test.
 
 The [student experience review](STUDENT-UX-REVIEW.md) documents audience hypotheses, the walkthrough findings and shipped fixes. No actual student interview study, physical VoiceOver traversal, physical Reduce Motion test, signed Apple account lifecycle or App Store release certification is claimed. UF supplies no sensor timestamp or guaranteed free-seat count. Reservations are completed only on UF's site.
+
+
+## October 29, 2026: UF booking portal handoff
+
+**34 focused tests passed, zero failures or skips:** 31 domain/source tests and three native UI methods on iPhone 17 Pro, iOS 26.2. The final bundle was `BookingPortalComplete.xcresult`; the portable [test summary](evidence/uf-booking-tests-2026-10-29.json) is included.
+
+The new native method opened Find's booking directory → Marston's official portal in Safari → returned to the native directory → opened Marston's native Rooms view → selected an actual returned room → verified UF's **Current Booking Time Selected** page → returned to the same native room selection with refreshed results. The positive-room branch ran in this recorded result; the test also supports the legitimate zero-result search handoff when UF has no spaces. Existing live hours/room and accessibility-size search-recovery methods passed in the same run. No Book Now or final reservation was submitted on UF's site.
+
+Two new domain tests exercise production URL parsing against the genuine room fixture, preservation of room/time, explicit exclusion of ephemeral checksums from JSON, stale/future/failed-refresh fallback, restored-cache fallback, and rejection of unexpected hosts, credentials, ports, duplicate/additional query fields and mismatched room/time values. Existing public-data and student-plan tests also passed. The API/domain code and UI sources in the final run match the committed implementation.
+
+A separate HTTPS pass returned **200 for all seven directory destinations** (all spaces plus six library/category links). The Health Science group link was also inspected in the live browser and rendered **Group Study Rooms** as its selected category. See [destination evidence](evidence/uf-booking-links-2026-10-29.json). The production data runner at **2026-10-29T12:29:20Z** retrieved eleven counts, six schedules and four successful room searches. All **55 parsed rooms** supplied exact-time links that passed the production validator. See [live source evidence](evidence/uf-booking-live-data-2026-10-29.json).
+
+Final screenshots: [booking directory](screenshots/UF-Booking-Directory.png), [official portal](screenshots/UF-Booking-Portal.png), [selected room/time on UF](screenshots/UF-Booking-Selected-Time.png), and [return to native rooms](screenshots/UF-Booking-Return.png). The UF website is shown as served; its own mobile layout is outside Between's styling.
+
+The new test can be run with `-only-testing:BetweenUITests/BetweenUITests/testBookingPortalOpensUFAndReturnsToBetween`, scheme Between, Development configuration. `scripts/test-live-ios.sh` now includes this method alongside the four previous native methods; only the three methods described above were rerun in this update. The existing local-copy Xcode build workaround was used again for the iCloud-backed source folder.
+
+Actual UF sign-in/MFA, final reservation and cancellation require the student's account and were not performed. Between intentionally uses the default browser and receives no private reservation result or UF credentials. The [integration analysis](UF-BOOKING-PORTAL.md) explains the approach and alternatives.

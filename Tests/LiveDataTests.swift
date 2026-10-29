@@ -157,3 +157,41 @@ struct CampusDirectoryTests {
         #expect(throws: (any Error).self) { try StudyRoomService.searchURL(placeID: "west", start: Date(), minutes: 30, capacity: 5) }
     }
 }
+
+
+struct BookingPortalTests {
+    private let start = ISO8601DateFormatter().date(from: "2026-10-29T02:30:00Z")!
+    @Test func sourceRoomLinksPreserveTimeButNeverEnterSavedJSON() throws {
+        let search = try StudyRoomService.searchURL(placeID: "west", start: start, minutes: 30)
+        let availability = try LibCalRoomParser.parse(fixture("uf-rooms-west-2026-10-28.html"), start: start, end: start.addingTimeInterval(1800), retrievedAt: start, searchURL: search)
+        #expect(availability.rooms.allSatisfy { $0.bookingURL != nil })
+        let room = try #require(availability.rooms.first)
+        let url = UFBookingPortal.destination(for: room, availability: availability, at: start.addingTimeInterval(60))
+        #expect(url.path == "/space/" + room.id)
+        #expect(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.contains(.init(name: "start", value: "2026-10-28 22:30:00")) == true)
+        #expect(UFBookingPortal.destination(for: room, availability: availability, at: start.addingTimeInterval(121)) == search)
+        #expect(UFBookingPortal.destination(for: room, availability: availability, at: start, refreshFailed: true) == search)
+        #expect(UFBookingPortal.destination(for: room, availability: availability, at: start.addingTimeInterval(-1)) == search)
+        let encoded = try JSONEncoder().encode(availability)
+        #expect(!String(decoding: encoded, as: UTF8.self).contains("checksum"))
+        let restored = try JSONDecoder().decode(RoomAvailability.self, from: encoded)
+        #expect(restored.rooms.first?.bookingURL == nil)
+        #expect(UFBookingPortal.destination(for: restored.rooms[0], availability: restored, at: start) == search)
+    }
+    @Test func mismatchedAndExternalRoomLinksFallBackToTheSelectedSearch() throws {
+        let base = "/space/123?start=2026-10-28%2022:30:00&end=2026-10-28%2023:00:00&checksum=1234567890abcdef1234567890abcdef"
+        let end = start.addingTimeInterval(1800)
+        #expect(UFBookingPortal.roomURL(href: base, roomID: "123", start: start, end: end) != nil)
+        for bad in ["https://example.com" + base, "http://libcal.uflib.ufl.edu" + base,
+                    "https://libcal.uflib.ufl.edu.example.com" + base,
+                    "https://user@libcal.uflib.ufl.edu" + base,
+                    "https://libcal.uflib.ufl.edu:8080" + base,
+                    base + "&start=2026-10-28%2022:30:00", base + "&redirect=https://example.com",
+                    base.replacingOccurrences(of: "/123?", with: "/456?"), base.replacingOccurrences(of: "22:30:00", with: "22:00:00")] {
+            #expect(UFBookingPortal.roomURL(href: bad, roomID: "123", start: start, end: end) == nil)
+        }
+        #expect(UFBookingPortal.destinations.count == 6)
+        #expect(UFBookingPortal.destinations.allSatisfy { UFBookingPortal.isOfficial($0.url) })
+        #expect(UFBookingPortal.allSpaces.path == "/allspaces")
+    }
+}

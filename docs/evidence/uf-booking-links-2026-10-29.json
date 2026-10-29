@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-29T12:35:38.254916+00:00",
+  "destinations": {
+    "all": {
+      "url": "https://libcal.uflib.ufl.edu/allspaces",
+      "status": 200,
+      "title": "Search Spaces - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": null,
+      "renderedCategoryVerified": false
+    },
+    "west": {
+      "url": "https://libcal.uflib.ufl.edu/reserve/studyLW",
+      "status": 200,
+      "title": "Search Spaces - Library West - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Study Rooms",
+      "renderedCategoryVerified": false
+    },
+    "marston": {
+      "url": "https://libcal.uflib.ufl.edu/reserve/studyMSL",
+      "status": 200,
+      "title": "Search Spaces - Marston Science Library-Study Rooms - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Study Rooms",
+      "renderedCategoryVerified": false
+    },
+    "education": {
+      "url": "https://libcal.uflib.ufl.edu/reserve/studyEDU",
+      "status": 200,
+      "title": "Search Spaces - Education Library - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Study Rooms",
+      "renderedCategoryVerified": false
+    },
+    "health": {
+      "url": "https://libcal.uflib.ufl.edu/reserve/individualstudyHSCL",
+      "status": 200,
+      "title": "Search Spaces - Health Science Center Library - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Individual Study Rooms",
+      "renderedCategoryVerified": false
+    },
+    "health-group": {
+      "url": "https://libcal.uflib.ufl.edu/r/search?lid=4913&gid=9718",
+      "status": 200,
+      "title": "Search Spaces - Health Science Center Library - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Group Study Rooms",
+      "renderedCategoryVerified": true
+    },
+    "west-graduate": {
+      "url": "https://libcal.uflib.ufl.edu/reserve/gradstudyLW",
+      "status": 200,
+      "title": "Search Spaces - Library West - LibCal - UF Libraries",
+      "ok": true,
+      "categoryFromHTML": "Graduate Study Rooms",
+      "renderedCategoryVerified": false
+    }
+  },
+  "browserObservation": "Health Science group link rendered Category: Group Study Rooms. UF HTML may mark both Show All and its specific category selected; the browser selects the specific category."
+}

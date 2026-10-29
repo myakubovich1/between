@@ -37,6 +37,7 @@ struct YouView: View {
     @State private var clear = false
     @State private var deleting = false
     @State private var demoDelete = false
+    @State private var booking = false
     var body: some View {
         @Bindable var store = store
         List {
@@ -55,6 +56,7 @@ struct YouView: View {
             }
             if !store.config.isDemo {
                 Section("UF library sources") {
+                    Button { booking = true } label: { Label("UF room bookings", systemImage: "calendar.badge.plus") }.accessibilityIdentifier("booking-portal")
                     Link(destination: UFLibraryData.sourceURL) { Label("UF Libraries occupancy", systemImage: "person.2") }
                     Link(destination: URL(string: "https://libcal.uflib.ufl.edu/hours/")!) { Label("Official opening hours", systemImage: "clock") }
                     Link(destination: URL(string: "https://uflib.ufl.edu/using-the-libraries/studyareas/")!) { Label("Study spaces & reservations", systemImage: "calendar") }
@@ -91,6 +93,7 @@ struct YouView: View {
         }.scrollContentBackground(.hidden).background(Color.canvas).navigationTitle("You")
             .sheet(isPresented: $filters) { FiltersView().modifier(DemoSheetLabel()) }
             .sheet(isPresented: $deleting) { DeleteAccountView() }
+            .sheet(isPresented: $booking) { BookingPortalView() }
             .confirmationDialog("Clear local saved places and preferences?", isPresented: $clear, titleVisibility: .visible) { Button("Clear local data", role: .destructive) { store.resetLocal() } }
             .confirmationDialog("Delete this isolated demo account?", isPresented: $demoDelete, titleVisibility: .visible) { Button("Delete demo account", role: .destructive) { store.demoReports.removeAll { $0.author == "demo-local-contributor" }; store.signedIn = false; store.myReports = []; store.recalculateDemo(); Task { await store.refresh() } } }
     }

@@ -1,0 +1,153 @@
+{
+  "buildingSchedules" : 6,
+  "counts" : {
+    "afa" : {
+      "count" : 8,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "education" : {
+      "count" : 12,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "health" : {
+      "count" : 32,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston" : {
+      "count" : 54,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "marston-makerspace" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers" : {
+      "count" : 21,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-grand" : {
+      "count" : 1,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-lacc" : {
+      "count" : 1,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-map" : {
+      "count" : 9,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "smathers-panama" : {
+      "count" : 0,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    },
+    "west" : {
+      "count" : 65,
+      "retrievedAt" : "2026-10-29T12:29:19Z",
+      "sensorTimestampSupplied" : false
+    }
+  },
+  "failedCounts" : [
+
+  ],
+  "retrievedAt" : "2026-10-29T12:29:20Z",
+  "rooms" : {
+    "education" : {
+      "names" : [
+        "Room 2508",
+        "Room 1506",
+        "Room 2503",
+        "Room 1507",
+        "Room 2501"
+      ],
+      "parsed" : 5,
+      "timedLinks" : 5,
+      "total" : 5,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=09:00&gid=7509&lid=4455&m=t&start=08:30"
+    },
+    "health" : {
+      "names" : [
+        "C2-45K",
+        "C2-45D",
+        "C2-45C",
+        "C2-40 (webcam)",
+        "C2-45E",
+        "C2-45N",
+        "C2-45A",
+        "C2-39 (webcam)",
+        "C2-37 (webcam)",
+        "C2-45O",
+        "C2-45G",
+        "C2-45I",
+        "C2-45H"
+      ],
+      "parsed" : 13,
+      "timedLinks" : 13,
+      "total" : 13,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=09:00&gid=8476&lid=4913&m=t&start=08:30"
+    },
+    "marston" : {
+      "names" : [
+        "L125 - Lichen",
+        "L121 - Googol",
+        "L201E - Xenon",
+        "L201F - Krypton",
+        "L119 - Eclipse",
+        "L122 - Hypotenuse",
+        "L124 - Karst",
+        "L117 - Chitin",
+        "L134 - Vector",
+        "L120 - Filial",
+        "L115 - Algae",
+        "L127 - Nebula",
+        "L116 - Byte",
+        "L131 - Riparian",
+        "L201D - Helium",
+        "L123 - Isotope",
+        "L201G - Argon"
+      ],
+      "parsed" : 17,
+      "timedLinks" : 17,
+      "total" : 17,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=09:00&gid=7502&lid=4316&m=t&start=08:30"
+    },
+    "west" : {
+      "names" : [
+        "Group Study Rm. 417",
+        "Individual Study Carrel G-211",
+        "Individual Study Carrel G-202",
+        "Group Study Rm. 415",
+        "Group Study Rm. 405",
+        "Group Study Rm. 336",
+        "Group Study Rm. 222",
+        "Individual Study Carrel G-212",
+        "Group Study Rm. 225",
+        "Group Study Rm. 230",
+        "Individual Study Carrel G-203",
+        "Individual Study Carrel G-207",
+        "Group Study Rm. 224",
+        "Individual Study Carrel G-208",
+        "Group Study Rm. 228",
+        "Group Study Rm. 227",
+        "Individual Study Carrel G-201",
+        "Group Study Rm. 229",
+        "Individual Study Carrel G-206",
+        "Group Study Rm. 223"
+      ],
+      "parsed" : 20,
+      "timedLinks" : 20,
+      "total" : 20,
+      "url" : "https:\/\/libcal.uflib.ufl.edu\/r\/search?capacity=0&date=2026-10-29&date-end=2026-10-29&end=09:00&gid=7520&lid=4458&m=t&start=08:30"
+    }
+  }
+}

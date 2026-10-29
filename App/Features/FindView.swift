@@ -21,7 +21,7 @@ struct FindView: View {
         var id: String { "closed-" + place.id }
     }
     private var closedOptions: [ClosedOption] { store.closedPlaces.map { ClosedOption(place: $0) } }
-    enum FindSheet: String, Identifiable { case plan, filters, origin; var id: String { rawValue } }
+    enum FindSheet: String, Identifiable { case plan, filters, origin, booking; var id: String { rawValue } }
     var body: some View {
         @Bindable var store = store
         Group {
@@ -36,6 +36,7 @@ struct FindView: View {
                 case .plan: PlanView()
                 case .filters: FiltersView()
                 case .origin: OriginView()
+                case .booking: BookingPortalView()
                 }
             }.modifier(DemoSheetLabel()).presentationDetents([.large]).presentationDragIndicator(.visible).presentationCornerRadius(28)
         }
@@ -73,7 +74,13 @@ struct FindView: View {
                             Text("UNIVERSITY OF FLORIDA").font(.system(size: 9, weight: .bold)).tracking(1.6)
                         }.foregroundStyle(Color.metadata)
                     }
-                    Spacer()
+                    Spacer(minLength: 0)
+                    Button { sheet = .booking } label: {
+                        VStack(spacing: 1) {
+                            Image(systemName: "calendar.badge.plus").font(.body)
+                            Text("Book").font(.system(size: 9, weight: .semibold))
+                        }.frame(width: 44, height: 44).foregroundStyle(Color.ink).background(Color.highlight, in: Circle())
+                    }.buttonStyle(BetweenPressStyle()).accessibilityLabel("UF room bookings").accessibilityIdentifier("booking-portal")
                     Button { withAnimation(BetweenMotion.animation(reduceMotion)) { mapShown.toggle() } } label: {
                         Image(systemName: mapShown ? "list.bullet" : "map").frame(width: 46, height: 46).background(Color.surface, in: Circle())
                     }.accessibilityLabel(mapShown ? "Show list only" : "Show map").accessibilityIdentifier("toggle-map")
@@ -141,6 +148,7 @@ struct FindView: View {
         return List {
             Section {
                 Text("Find your in-between").font(.largeTitle.bold())
+                Button("UF room bookings") { sheet = .booking }.frame(minHeight: 44).accessibilityIdentifier("booking-portal")
                 TextField("Search UF libraries", text: $store.query).accessibilityIdentifier("search").onChange(of: store.query) { store.searchChanged() }.submitLabel(.search).focused($searchFocused).onSubmit { store.commitSearch(); searchFocused = false }
                 Button("\(store.remainingMinutes) minutes left · Edit plan") { sheet = .plan }.frame(minHeight: 44).accessibilityIdentifier("time-plan")
                 Button(store.hasOrigin ? "From " + store.originName : "Choose your starting point") { sheet = .origin }.frame(minHeight: 44).accessibilityIdentifier("origin")

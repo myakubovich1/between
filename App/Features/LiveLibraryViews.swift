@@ -59,6 +59,7 @@ struct PublishedHoursView: View {
 
 struct StudyRoomsView: View {
     @Environment(AppStore.self) private var store
+    @Environment(\.openURL) private var openURL
     @Environment(\.betweenReducedMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     let place: Place
@@ -76,6 +77,11 @@ struct StudyRoomsView: View {
     @State private var loadedKey: String?
     @State private var showAllRooms = false
     @State private var alignedWithPlan = false
+    @State private var browserIssue = false
+    private var selectedSearchURL: URL? {
+        try? StudyRoomService.searchURL(placeID: place.id, start: start, minutes: minutes,
+                                      groupID: place.id == "health" && healthGroup ? 9718 : nil, capacity: capacity)
+    }
     var body: some View {
         Surface {
             VStack(alignment: .leading, spacing: 16) {
@@ -120,12 +126,13 @@ struct StudyRoomsView: View {
                         Text("UF lists no reservable spaces for this time. Try a different time or library.").font(.subheadline).foregroundStyle(Color.metadata)
                     }
                     ForEach(Array(showAllRooms ? availability.rooms[...] : availability.rooms.prefix(3))) { room in
-                        Link(destination: room.url) {
+                        Button { openBooking(UFBookingPortal.destination(for: room, availability: availability, at: Date(), refreshFailed: issue != nil)) } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: room.capacity == 1 ? "person" : "person.2").frame(width: 34, height: 34).background(Color.highlight, in: RoundedRectangle(cornerRadius: 10))
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(room.name).font(.subheadline.weight(.semibold))
-                                    if let capacity = room.capacity { Text("Capacity \(capacity)").font(.caption).foregroundStyle(Color.metadata) }
+                                    if let capacity = room.capacity { Text("Capacity \(capacity) · Book with UF").font(.caption).foregroundStyle(Color.metadata) }
+                                    else { Text("Book with UF").font(.caption).foregroundStyle(Color.metadata) }
                                 }
                                 Spacer(minLength: 4)
                                 Image(systemName: "arrow.up.right").font(.caption)
@@ -137,12 +144,23 @@ struct StudyRoomsView: View {
                     }
                     if availability.total == 0 { Button("Try 30 minutes later") { start = start.addingTimeInterval(1800) }.frame(minHeight: 44) }
                     Text("UF LibCal · checked " + CampusClock.timeLabel(availability.retrievedAt)).font(.caption).foregroundStyle(Color.metadata)
-                    Link("Confirm availability & book with UF", destination: availability.searchURL).font(.subheadline.weight(.semibold)).frame(minHeight: 44)
                 } else if loading { Text("Checking UF’s reservation system…").font(.subheadline).foregroundStyle(Color.metadata) }
-                Text("Booking requires UF’s eligibility rules. A listed room is not a confirmed reservation.").font(.caption2).foregroundStyle(Color.metadata)
+                if let url = selectedSearchURL {
+                    PrimaryButton(title: "Continue on UF for this time", symbol: "arrow.up.right.square") { openBooking(url) }
+                        .accessibilityIdentifier("book-selected-time")
+                }
+                if browserIssue {
+                    NoticeView(title: "Your browser couldn’t open. Try again or use the official UF portal below.", symbol: "safari")
+                    ShareLink(item: selectedSearchURL ?? UFBookingPortal.allSpaces) { Label("Share or copy booking link", systemImage: "square.and.arrow.up") }.frame(minHeight: 44)
+                }
+                Link("Browse all UF study spaces", destination: UFBookingPortal.allSpaces).font(.subheadline).frame(minHeight: 44)
+                Text("Opens UF LibCal in your browser. Finish any required sign-in and confirm there. Use your confirmation email to view or cancel a booking.").font(.caption2).foregroundStyle(Color.metadata)
             }
         }
         .animation(BetweenMotion.animation(reduceMotion), value: availability?.total)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refreshID += 1 }
+        }
         .task(id: scenePhase) {
             guard scenePhase == .active else { return }
             while !Task.isCancelled {
@@ -172,5 +190,11 @@ struct StudyRoomsView: View {
             }
         }
         if let url = place.reservationURL, issue != nil { Link("Open UF reservations", destination: url).font(.subheadline).frame(minHeight: 44) }
+    }
+    private func openBooking(_ url: URL) {
+        browserIssue = false
+        openURL(url) { accepted in
+            if !accepted { browserIssue = true }
+        }
     }
 }

@@ -18,7 +18,7 @@ enum AppFailure: LocalizedError {
         for place in RoomLocation.all.keys.sorted() {
             do {
                 let result = try await rooms.availability(placeID:place,start:start,force:true)
-                searches[place] = ["total":result.total,"parsed":result.rooms.count,"names":result.rooms.map(\.name),"url":result.searchURL.absoluteString]
+                searches[place] = ["total":result.total,"parsed":result.rooms.count,"timedLinks":result.rooms.filter { $0.bookingURL != nil }.count,"names":result.rooms.map(\.name),"url":result.searchURL.absoluteString]
             } catch { searches[place] = ["error":error.localizedDescription] }
         }
         output["rooms"] = searches

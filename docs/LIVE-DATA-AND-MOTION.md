@@ -16,7 +16,7 @@ The `Between` and `Between-Live` schemes use public UF sources without credentia
 
 A count of people does not measure free seats. UF supplies no sensor timestamp in these displays, so the app distinguishes retrieval age from measurement freshness. Failed refreshes preserve earlier values as *saved* counts and never update their timestamps. Malformed payloads are unavailable, not zero. Unknown amenities remain unconfirmed.
 
-Room search uses GET only. The parser separates exact-time results from suggestions for other times, validates the actual returned start/end for every match, and extracts names/capacities and stable official detail links. Actual reservations and UF authentication stay on UF's site. The app never submits a booking. A listed space is not a confirmed reservation. Overnight searches include LibCal's end date.
+Room search uses GET only. The parser separates exact-time results from suggestions for other times, validates the actual returned start/end for every match, and extracts names/capacities, stable detail links and validated, ephemeral UF-generated exact-time room links. Actual reservations and UF authentication stay on UF's site. The app never submits a booking. See [UF booking portal integration](UF-BOOKING-PORTAL.md) for browser handoff, stale-link fallback and refresh on return. A listed space is not a confirmed reservation. Overnight searches include LibCal's end date.
 
 The optional community backend does not block official data. Unconnected community sections do not show synthetic observations or imply that a report service has returned zero results. Archived community/auth implementation remains available for a separately configured backend.
 
